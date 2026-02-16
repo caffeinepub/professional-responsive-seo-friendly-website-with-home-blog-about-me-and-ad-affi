@@ -1,5 +1,6 @@
 import { SiFacebook, SiX, SiLinkedin, SiGithub } from 'react-icons/si';
-import { Heart } from 'lucide-react';
+import { Heart, ExternalLink } from 'lucide-react';
+import { HELP_LINKS } from '../../lib/helpLinks';
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
@@ -8,9 +9,9 @@ export function SiteFooter() {
     : 'unknown-app';
 
   return (
-    <footer className="border-t border-border/40 bg-muted/30">
+    <footer className="border-t border-border/40 bg-muted/40 backdrop-blur-sm">
       <div className="container py-8 md:py-12">
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <h3 className="mb-3 text-sm font-semibold">About</h3>
             <p className="text-sm text-muted-foreground">
@@ -35,6 +36,24 @@ export function SiteFooter() {
                   About Me
                 </a>
               </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="mb-3 text-sm font-semibold">সাহায্য</h3>
+            <ul className="space-y-2 text-sm">
+              {HELP_LINKS.map((link) => (
+                <li key={link.url}>
+                  <a 
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
+                  >
+                    {link.label}
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
           <div>

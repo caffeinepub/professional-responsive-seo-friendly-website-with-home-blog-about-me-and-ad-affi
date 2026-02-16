@@ -1,69 +1,41 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-16T07:57:14.593Z",
+  "generatedAt": "2026-02-16T12:55:23.805Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
-    "implemented": 3,
+    "total": 1,
+    "implemented": 1,
     "items": [
       {
-        "id": "REQ-11",
-        "summary": "Update the site/blog branding text from \"MyBlog\" to \"MHS Habibur Blog\" anywhere it is shown to users, including the header brand text, site-wide config metadata, and footer copyright.",
+        "id": "REQ-31",
+        "summary": "Add a new large Welcome section at the very top of the Home page (route \"/\"), above the existing Hero section, that renders exactly this Bengali text (verbatim) as the first content on the page: \"আসসালামু আলাইকুম। আমি Md. Habibur Rahman, এই ওয়েবসাইটটি আমার। এখানে অতি শীঘ্রই আমি বিভিন্ন ধরনের ইনকাম সাইট এড করবো এবং সম্পূর্ণ ফ্রিতে কাজ শিখিয়ে দিবো। বি:দ্র: অনেক সহজ কাজ এড করবো, যেটা আপনি ১০-৩০ মিনিটের মধ্যে শিখে যাবেন। কোনো প্রয়োজনে আমার ফেসবুক আইডিতে যোগাযোগ করতে পারেন।\"",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/lib/siteConfig.ts",
-          "frontend/src/components/layout/SiteHeader.tsx",
-          "frontend/src/components/layout/SiteFooter.tsx",
+          "frontend/src/components/home/WelcomeSection.tsx",
           "frontend/src/pages/HomePage.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/lib/siteConfig.ts",
-          "frontend/src/components/layout/SiteHeader.tsx",
-          "frontend/src/components/layout/SiteFooter.tsx",
+          "frontend/src/components/home/WelcomeSection.tsx",
           "frontend/src/pages/HomePage.tsx"
-        ]
-      },
-      {
-        "id": "REQ-12",
-        "summary": "Write and add 5 professional, reader-useful blog posts focused on “Online Income” and “Digital Marketing” to the blog section by updating the sample fallback posts used by the Blog list/detail pages (`frontend/src/lib/blogSampleFallback.ts`). Each post must include a catchy title, a unique URL-safe slug, a clear excerpt, substantial content, and a realistic published timestamp.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/lib/blogSampleFallback.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/lib/blogSampleFallback.ts"
-        ]
-      },
-      {
-        "id": "REQ-13",
-        "summary": "Update the static sitemap (`frontend/public/sitemap.xml`) so it includes the blog post URLs for the 5 new blog post slugs and removes URLs for any deleted/replaced sample posts.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/public/sitemap.xml",
-          "frontend/scripts/README-sitemap.md"
-        ],
-        "matchedFiles": [
-          "frontend/public/sitemap.xml"
         ]
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
-    "build-template/README.md",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/public/sitemap.xml",
-    "frontend/src/components/layout/SiteFooter.tsx",
+    "frontend/src/components/home/WelcomeSection.tsx",
+    "frontend/src/components/layout/MobileMenu.tsx",
     "frontend/src/components/layout/SiteHeader.tsx",
-    "frontend/src/lib/blogSampleFallback.ts",
-    "frontend/src/lib/siteConfig.ts",
+    "frontend/src/index.css",
     "frontend/src/pages/HomePage.tsx",
+    "frontend/tailwind.config.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

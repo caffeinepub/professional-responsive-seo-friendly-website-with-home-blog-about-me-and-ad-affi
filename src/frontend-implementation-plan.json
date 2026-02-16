@@ -1,74 +1,25 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Rebrand to “MHS Habibur Blog” and refresh sample blog content + sitemap",
+  "title": "Add Bengali welcome section at top of Home page",
   "requirements": [
     {
-      "id": "REQ-11",
-      "summary": "Replace all user-visible “MyBlog” branding with “MHS Habibur Blog” across header, site config metadata, and footer copyright.",
+      "id": "REQ-31",
+      "summary": "Add a large, colorful Welcome section at the very top of the Home page that renders the provided Bengali text verbatim above the existing Hero section.",
       "acceptanceCriteria": [
-        "Header brand text shows exactly “MHS Habibur Blog” (no remaining “MyBlog” in the header).",
-        "`frontend/src/lib/siteConfig.ts` uses `name: 'MHS Habibur Blog'`.",
-        "Footer copyright line shows “© {year} MHS Habibur Blog. All rights reserved.”.",
-        "A case-sensitive search for the standalone string “MyBlog” in user-facing UI text no longer finds the old title (excluding URLs like https://myblog.com if still present)."
+        "On route \"/\", the first visible content on the page is the Welcome section containing exactly the provided Bengali text verbatim.",
+        "The Welcome section renders above (before) the existing Hero section."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/lib/siteConfig.ts",
-          "operation": "modify",
-          "description": "Update site-wide metadata to use `name: 'MHS Habibur Blog'` (and ensure any other user-facing metadata strings no longer display “MyBlog”)."
-        },
-        {
-          "path": "frontend/src/components/layout/SiteHeader.tsx",
-          "operation": "modify",
-          "description": "Update the header brand text from “MyBlog” to exactly “MHS Habibur Blog”."
-        },
-        {
-          "path": "frontend/src/components/layout/SiteFooter.tsx",
-          "operation": "modify",
-          "description": "Update the footer copyright line to “© {year} MHS Habibur Blog. All rights reserved.” and ensure no remaining “MyBlog” appears in the footer UI text."
+          "path": "frontend/src/components/home/WelcomeSection.tsx",
+          "operation": "create",
+          "description": "Create a new Home page Welcome section component with prominent styling (large, colorful) that renders the Bengali welcome text verbatim as its primary content."
         },
         {
           "path": "frontend/src/pages/HomePage.tsx",
           "operation": "modify",
-          "description": "Update the Home page SEO description text to remove the standalone “MyBlog” brand mention and reflect “MHS Habibur Blog” branding."
-        }
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "summary": "Replace fallback sample blog posts with exactly 5 professional posts about Online Income and Digital Marketing (with full titles, slugs, excerpts, substantial content, and realistic timestamps).",
-      "acceptanceCriteria": [
-        "`samplePosts` contains exactly 5 posts and all 5 are about Online Income and/or Digital Marketing (remove/replace the existing generic web-dev sample posts).",
-        "Each post has: non-empty `title`, unique `slug`, non-empty `excerpt`, non-empty `content`, and a valid `published` timestamp.",
-        "Blog list page renders 5 cards and each navigates to a working detail page for its slug.",
-        "Post content is professional, actionable, and formatted as readable multi-paragraph text (not a single short paragraph)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/lib/blogSampleFallback.ts",
-          "operation": "modify",
-          "description": "Replace the existing fallback posts with exactly 5 new, professional posts focused on Online Income and Digital Marketing; ensure each has a catchy title, unique URL-safe slug, clear excerpt, substantial multi-paragraph content (optionally with bullet lists), and realistic `published` timestamps in `bigint` form."
-        }
-      ]
-    },
-    {
-      "id": "REQ-13",
-      "summary": "Update the static sitemap to reflect the 5 new blog post slugs and remove any old sample post URLs.",
-      "acceptanceCriteria": [
-        "`frontend/public/sitemap.xml` includes `<url><loc>.../blog/{slug}</loc>...</url>` entries for all 5 new slugs.",
-        "`frontend/public/sitemap.xml` does not list blog post URLs for any removed/replaced sample slugs."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/sitemap.xml",
-          "operation": "modify",
-          "description": "Remove the old sample blog post URL entries and add sitemap `<url>` entries for each of the 5 new fallback post slugs under `/blog/{slug}`."
-        },
-        {
-          "path": "frontend/scripts/README-sitemap.md",
-          "operation": "modify",
-          "description": "Update the sitemap maintenance notes/examples (if they reference old sample slugs) so documentation matches the new set of 5 blog post slugs."
+          "description": "Wire the new WelcomeSection into the Home page so it appears at the very top of the page (before the existing HeroSection) on route \"/\"."
         }
       ]
     }

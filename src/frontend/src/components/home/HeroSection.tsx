@@ -11,22 +11,24 @@ export function HeroSection() {
       </div>
       <div className="container relative py-16 md:py-24 lg:py-32">
         <div className="mx-auto max-w-3xl text-center">
-          <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            Welcome to My Blog
-          </h1>
-          <p className="mb-8 text-lg text-muted-foreground sm:text-xl md:text-2xl">
-            Discover insights, stories, and expertise on topics that inspire and inform. Join me on a journey of learning and growth.
-          </p>
+          <div className="readable-text-block">
+            <h1 className="neon-heading mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+              Welcome to My Blog
+            </h1>
+            <p className="mb-8 text-lg text-white sm:text-xl md:text-2xl">
+              Discover insights, stories, and expertise on topics that inspire and inform. Join me on a journey of learning and growth.
+            </p>
+          </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <a
               href="/blog"
-              className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              className="neon-button neon-button-primary inline-flex h-11 items-center justify-center rounded-md px-8 text-sm font-medium shadow transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Explore Articles
             </a>
             <a
               href="/about"
-              className="inline-flex h-11 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              className="neon-button neon-button-secondary inline-flex h-11 items-center justify-center rounded-md border px-8 text-sm font-medium shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Learn More
             </a>

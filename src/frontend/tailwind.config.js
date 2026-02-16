@@ -65,6 +65,22 @@ export default {
                     'accent-foreground': 'oklch(var(--sidebar-accent-foreground))',
                     border: 'oklch(var(--sidebar-border))',
                     ring: 'oklch(var(--sidebar-ring))'
+                },
+                neon: {
+                    gold: 'oklch(var(--neon-gold))',
+                    green: 'oklch(var(--neon-green))',
+                    cyan: 'oklch(var(--neon-cyan))',
+                    white: 'oklch(var(--neon-white))'
+                },
+                rainbow: {
+                    red: 'oklch(var(--rainbow-red))',
+                    orange: 'oklch(var(--rainbow-orange))',
+                    yellow: 'oklch(var(--rainbow-yellow))',
+                    green: 'oklch(var(--rainbow-green))',
+                    cyan: 'oklch(var(--rainbow-cyan))',
+                    blue: 'oklch(var(--rainbow-blue))',
+                    purple: 'oklch(var(--rainbow-purple))',
+                    pink: 'oklch(var(--rainbow-pink))'
                 }
             },
             borderRadius: {
@@ -73,7 +89,8 @@ export default {
                 sm: 'calc(var(--radius) - 4px)'
             },
             boxShadow: {
-                xs: '0 1px 2px 0 rgba(0,0,0,0.05)'
+                xs: '0 1px 2px 0 rgba(0,0,0,0.05)',
+                neon: '0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(0, 255, 127, 0.3)'
             },
             fontFamily: {
                 sans: [
@@ -95,11 +112,23 @@ export default {
                 'accordion-up': {
                     from: { height: 'var(--radix-accordion-content-height)' },
                     to: { height: '0' }
+                },
+                'neon-flow': {
+                    '0%': { backgroundPosition: '0% 50%' },
+                    '50%': { backgroundPosition: '100% 50%' },
+                    '100%': { backgroundPosition: '0% 50%' }
+                },
+                'rainbow-flow': {
+                    '0%': { backgroundPosition: '0% 50%' },
+                    '50%': { backgroundPosition: '100% 50%' },
+                    '100%': { backgroundPosition: '0% 50%' }
                 }
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
-                'accordion-up': 'accordion-up 0.2s ease-out'
+                'accordion-up': 'accordion-up 0.2s ease-out',
+                'neon-flow': 'neon-flow 6s ease-in-out infinite',
+                'rainbow-flow': 'rainbow-flow 8s ease-in-out infinite'
             }
         }
     },

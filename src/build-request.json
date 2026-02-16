@@ -1,74 +1,26 @@
 {
   "kind": "build_request",
-  "title": "Rename site/blog branding to “MHS Habibur Blog” and add 5 new professional posts",
-  "priority": "normal",
+  "title": "Add Bengali welcome section, fix mobile header menu, and improve text readability over background",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-11",
-      "text": "Update the site/blog branding text from \"MyBlog\" to \"MHS Habibur Blog\" anywhere it is shown to users, including the header brand text, site-wide config metadata, and footer copyright.",
+      "id": "REQ-31",
+      "text": "Add a new large Welcome section at the very top of the Home page (route \"/\"), above the existing Hero section, that renders exactly this Bengali text (verbatim) as the first content on the page: \"আসসালামু আলাইকুম। আমি Md. Habibur Rahman, এই ওয়েবসাইটটি আমার। এখানে অতি শীঘ্রই আমি বিভিন্ন ধরনের ইনকাম সাইট এড করবো এবং সম্পূর্ণ ফ্রিতে কাজ শিখিয়ে দিবো। বি:দ্র: অনেক সহজ কাজ এড করবো, যেটা আপনি ১০-৩০ মিনিটের মধ্যে শিখে যাবেন। কোনো প্রয়োজনে আমার ফেসবুক আইডিতে যোগাযোগ করতে পারেন।\"",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-9"
+          "msg-user-1"
         ],
         "quotes": [
-          "Please change the blog title from 'MyBlog' to 'MHS Habibur Blog'."
+          "Add Welcome Message: Add a large, colorful section at the top with this Bengali text: 'আসসালামু আলাইকুম...'] },",
+          "acceptanceCriteria=["
         ]
       },
-      "acceptanceCriteria": [
-        "Header brand text shows exactly “MHS Habibur Blog” (no remaining “MyBlog” in the header).",
-        "`frontend/src/lib/siteConfig.ts` uses `name: 'MHS Habibur Blog'`.",
-        "Footer copyright line shows “© {year} MHS Habibur Blog. All rights reserved.”.",
-        "A case-sensitive search for the standalone string “MyBlog” in user-facing UI text no longer finds the old title (excluding URLs like https://myblog.com if still present)."
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "text": "Write and add 5 professional, reader-useful blog posts focused on “Online Income” and “Digital Marketing” to the blog section by updating the sample fallback posts used by the Blog list/detail pages (`frontend/src/lib/blogSampleFallback.ts`). Each post must include a catchy title, a unique URL-safe slug, a clear excerpt, substantial content, and a realistic published timestamp.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-9"
-        ],
-        "quotes": [
-          "please write and add 5 professional blog posts about 'Online Income' and 'Digital Marketing' to the blog section. Make sure each post has a catchy title and useful information for the readers."
-        ]
-      },
-      "acceptanceCriteria": [
-        "`samplePosts` contains exactly 5 posts and all 5 are about Online Income and/or Digital Marketing (remove/replace the existing generic web-dev sample posts).",
-        "Each post has: non-empty `title`, unique `slug`, non-empty `excerpt`, non-empty `content`, and a valid `published` timestamp.",
-        "Blog list page renders 5 cards and each navigates to a working detail page for its slug.",
-        "Post content is professional, actionable, and formatted as readable multi-paragraph text (not a single short paragraph)."
-      ]
-    },
-    {
-      "id": "REQ-13",
-      "text": "Update the static sitemap (`frontend/public/sitemap.xml`) so it includes the blog post URLs for the 5 new blog post slugs and removes URLs for any deleted/replaced sample posts.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-9"
-        ],
-        "quotes": [
-          "write and add 5 professional blog posts... to the blog section"
-        ]
-      },
-      "acceptanceCriteria": [
-        "`frontend/public/sitemap.xml` includes `<url><loc>.../blog/{slug}</loc>...</url>` entries for all 5 new slugs.",
-        "`frontend/public/sitemap.xml` does not list blog post URLs for any removed/replaced sample slugs."
-      ]
+      "acceptanceCriteria": []
     }
   ],
-  "constraints": [
-    "Do not edit files under `frontend/src/components/ui` (compose them instead).",
-    "Do not modify any frontend immutable paths listed in SYSTEM_CONTEXT (e.g., `frontend/src/main.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/hooks/useInternetIdentity.ts/tsx`).",
-    "Backend remains single-actor; do not introduce additional backend services."
-  ],
-  "nonGoals": [
-    "Implementing a CMS/admin UI for creating/editing blog posts.",
-    "Adding third-party integrations (analytics, email, social APIs, external databases).",
-    "Changing the site theme/colors/layout beyond what is required for the title/branding and new post content."
-  ],
+  "constraints": [],
+  "nonGoals": [],
   "imageRequirements": {
     "required": [],
     "edits": []

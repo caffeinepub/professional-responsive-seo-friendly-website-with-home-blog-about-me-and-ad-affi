@@ -15,9 +15,9 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
   });
 
   return (
-    <article className="group rounded-lg border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md">
+    <article className="readable-card group rounded-lg border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md">
       <Link to="/blog/$slug" params={{ slug: post.slug }} className="block">
-        <h2 className="mb-2 text-2xl font-bold tracking-tight transition-colors group-hover:text-primary">
+        <h2 className="neon-subheading mb-2 text-2xl font-bold tracking-tight transition-colors group-hover:text-primary">
           {post.title}
         </h2>
         <div className="mb-3 flex items-center gap-2 text-sm text-muted-foreground">

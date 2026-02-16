@@ -13,12 +13,14 @@ export default function AboutPage() {
       />
       <div className="container py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
-          <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">About Me</h1>
+          <div className="readable-text-block mb-8">
+            <h1 className="neon-heading text-4xl font-bold tracking-tight sm:text-5xl">About Me</h1>
+          </div>
 
           <AdPlaceholder variant="banner" className="mb-12" />
 
-          <section className="mb-12">
-            <h2 className="mb-4 text-2xl font-semibold">Biography</h2>
+          <section className="readable-card mb-12">
+            <h2 className="neon-subheading mb-4 text-2xl font-semibold">Biography</h2>
             <div className="space-y-4 text-muted-foreground">
               <p>
                 Welcome! I'm a passionate writer and content creator dedicated to sharing knowledge and insights
@@ -38,16 +40,18 @@ export default function AboutPage() {
           </section>
 
           <section className="mb-12">
-            <h2 className="mb-4 text-2xl font-semibold">Expertise & Interests</h2>
+            <div className="readable-text-block mb-4">
+              <h2 className="neon-subheading text-2xl font-semibold">Expertise & Interests</h2>
+            </div>
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-lg border border-border bg-card p-6">
+              <div className="readable-card rounded-lg border border-border bg-card p-6">
                 <Briefcase className="mb-3 h-6 w-6 text-primary" />
                 <h3 className="mb-2 font-semibold">Professional Experience</h3>
                 <p className="text-sm text-muted-foreground">
                   Extensive background in content creation, digital marketing, and strategic communication.
                 </p>
               </div>
-              <div className="rounded-lg border border-border bg-card p-6">
+              <div className="readable-card rounded-lg border border-border bg-card p-6">
                 <MapPin className="mb-3 h-6 w-6 text-primary" />
                 <h3 className="mb-2 font-semibold">Areas of Focus</h3>
                 <p className="text-sm text-muted-foreground">
@@ -58,8 +62,10 @@ export default function AboutPage() {
           </section>
 
           <section className="mb-12">
-            <h2 className="mb-4 text-2xl font-semibold">Get in Touch</h2>
-            <div className="rounded-lg border border-border bg-card p-6">
+            <div className="readable-text-block mb-4">
+              <h2 className="neon-subheading text-2xl font-semibold">Get in Touch</h2>
+            </div>
+            <div className="readable-card rounded-lg border border-border bg-card p-6">
               <div className="mb-6">
                 <div className="mb-4 flex items-center gap-3">
                   <Mail className="h-5 w-5 text-muted-foreground" />

@@ -1,10 +1,21 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 5,
-  "summary": "Professional, responsive, SEO-friendly website to publish online with clean layout, placeholders for ads/affiliate links, and core pages: Home, Blog, About Me.",
-  "architectural_notes": [],
-  "known_issues": [],
-  "isFixRequest": false,
+  "projectStateVersion": 17,
+  "summary": "Professional, responsive, SEO-friendly website with clean layout, full-screen fixed background image theme (with dark overlay for readability), ad/affiliate placeholders, core pages (Home, Blog, About Me), plus a working mobile hamburger menu and enhanced modern/neon styling for improved readability and visual impact.",
+  "architectural_notes": [
+    "Home page ad region should support embedding third-party ad network code (external async script + container div) in place of a placeholder, while keeping the rest of the layout unchanged.",
+    "Site-wide visual theme should support a full-screen fixed background image (parallax-style) with a dark overlay layer to preserve text contrast/readability; must be responsive across mobile and desktop.",
+    "Mobile navigation must include a hamburger menu icon on small screens; on open, it must reveal 'কাজ', 'পেমেন্ট প্রুফ', and 'সাহায্য' items and preserve the existing Help submenu links (Admin 1/Admin 2).",
+    "Because the site uses a full-screen background image, all text blocks must maintain sufficient contrast via a subtle dark translucent backing and/or text-shadow; ensure readability on mobile and desktop.",
+    "Home page should include a top-of-page Welcome section featuring provided Bengali text, center-aligned in a bold Bengali font, with neon/gradient glow styling and a slow rainbow animation; place the text inside a semi-transparent dark glassmorphism container to maintain readability over the fixed background image.",
+    "Welcome section Bengali text is explicitly provided and must be used verbatim, styled bold + center-aligned with rainbow light animation: 'আসসালামু আলাইকুম। আমি Md. Habibur Rahman, এই ওয়েবসাইটটি আমার। এখানে অতি শীঘ্রই আমি বিভিন্ন ধরনের ইনকাম সাইট এড করবো এবং সম্পূর্ণ ফ্রিতে কাজ শিখিয়ে দিবো। বি:দ্র: অনেক সহজ কাজ এড করবো, যেটা আপনি ১০-৩০ মিনিটের মধ্যে শিখে যাবেন। কোনো প্রয়োজনে আমার ফেসবুক আইডিতে যোগাযোগ করতে পারেন।'"
+  ],
+  "known_issues": [
+    "Mobile hamburger menu icon is missing on mobile view, preventing access to navigation.",
+    "Text is not clearly readable against the background image; insufficient contrast/overlay/text-shadow.",
+    "Deployment/build did not complete successfully (deployment error reported)."
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-a-responsive-site-layout-with-a-clean-professional-design-including-a-header-navigation-home-blog-about-me-footer-and-consistent-spacing-typography-across-pages",
@@ -101,6 +112,150 @@
         "REQ-13"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-replace-the-home-page-advertisement-space-banner-placeholder-with-the-provided-adsterra-native-banner-embed-so-the-real-ad-can-render-implement-the-embed-safely-in-react-by-creating-a-dedicated-ad-component-that-1-renders-the-required-container-div-with-id-container-f611970e20286f1dc66f1d89f295d869-and-2-loads-the-external-script-https-pl28724796-effectivegatecpm-com-f611970e20286f1dc66f1d89f295d869-invoke-js-on-the-client-only-avoid-duplicating-the-script-tag-if-the-user-navigates-away-back-update-frontend-src-pages-homepage-tsx-to-use-this-new-adsterra-component-in-place-of-adplaceholder-variant-banner-while-leaving-other-pages-ad-placeholders-unchanged",
+      "title": "Replace the Home page \"Advertisement Space\" banner placeholder with the provided Adsterra native banner embed so the real ad can render. Implement the embed safely in React by creating a dedicated ad component that (1) renders the required container div with id \"container-f611970e20286f1dc66f1d89f295d869\" and (2) loads the external script \"https://pl28724796.effectivegatecpm.com/f611970e20286f1dc66f1d89f295d869/invoke.js\" on the client only (avoid duplicating the script tag if the user navigates away/back). Update `frontend/src/pages/HomePage.tsx` to use this new Adsterra component in place of `<AdPlaceholder variant=\"banner\" ... />` while leaving other pages’ ad placeholders unchanged.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-optimized-background-image-assets-from-the-uploaded-file-1770720033234-jpg-for-desktop-and-mobile-and-place-the-generated-files-in-frontend-public-assets-generated-for-use-as-a-site-wide-background",
+      "title": "Create optimized background image assets from the uploaded file `1770720033234.jpg` for desktop and mobile, and place the generated files in `frontend/public/assets/generated` for use as a site-wide background.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-the-uploaded-image-as-a-full-screen-background-theme-across-the-entire-website-header-all-pages-and-footer-with-a-fixed-parallax-style-effect-plus-a-dark-overlay-to-ensure-text-readability",
+      "title": "Apply the uploaded image as a full-screen background theme across the entire website (header, all pages, and footer) with a fixed/parallax-style effect, plus a dark overlay to ensure text readability.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-background-theme-remains-professional-and-usable-on-both-mobile-and-desktop-including-graceful-handling-of-mobile-browsers-that-do-not-fully-support-fixed-backgrounds",
+      "title": "Ensure the background theme remains professional and usable on both mobile and desktop, including graceful handling of mobile browsers that do not fully support fixed backgrounds.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-existing-menu-that-contains-the-bengali-section-label-help-add-two-new-sub-options-buttons-labeled-in-english-as-admin-1-and-admin-2-and-make-each-option-a-clickable-link-to-the-corresponding-facebook-profile-url-admin-1-https-www-facebook-com-md-habibur-rahman-62356-admin-2-https-www-facebook-com-profile-php-id-61575236122760-these-links-must-allow-users-to-contact-the-admins-directly-by-navigating-to-the-facebook-pages",
+      "title": "In the existing menu that contains the Bengali section label “সাহায্য” (Help), add two new sub-options/buttons labeled in English as “Admin 1” and “Admin 2”, and make each option a clickable link to the corresponding Facebook profile URL:\n- Admin 1: https://www.facebook.com/md.habibur.rahman.62356\n- Admin 2: https://www.facebook.com/profile.php?id=61575236122760\nThese links must allow users to contact the admins directly by navigating to the Facebook pages.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-keep-the-existing-menu-items-sections-labeled-and-as-is-for-now-and-do-not-add-any-new-functionality-or-additional-sub-options-under-those-sections-as-part-of-this-change",
+      "title": "Keep the existing menu items/sections labeled “কাজ” and “পেমেন্ট প্রুফ” as-is for now, and do not add any new functionality or additional sub-options under those sections as part of this change.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-mobile-hamburger-menu-three-line-icon-in-the-top-right-of-the-header-that-is-visible-on-small-screens-and-toggles-a-mobile-navigation-panel",
+      "title": "Add a mobile hamburger menu (three-line icon) in the top-right of the header that is visible on small screens and toggles a mobile navigation panel.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-mobile-menu-displays-the-bengali-sections-exactly-as-labels-and-and-under-include-the-existing-admin-1-and-admin-2-facebook-links-with-the-exact-urls-already-used-in-the-footer",
+      "title": "Ensure the mobile menu displays the Bengali sections exactly as labels: “কাজ”, “পেমেন্ট প্রুফ”, and “সাহায্য”, and under “সাহায্য” include the existing “Admin 1” and “Admin 2” Facebook links with the exact URLs already used in the footer.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-site-wide-text-readability-over-the-fixed-background-image-by-adding-consistent-contrast-treatments-for-content-blocks-e-g-subtle-semi-transparent-dark-backgrounds-behind-key-text-containers-and-or-stronger-text-shadow-while-keeping-the-overall-theme-professional",
+      "title": "Improve site-wide text readability over the fixed background image by adding consistent contrast treatments for content blocks (e.g., subtle semi-transparent dark backgrounds behind key text containers and/or stronger text shadow), while keeping the overall theme professional.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-animated-neon-gradient-moving-light-effect-for-headings-and-main-titles-using-high-contrast-colors-gold-neon-green-bright-white-and-optionally-neon-cyan-with-a-flowing-animated-look-while-preserving-legibility",
+      "title": "Add an animated ‘neon gradient / moving light’ effect for headings (and main titles) using high-contrast colors (Gold, Neon Green, Bright White, and optionally Neon Cyan) with a flowing/animated look, while preserving legibility.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-the-same-animated-gradient-glow-light-effect-to-the-primary-menu-items-in-the-mobile-menu-and-optionally-the-hamburger-menu-header-text-so-the-navigation-looks-modern-and-colorful-without-reducing-readability",
+      "title": "Apply the same animated gradient glow/light effect to the primary menu items in the mobile menu (and optionally the hamburger/menu header text) so the navigation looks modern and colorful without reducing readability.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-explore-articles-and-learn-more-buttons-in-the-hero-section-to-use-neon-colored-styling-with-a-glowing-hover-focus-effect-while-preserving-accessible-contrast-and-clear-focus-indicators",
+      "title": "Update the ‘Explore Articles’ and ‘Learn More’ buttons in the Hero section to use neon-colored styling with a glowing hover/focus effect, while preserving accessible contrast and clear focus indicators.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-overall-theme-remains-professional-and-the-mobile-menu-interaction-works-reliably-on-mobile-devices-tap-targets-scroll-behavior-and-overlay-layering-over-the-fixed-background",
+      "title": "Ensure the overall theme remains professional and the mobile menu interaction works reliably on mobile devices (tap targets, scroll behavior, and overlay layering over the fixed background).",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-new-large-welcome-section-at-the-very-top-of-the-home-page-above-the-existing-hero-section-that-displays-the-provided-bengali-text-center-aligned-as-the-first-content-users-see-when-visiting",
+      "title": "Add a new, large “Welcome” section at the very top of the Home page (above the existing Hero section) that displays the provided Bengali text, center-aligned, as the first content users see when visiting “/”.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-style-the-welcome-section-text-using-a-neon-glow-gradient-light-look-with-a-slow-moving-rainbow-style-animated-gradient-so-the-letters-appear-to-shine-in-multiple-colors-while-remaining-readable-over-the-site-s-background-image",
+      "title": "Style the Welcome section text using a neon-glow / gradient-light look with a slow-moving rainbow-style animated gradient so the letters appear to shine in multiple colors while remaining readable over the site’s background image.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-welcome-section-uses-a-bold-aesthetically-pleasing-bengali-font-for-the-bengali-text-with-a-sensible-fallback-font-stack-if-the-preferred-font-cannot-load",
+      "title": "Ensure the Welcome section uses a bold, aesthetically pleasing Bengali font for the Bengali text, with a sensible fallback font stack if the preferred font cannot load.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-place-the-welcome-text-inside-a-semi-transparent-dark-glass-style-container-blur-backdrop-effect-to-ensure-clear-readability-over-the-existing-full-screen-background-image-and-size-space-the-container-so-it-feels-like-a-prominent-top-of-page-welcome-block",
+      "title": "Place the Welcome text inside a semi-transparent dark, glass-style container (blur/backdrop effect) to ensure clear readability over the existing full-screen background image, and size/space the container so it feels like a prominent top-of-page welcome block.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-new-large-welcome-section-at-the-very-top-of-the-home-page-route-above-the-existing-hero-section-that-renders-exactly-this-bengali-text-verbatim-as-the-first-content-on-the-page-md-habibur-rahman",
+      "title": "Add a new large Welcome section at the very top of the Home page (route \"/\"), above the existing Hero section, that renders exactly this Bengali text (verbatim) as the first content on the page: \"আসসালামু আলাইকুম। আমি Md. Habibur Rahman, এই ওয়েবসাইটটি আমার। এখানে অতি শীঘ্রই আমি বিভিন্ন ধরনের ইনকাম সাইট এড করবো এবং সম্পূর্ণ ফ্রিতে কাজ শিখিয়ে দিবো। বি:দ্র: অনেক সহজ কাজ এড করবো, যেটা আপনি ১০-৩০ মিনিটের মধ্যে শিখে যাবেন। কোনো প্রয়োজনে আমার ফেসবুক আইডিতে যোগাযোগ করতে পারেন।\"",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -145,6 +300,54 @@
     {
       "id": "AR-12",
       "summary": "Write and add 5 professional blog posts on 'Online Income' and 'Digital Marketing' with catchy titles and useful reader-focused content",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Replace the Home page 'Advertisement Space' placeholder with the provided Adsterra native banner embed code so real ads display",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Use the uploaded image as a full-screen fixed (parallax-style) background across the entire site with a dark overlay for text readability; ensure professional appearance on mobile and desktop",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Under the 'সাহায্য' (Help) menu section, add two clickable sub-options/buttons linking to the two provided Facebook admin profiles (Admin 1 and Admin 2), while keeping 'কাজ' and 'পেমেন্ট প্রুফ' menu items for later.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Add a working mobile hamburger menu (three-line icon) in the top-right that reveals the menu items 'কাজ', 'পেমেন্ট প্রুফ', and 'সাহায্য' (including its Admin 1/Admin 2 links) and works perfectly on mobile.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Improve text readability over the background image by adding subtle dark semi-transparent backgrounds/overlays to text blocks and/or text-shadow site-wide so all content is clearly visible.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Apply animated 'Neon Gradient' / 'Gradient Glow' / 'Rainbow Light' flowing color effects to headings (and optionally menu items) using high-contrast colors like Gold, Neon Green, Bright White, and Neon Cyan while keeping the overall theme professional.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Update primary call-to-action buttons (e.g., 'Explore Articles' and 'Learn More') to neon-colored styling with a glowing hover effect for a modern, colorful look.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Add a large, stylish Bengali Welcome Section at the very top of the Home page with center-aligned text in a bold Bengali font, using a neon glow/gradient light effect plus slow-moving rainbow color animation, displayed inside a semi-transparent dark glass-style box for readability over the background image.",
       "reqIds": [],
       "status": "pending"
     }

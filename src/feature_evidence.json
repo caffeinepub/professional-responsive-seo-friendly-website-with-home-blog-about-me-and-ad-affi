@@ -2,12 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-site-blog-branding-text-from-myblog-to-mhs-habibur-blog-anywhere-it-is-shown-to-users-including-the-header-brand-text-site-wide-config-metadata-and-footer-copyright",
-      "featureTitle": "Update the site/blog branding text from \"MyBlog\" to \"MHS Habibur Blog\" anywhere it is shown to users, including the header brand text, site-wide config metadata, and footer copyright.",
+      "featureId": "feature-add-a-new-large-welcome-section-at-the-very-top-of-the-home-page-route-above-the-existing-hero-section-that-renders-exactly-this-bengali-text-verbatim-as-the-first-content-on-the-page-md-habibur-rahman",
+      "featureTitle": "Add a new large Welcome section at the very top of the Home page (route \"/\"), above the existing Hero section, that renders exactly this Bengali text (verbatim) as the first content on the page: \"আসসালামু আলাইকুম। আমি Md. Habibur Rahman, এই ওয়েবসাইটটি আমার। এখানে অতি শীঘ্রই আমি বিভিন্ন ধরনের ইনকাম সাইট এড করবো এবং সম্পূর্ণ ফ্রিতে কাজ শিখিয়ে দিবো। বি:দ্র: অনেক সহজ কাজ এড করবো, যেটা আপনি ১০-৩০ মিনিটের মধ্যে শিখে যাবেন। কোনো প্রয়োজনে আমার ফেসবুক আইডিতে যোগাযোগ করতে পারেন।\"",
       "files": [
-        "frontend/src/components/layout/SiteFooter.tsx",
-        "frontend/src/components/layout/SiteHeader.tsx",
-        "frontend/src/lib/siteConfig.ts",
+        "frontend/src/components/home/WelcomeSection.tsx",
         "frontend/src/pages/HomePage.tsx"
       ],
       "components": [
@@ -18,43 +16,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-11"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-write-and-add-5-professional-reader-useful-blog-posts-focused-on-online-income-and-digital-marketing-to-the-blog-section-by-updating-the-sample-fallback-posts-used-by-the-blog-list-detail-pages-frontend-src-lib-blogsamplefallback-ts-each-post-must-include-a-catchy-title-a-unique-url-safe-slug-a-clear-excerpt-substantial-content-and-a-realistic-published-timestamp",
-      "featureTitle": "Write and add 5 professional, reader-useful blog posts focused on “Online Income” and “Digital Marketing” to the blog section by updating the sample fallback posts used by the Blog list/detail pages (`frontend/src/lib/blogSampleFallback.ts`). Each post must include a catchy title, a unique URL-safe slug, a clear excerpt, substantial content, and a realistic published timestamp.",
-      "files": [
-        "frontend/src/lib/blogSampleFallback.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-12"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-the-static-sitemap-frontend-public-sitemap-xml-so-it-includes-the-blog-post-urls-for-the-5-new-blog-post-slugs-and-removes-urls-for-any-deleted-replaced-sample-posts",
-      "featureTitle": "Update the static sitemap (`frontend/public/sitemap.xml`) so it includes the blog post URLs for the 5 new blog post slugs and removes URLs for any deleted/replaced sample posts.",
-      "files": [
-        "frontend/public/sitemap.xml"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-13"
+        "REQ-31"
       ],
       "confidence": "high"
     }

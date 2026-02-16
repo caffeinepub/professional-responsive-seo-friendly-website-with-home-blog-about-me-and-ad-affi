@@ -20,7 +20,7 @@ export default function BlogPostPage() {
   if (error || !post) {
     return (
       <div className="container py-12">
-        <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-6 text-center">
+        <div className="readable-card rounded-lg border border-destructive/50 bg-destructive/10 p-6 text-center">
           <p className="text-destructive">Blog post not found or failed to load.</p>
           <a
             href="/blog"
@@ -51,9 +51,9 @@ export default function BlogPostPage() {
       />
       <article className="container py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
-          <header className="mb-8">
-            <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">{post.title}</h1>
-            <div className="flex items-center gap-2 text-muted-foreground">
+          <header className="readable-text-block mb-8">
+            <h1 className="neon-heading mb-4 text-4xl font-bold tracking-tight sm:text-5xl">{post.title}</h1>
+            <div className="flex items-center gap-2 text-white">
               <Calendar className="h-4 w-4" />
               <time dateTime={publishedDate.toISOString()}>{formattedDate}</time>
             </div>
@@ -61,7 +61,7 @@ export default function BlogPostPage() {
 
           <AdPlaceholder variant="banner" className="mb-8" />
 
-          <div className="prose prose-lg max-w-none dark:prose-invert">
+          <div className="readable-card prose prose-lg max-w-none dark:prose-invert">
             <p className="lead text-xl text-muted-foreground">{post.excerpt}</p>
             <div className="mt-6 whitespace-pre-wrap">{post.content}</div>
           </div>

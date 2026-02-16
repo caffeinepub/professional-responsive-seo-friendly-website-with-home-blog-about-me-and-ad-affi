@@ -5,7 +5,7 @@
 @layer base {
     :root {
         --radius: 0.625rem;
-        /* Warm, content-focused palette - avoiding blue/purple primaries */
+        /* Neon-enhanced color palette with high contrast */
         --background: 0.99 0 0;
         --foreground: 0.2 0 0;
         --card: 1 0 0;
@@ -34,6 +34,22 @@
         --chart-3: 0.55 0.18 320;
         --chart-4: 0.7 0.14 80;
         --chart-5: 0.5 0.16 200;
+        
+        /* Neon gradient colors */
+        --neon-gold: 0.75 0.18 80;
+        --neon-green: 0.75 0.25 145;
+        --neon-cyan: 0.75 0.20 195;
+        --neon-white: 0.98 0 0;
+        
+        /* Rainbow colors for welcome text */
+        --rainbow-red: 0.65 0.25 25;
+        --rainbow-orange: 0.70 0.22 50;
+        --rainbow-yellow: 0.80 0.20 90;
+        --rainbow-green: 0.70 0.25 145;
+        --rainbow-cyan: 0.75 0.20 195;
+        --rainbow-blue: 0.60 0.22 250;
+        --rainbow-purple: 0.65 0.22 290;
+        --rainbow-pink: 0.70 0.22 340;
     }
 
     .dark {
@@ -73,67 +89,245 @@
         font-feature-settings: "rlig" 1, "calt" 1;
     }
 
-    /* Typography improvements */
-    h1, h2, h3, h4, h5, h6 {
-        @apply font-bold tracking-tight;
+    /* Global fixed background with parallax effect */
+    .site-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+        background-image: url('/assets/generated/site-background-desktop.dim_1920x1080.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
     }
 
-    h1 {
-        @apply text-4xl sm:text-5xl;
+    /* Responsive background for mobile */
+    @media (max-width: 768px) {
+        .site-background {
+            background-image: url('/assets/generated/site-background-mobile.dim_1080x1920.jpg');
+            /* Fallback for mobile browsers that don't support fixed attachment */
+            background-attachment: scroll;
+        }
     }
 
-    h2 {
-        @apply text-3xl sm:text-4xl;
+    /* Dark overlay for text readability */
+    .site-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        background: rgba(0, 0, 0, 0.65);
+        pointer-events: none;
     }
 
-    h3 {
-        @apply text-2xl sm:text-3xl;
+    /* Adjust dark mode overlay */
+    .dark .site-overlay {
+        background: rgba(0, 0, 0, 0.75);
     }
 
-    /* Prose styling for blog content */
-    .prose {
-        @apply text-foreground;
+    /* Glass background for improved text readability */
+    .glass-background {
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .prose p {
-        @apply mb-4 leading-7;
+    /* Readability helpers */
+    .readable-text-block {
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 4px 16px rgba(0, 0, 0, 0.6);
     }
 
-    .prose a {
-        @apply font-medium text-primary underline underline-offset-4 hover:text-primary/80;
+    .readable-card {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 
-    .prose strong {
-        @apply font-semibold text-foreground;
+    .mobile-menu-content {
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
     }
 
-    .prose code {
-        @apply rounded bg-muted px-1.5 py-0.5 font-mono text-sm;
+    /* Rainbow animation for welcome text */
+    @keyframes rainbow-flow {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
     }
 
-    .prose pre {
-        @apply overflow-x-auto rounded-lg bg-muted p-4;
+    .rainbow-text {
+        background: linear-gradient(
+            90deg,
+            oklch(var(--rainbow-red)),
+            oklch(var(--rainbow-orange)),
+            oklch(var(--rainbow-yellow)),
+            oklch(var(--rainbow-green)),
+            oklch(var(--rainbow-cyan)),
+            oklch(var(--rainbow-blue)),
+            oklch(var(--rainbow-purple)),
+            oklch(var(--rainbow-pink)),
+            oklch(var(--rainbow-red))
+        );
+        background-size: 400% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: rainbow-flow 8s ease-in-out infinite;
+        filter: drop-shadow(0 0 12px oklch(var(--rainbow-yellow) / 0.6))
+                drop-shadow(0 0 24px oklch(var(--rainbow-cyan) / 0.4))
+                drop-shadow(0 0 36px oklch(var(--rainbow-pink) / 0.3));
     }
 
-    .prose ul, .prose ol {
-        @apply mb-4 ml-6;
+    /* Neon gradient animation for headings */
+    @keyframes neon-flow {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
     }
 
-    .prose li {
-        @apply mb-2;
+    .neon-heading {
+        background: linear-gradient(
+            90deg,
+            oklch(var(--neon-gold)),
+            oklch(var(--neon-green)),
+            oklch(var(--neon-white)),
+            oklch(var(--neon-cyan)),
+            oklch(var(--neon-gold))
+        );
+        background-size: 300% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: neon-flow 6s ease-in-out infinite;
+        filter: drop-shadow(0 0 8px oklch(var(--neon-gold) / 0.5))
+                drop-shadow(0 0 16px oklch(var(--neon-green) / 0.3));
     }
 
-    .prose blockquote {
-        @apply border-l-4 border-primary pl-4 italic text-muted-foreground;
+    .neon-subheading {
+        background: linear-gradient(
+            90deg,
+            oklch(var(--neon-cyan)),
+            oklch(var(--neon-white)),
+            oklch(var(--neon-gold)),
+            oklch(var(--neon-cyan))
+        );
+        background-size: 300% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: neon-flow 5s ease-in-out infinite;
+        filter: drop-shadow(0 0 6px oklch(var(--neon-cyan) / 0.4));
     }
 
-    /* Link styles */
-    a {
-        @apply transition-colors;
+    .neon-text {
+        background: linear-gradient(
+            90deg,
+            oklch(var(--neon-white)),
+            oklch(var(--neon-gold)),
+            oklch(var(--neon-white))
+        );
+        background-size: 200% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: neon-flow 4s ease-in-out infinite;
     }
 
-    /* Focus styles for accessibility */
-    *:focus-visible {
-        @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+    .neon-menu-item {
+        background: linear-gradient(
+            90deg,
+            oklch(var(--neon-gold)),
+            oklch(var(--neon-green)),
+            oklch(var(--neon-cyan)),
+            oklch(var(--neon-gold))
+        );
+        background-size: 300% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: neon-flow 5s ease-in-out infinite;
+        filter: drop-shadow(0 0 4px oklch(var(--neon-gold) / 0.3));
+    }
+
+    /* Neon button styles */
+    .neon-button {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .neon-button-primary {
+        background: linear-gradient(
+            135deg,
+            oklch(var(--neon-gold)),
+            oklch(var(--neon-green))
+        );
+        color: oklch(0.1 0 0);
+        font-weight: 600;
+        border: none;
+    }
+
+    .neon-button-primary:hover,
+    .neon-button-primary:focus {
+        box-shadow: 0 0 20px oklch(var(--neon-gold) / 0.6),
+                    0 0 40px oklch(var(--neon-green) / 0.4),
+                    inset 0 0 20px oklch(var(--neon-white) / 0.2);
+        transform: translateY(-2px);
+    }
+
+    .neon-button-secondary {
+        background: rgba(0, 0, 0, 0.5);
+        border: 2px solid oklch(var(--neon-cyan));
+        color: oklch(var(--neon-white));
+        font-weight: 600;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    .neon-button-secondary:hover,
+    .neon-button-secondary:focus {
+        background: rgba(0, 0, 0, 0.7);
+        border-color: oklch(var(--neon-gold));
+        box-shadow: 0 0 20px oklch(var(--neon-cyan) / 0.6),
+                    0 0 40px oklch(var(--neon-gold) / 0.4);
+        transform: translateY(-2px);
+    }
+
+    /* Disable animations for users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        .neon-heading,
+        .neon-subheading,
+        .neon-text,
+        .neon-menu-item,
+        .rainbow-text {
+            animation: none;
+            background-position: 0% 50%;
+        }
+        
+        .neon-button-primary:hover,
+        .neon-button-primary:focus,
+        .neon-button-secondary:hover,
+        .neon-button-secondary:focus {
+            transform: none;
+        }
     }
 }

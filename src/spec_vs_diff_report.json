@@ -1,51 +1,52 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-16T07:57:14.590Z",
-  "summary": "Branding updates to “MHS Habibur Blog” are implemented in header, footer, and siteConfig. Sitemap includes 5 blog post URLs for new slugs. However, the diff summary truncates `blogSampleFallback.ts`, so it’s not fully verifiable from provided evidence that `samplePosts` contains exactly 5 qualifying posts with required fields/content. Several additional unrequested changes appear (theme/style overhaul, Tailwind config, social icons/links, extra docs/assets changes).",
+  "generatedAt": "2026-02-16T12:55:23.802Z",
+  "summary": "A WelcomeSection component was added and placed above the Hero section on the Home page, but the Bengali text is not rendered verbatim as requested. Several additional UI/styling changes (mobile menu behavior and global readability/neon/rainbow styling) were implemented without being explicitly required by the only listed requirement (REQ-31).",
   "missing_requirements": [
     {
-      "id": "REQ-12",
-      "requirement": "Update `frontend/src/lib/blogSampleFallback.ts` so `samplePosts` contains exactly 5 professional posts about Online Income and/or Digital Marketing, each with non-empty title/slug/excerpt/content and valid published timestamp.",
-      "reason": "The `blogSampleFallback.ts` content is truncated in the diff summary, showing only the first post and part of the second; this is insufficient evidence to confirm there are exactly 5 posts, that all 5 match the required topics, and that each includes the required non-empty fields and readable multi-paragraph content.",
+      "id": "REQ-31",
+      "requirement": "Add a new large Welcome section at the very top of the Home page (route \"/\"), above the existing Hero section, that renders exactly this Bengali text (verbatim) as the first content on the page: \"আসসালামু আলাইকুম। আমি Md. Habibur Rahman, এই ওয়েবসাইটটি আমার। এখানে অতি শীঘ্রই আমি বিভিন্ন ধরনের ইনকাম সাইট এড করবো এবং সম্পূর্ণ ফ্রিতে কাজ শিখিয়ে দিবো। বি:দ্র: অনেক সহজ কাজ এড করবো, যেটা আপনি ১০-৩০ মিনিটের মধ্যে শিখে যাবেন। কোনো প্রয়োজনে আমার ফেসবুক আইডিতে যোগাযোগ করতে পারেন।\"",
+      "reason": "The WelcomeSection text differs from the requested verbatim string (e.g., different Bengali characters/orthography such as \"ওয়েবসাইটটি\" vs \"ওয়েবসাইটটি\", \"শিখিয়ে\" vs \"শিখিয়ে\", \"প্রয়োজনে\" vs \"প্রয়োজনে\"), so it is not exactly the required text.",
       "evidence": [
-        "frontend/src/lib/blogSampleFallback.ts (truncated)"
+        "frontend/src/components/home/WelcomeSection.tsx"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Theme/visual styling changes beyond title/branding and new post content (global CSS and Tailwind theme updates).",
-      "reason": "BuildRequest non-goal disallows changing site theme/colors/layout beyond what is required for title/branding and new post content; modifying global styles and Tailwind theme is not requested by REQ-11/12/13.",
+      "description": "Mobile menu overlay/panel behavior changes (scroll locking, Escape-to-close, new markup/styling, help links section).",
+      "reason": "Not requested in the explicit requirements list (only REQ-31 is specified).",
+      "evidence": [
+        "frontend/src/components/layout/MobileMenu.tsx",
+        "frontend/src/components/layout/SiteHeader.tsx"
+      ]
+    },
+    {
+      "description": "Global readability/styling changes: dark overlay, glass background utility, neon/rainbow theme tokens and related Tailwind extensions.",
+      "reason": "Not requested in the explicit requirements list (only REQ-31 is specified).",
       "evidence": [
         "frontend/src/index.css",
         "frontend/tailwind.config.js"
       ]
     },
     {
-      "description": "Footer expansion with social media icon section and additional “About/Quick Links/Connect” content.",
-      "reason": "Not requested by REQ-11/12/13; REQ-11 only requires copyright branding text update.",
+      "description": "Additional Home page styling/content adjustments beyond inserting the welcome text (e.g., widespread use of glass-background/neon heading/button classes).",
+      "reason": "Not requested in the explicit requirements list (only REQ-31 is specified).",
       "evidence": [
-        "frontend/src/components/layout/SiteFooter.tsx"
-      ]
-    },
-    {
-      "description": "Added/updated sitemap maintenance documentation.",
-      "reason": "Not requested by REQ-11/12/13; REQ-13 only requires updating `frontend/public/sitemap.xml`.",
-      "evidence": [
-        "frontend/scripts/README-sitemap.md"
+        "frontend/src/pages/HomePage.tsx"
       ]
     }
   ],
-  "confidence": 0.66,
+  "confidence": 0.78,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/public/sitemap.xml",
-    "frontend/src/components/layout/SiteFooter.tsx",
+    "frontend/src/components/home/WelcomeSection.tsx",
+    "frontend/src/components/layout/MobileMenu.tsx",
     "frontend/src/components/layout/SiteHeader.tsx",
-    "frontend/src/lib/blogSampleFallback.ts",
-    "frontend/src/lib/siteConfig.ts",
+    "frontend/src/index.css",
     "frontend/src/pages/HomePage.tsx",
+    "frontend/tailwind.config.js",
     "project_state.json"
   ]
 }

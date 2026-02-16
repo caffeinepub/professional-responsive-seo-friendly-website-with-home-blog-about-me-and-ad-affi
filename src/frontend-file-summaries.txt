@@ -1,0 +1,23 @@
+{
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup defining routes for Home, Blog list, Blog post detail, and About pages, all wrapped in the SiteLayout component.",
+  "frontend/src/components/layout/SiteLayout.tsx": "Root layout component that wraps all pages with a consistent header, main content area, and footer structure.",
+  "frontend/src/components/layout/SiteHeader.tsx": "Responsive site header with logo and navigation, now displaying \"MHS Habibur Blog\" as the site name.",
+  "frontend/src/components/layout/SiteFooter.tsx": "Professional footer with about section, quick links, social media icons, and copyright notice showing \"© {year} MHS Habibur Blog. All rights reserved.\"",
+  "frontend/src/components/home/HeroSection.tsx": "Hero section component for the home page featuring the hero banner image, headline, description, and call-to-action buttons.",
+  "frontend/src/components/monetization/AdPlaceholder.tsx": "Reusable advertisement placeholder component supporting banner, sidebar, and in-content variants with dashed borders and labels.",
+  "frontend/src/components/monetization/AffiliateLinkPlaceholder.tsx": "Reusable affiliate link placeholder component styled as a card with icon, title, description, and call-to-action button.",
+  "frontend/src/components/blog/BlogPostCard.tsx": "Blog post summary card component displaying title, published date, excerpt, and read more link using proper TanStack Router Link with params for type safety.",
+  "frontend/src/components/seo/Seo.tsx": "SEO helper component that dynamically sets document title, meta description, Open Graph tags, Twitter Card tags, and canonical URL for each page.",
+  "frontend/src/pages/HomePage.tsx": "Home page with hero section, feature cards, and SEO metadata updated to reflect \"MHS Habibur Blog\" branding and focus on online income and digital marketing.",
+  "frontend/src/pages/BlogListPage.tsx": "Blog list page displaying all blog posts in a grid layout with SEO metadata, loading states, error handling, and ad placeholder.",
+  "frontend/src/pages/BlogPostPage.tsx": "Individual blog post detail page showing full post content with title, date, excerpt, ad placements, affiliate link placeholder, and back navigation.",
+  "frontend/src/pages/AboutPage.tsx": "About Me page with biography section, expertise/interests cards, contact information, social media links, and ad placements.",
+  "frontend/src/hooks/useBlogPosts.ts": "React Query hooks for fetching blog posts from the backend with fallback to sample data, including useGetPosts, useGetPost, and useSearchPosts with correct import path.",
+  "frontend/src/lib/blogSampleFallback.ts": "Contains exactly 5 professional blog posts about Online Income and Digital Marketing with catchy titles, comprehensive content, unique slugs, excerpts, and realistic timestamps.",
+  "frontend/src/lib/siteConfig.ts": "Site-wide configuration updated with \"MHS Habibur Blog\" name and description focused on online income and digital marketing.",
+  "frontend/src/index.css": "Global styles with warm, content-focused OKLCH color palette (avoiding blue/purple primaries), typography improvements, prose styling, and accessibility focus states.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending the theme with OKLCH color system, custom font stack, border radius, shadows, and animation keyframes.",
+  "frontend/public/robots.txt": "Robots.txt file allowing all search engines to crawl and index the site with sitemap reference.",
+  "frontend/public/sitemap.xml": "XML sitemap updated with URLs for all 5 new blog posts about online income and digital marketing, removing old sample post URLs.",
+  "frontend/scripts/README-sitemap.md": "Documentation for maintaining the sitemap, updated with the 5 new blog post slugs and current sitemap structure."
+}

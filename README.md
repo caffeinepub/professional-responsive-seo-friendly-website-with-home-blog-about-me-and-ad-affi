@@ -1,2 +1,3 @@
-# professional-responsive-seo-friendly-website-with-home-blog-about-me-and-ad-affi
-Exported from Caffeine project: Professional responsive SEO-friendly website with Home, Blog, About Me, and ad/affiliate placeholders
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

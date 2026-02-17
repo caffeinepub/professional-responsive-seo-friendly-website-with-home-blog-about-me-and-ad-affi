@@ -1,35 +1,53 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-17T15:56:25.481Z",
+  "generatedAt": "2026-02-17T16:06:11.095Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
-    "implemented": 2,
+    "total": 3,
+    "implemented": 3,
     "items": [
       {
-        "id": "REQ-63",
-        "summary": "Change the Home page Hero section \"Join My Team\" button so it links to the Facebook profile URL https://www.facebook.com/share/1CPKURCrY8/ instead of routing to an internal Task page or a Google Form.",
+        "id": "REQ-65",
+        "summary": "Update the site-wide SEO configuration so the global Meta Title is exactly \"H★S Online Earn Platform | Md. Habibur Rahman\" and the global Meta Description is exactly \"Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.\".",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/home/HeroSection.tsx"
+          "frontend/src/lib/siteConfig.ts",
+          "frontend/src/pages/HomePage.tsx",
+          "frontend/index.html"
         ],
         "matchedFiles": [
-          "frontend/src/components/home/HeroSection.tsx"
+          "frontend/src/lib/siteConfig.ts",
+          "frontend/src/pages/HomePage.tsx",
+          "frontend/index.html"
         ]
       },
       {
-        "id": "REQ-64",
-        "summary": "Change the Mobile Menu \"Join Team\" link so it navigates to https://www.facebook.com/share/1CPKURCrY8/ (the same destination as the Home page \"Join My Team\" CTA).",
+        "id": "REQ-66",
+        "summary": "Ensure the site is configured to allow search engines to index the site (no \"noindex\" directives), including adding an explicit robots meta tag if needed.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/layout/MobileMenu.tsx"
+          "frontend/index.html",
+          "frontend/src/components/seo/Seo.tsx",
+          "frontend/public/robots.txt"
         ],
         "matchedFiles": [
-          "frontend/src/components/layout/MobileMenu.tsx"
+          "frontend/index.html",
+          "frontend/src/components/seo/Seo.tsx"
+        ]
+      },
+      {
+        "id": "REQ-67",
+        "summary": "Replace any visible header brand text \"MHS Habibur Blog\" with the previously uploaded logo asset, ensuring the logo is the primary visible brand element in the header on both desktop and mobile.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/layout/SiteHeader.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/layout/SiteHeader.tsx"
         ]
       }
     ]
@@ -39,8 +57,11 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/home/HeroSection.tsx",
-    "frontend/src/components/layout/MobileMenu.tsx",
+    "frontend/index.html",
+    "frontend/src/components/layout/SiteHeader.tsx",
+    "frontend/src/components/seo/Seo.tsx",
+    "frontend/src/lib/siteConfig.ts",
+    "frontend/src/pages/HomePage.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

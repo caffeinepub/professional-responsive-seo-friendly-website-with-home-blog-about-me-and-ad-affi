@@ -1,24 +1,26 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-17T15:56:25.477Z",
-  "summary": "REQ-63 appears implemented by changing the Home Hero CTA to an external Facebook URL while keeping the label. REQ-64 appears implemented by changing the Mobile Menu \"Join Team\" item to an external anchor to the same Facebook URL, though the relevant portion is truncated so full verification of unchanged structure/label is limited. Additionally, documentation/state summary files were updated with unrelated claims beyond the requested navigation-only change.",
+  "generatedAt": "2026-02-17T16:06:11.088Z",
+  "summary": "REQ-65 and REQ-67 appear implemented: global SEO title/description updated in siteConfig, HomePage uses global defaults, and SiteHeader shows the uploaded logo with SR-only brand text. Indexing support (REQ-66) is implemented via explicit robots meta tags in both Seo.tsx (runtime) and index.html. However, the header diff also introduces/retains a full navigation menu including a 'Work Tasks' dropdown, which is not requested and may violate the 'no new navigation items beyond what is required' non-goal.",
   "missing_requirements": [],
   "hallucinated_features": [
     {
-      "description": "Documentation/state updates describing broader site changes (e.g., router setup, new task pages, SEO/robots updates, removing duplicate sections) beyond the requested CTA destination change.",
-      "reason": "BuildRequest constrains this change to frontend navigation only and explicitly says not to change other navigation destinations or SEO/robots; the diff includes updates to summary/state files that claim unrelated changes.",
+      "description": "Header includes/introduces a 'Work Tasks' dropdown menu with links to Task 1/2/3 (additional navigation not required for SEO/header branding).",
+      "reason": "BuildRequest non-goal says not to add new pages or navigation items beyond what is required for SEO/header branding; REQ-67 only asks to replace visible brand text with the uploaded logo.",
       "evidence": [
-        "frontend-file-summaries.txt",
-        "project_state.json"
+        "frontend/src/components/layout/SiteHeader.tsx"
       ]
     }
   ],
   "confidence": 0.72,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/src/components/home/HeroSection.tsx",
-    "frontend/src/components/layout/MobileMenu.tsx",
+    "frontend/index.html",
+    "frontend/src/components/layout/SiteHeader.tsx",
+    "frontend/src/components/seo/Seo.tsx",
+    "frontend/src/lib/siteConfig.ts",
+    "frontend/src/pages/HomePage.tsx",
     "project_state.json"
   ]
 }

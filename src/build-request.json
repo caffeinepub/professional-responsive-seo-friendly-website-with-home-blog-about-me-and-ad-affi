@@ -1,56 +1,89 @@
 {
   "kind": "build_request",
-  "title": "Update 'Join My Team' CTA to link to Facebook profile",
-  "projectName": "MHS Habibur Blog",
+  "title": "Update global SEO meta title/description, ensure indexing enabled, and use uploaded logo in header",
+  "projectName": "H★S Earn Platform",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-63",
-      "text": "Change the Home page Hero section \"Join My Team\" button so it links to the Facebook profile URL https://www.facebook.com/share/1CPKURCrY8/ instead of routing to an internal Task page or a Google Form.",
+      "id": "REQ-65",
+      "text": "Update the site-wide SEO configuration so the global Meta Title is exactly \"H★S Online Earn Platform | Md. Habibur Rahman\" and the global Meta Description is exactly \"Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.\".",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "Please change the 'Join My Team' button link. Instead of a Google Form, link the button to my Facebook Profile.\n\nMy Facebook URL:https://www.facebook.com/share/1CPKURCrY8/"
+          "Set Meta Title to: 'H★S Online Earn Platform | Md. Habibur Rahman'",
+          "Set Meta Description to: 'Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.'"
         ]
       },
       "acceptanceCriteria": [
-        "On the Home page, clicking the Hero section \"Join My Team\" button navigates to https://www.facebook.com/share/1CPKURCrY8/.",
-        "The button label remains \"Join My Team ★\" (no user-facing text changes)."
+        "`frontend/src/lib/siteConfig.ts` is updated so the default SEO title resolves to exactly \"H★S Online Earn Platform | Md. Habibur Rahman\".",
+        "`frontend/src/lib/siteConfig.ts` is updated so the default SEO description resolves to exactly \"Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.\".",
+        "The homepage (route \"/\") uses the global title/description (i.e., it does not render a conflicting per-page title/description that overrides the requested global values)."
       ]
     },
     {
-      "id": "REQ-64",
-      "text": "Change the Mobile Menu \"Join Team\" link so it navigates to https://www.facebook.com/share/1CPKURCrY8/ (the same destination as the Home page \"Join My Team\" CTA).",
+      "id": "REQ-66",
+      "text": "Ensure the site is configured to allow search engines to index the site (no \"noindex\" directives), including adding an explicit robots meta tag if needed.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "Please change the 'Join My Team' button link. Instead of a Google Form, link the button to my Facebook Profile.\n\nMy Facebook URL:https://www.facebook.com/share/1CPKURCrY8/"
+          "Make sure the site is set to 'Allow search engines to index this site'."
         ]
       },
       "acceptanceCriteria": [
-        "In the mobile hamburger menu, clicking \"Join Team\" navigates to https://www.facebook.com/share/1CPKURCrY8/.",
-        "The rest of the mobile menu structure and labels remain unchanged."
+        "`frontend/public/robots.txt` continues to allow crawling (User-agent: * / Allow: /) and references `/sitemap.xml`.",
+        "There is no `meta name=\"robots\" content=\"noindex\"` (or equivalent) being injected by the app at runtime.",
+        "The HTML entry (`frontend/index.html`) includes an explicit robots meta tag that allows indexing (e.g., `index,follow`) OR the build verifies that indexing is allowed without it (no noindex present anywhere)."
+      ]
+    },
+    {
+      "id": "REQ-67",
+      "text": "Replace any visible header brand text \"MHS Habibur Blog\" with the previously uploaded logo asset, ensuring the logo is the primary visible brand element in the header on both desktop and mobile.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "Also, replace the current 'MHS Habibur Blog' text in the header with the logo I uploaded earlier."
+        ]
+      },
+      "acceptanceCriteria": [
+        "`frontend/src/components/layout/SiteHeader.tsx` renders the header brand as an `<img>` using the uploaded logo asset (the existing `/assets/generated/site-logo-header.dim_512x512.png`), not visible brand text.",
+        "The old brand text \"MHS Habibur Blog\" is not visibly displayed in the header UI (it may remain as screen-reader-only text for accessibility).",
+        "The logo has a descriptive English `alt` text aligned with the updated branding (includes \"H★S Online Earn Platform\" and \"Md. Habibur Rahman\") and displays with professional sizing/spacing on mobile and desktop."
       ]
     }
   ],
   "constraints": [
-    "Frontend immutable paths must not be edited: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
-    "Do not add or change backend functionality; this change is frontend navigation only.",
-    "Do not change any other navigation destinations (e.g., Task 1/2/3 links) besides the \"Join My Team\" / \"Join Team\" CTA destinations."
+    "Do not edit any files under `frontend/src/components/ui` (read-only components).",
+    "Do not edit any paths listed under `frontend.immutablePaths` in SYSTEM_CONTEXT.",
+    "Keep the backend architecture as a single Motoko actor; no backend changes are required for this SEO/header update."
   ],
   "nonGoals": [
-    "Do not redesign the Hero section or change button styling.",
-    "Do not add new pages or routes.",
-    "Do not modify SEO metadata, sitemap.xml, or robots.txt for this change."
+    "Do not change blog post content or routes.",
+    "Do not add new pages or navigation items beyond what is required for SEO/header branding.",
+    "Do not introduce any third-party SEO services or external integrations."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [
+      "Use English for any user-facing text in the build request."
+    ],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

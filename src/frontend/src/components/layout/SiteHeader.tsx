@@ -26,10 +26,10 @@ export function SiteHeader() {
           <Link to="/" className="flex items-center">
             <img
               src="/assets/generated/site-logo-header.dim_512x512.png"
-              alt="MHS Habibur Blog - H*S Online earn platform"
+              alt="H★S Online Earn Platform by Md. Habibur Rahman - Online typing and data entry jobs"
               className="h-12 w-auto object-contain sm:h-14"
             />
-            <span className="sr-only">MHS Habibur Blog</span>
+            <span className="sr-only">H★S Online Earn Platform | Md. Habibur Rahman</span>
           </Link>
           
           {/* Desktop Navigation */}

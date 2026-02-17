@@ -47,6 +47,7 @@ export function Seo({
 
     // Basic meta tags
     updateMetaTag('description', description);
+    updateMetaTag('robots', 'index,follow');
 
     // Open Graph tags
     updateMetaTag('og:title', fullTitle, true);

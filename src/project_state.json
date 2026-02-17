@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 37,
+  "projectStateVersion": 39,
   "summary": "Homepage should include an updated Hero section using the uploaded image as its background, with a Bengali headline/sub-headline, a bright \"Join My Team\" button directly below the hero text, and the old yellow text box removed entirely. Other existing navigation/task/footer requirements remain as previously specified.",
   "architectural_notes": [
     "Home page ad region should support embedding third-party ad network code (external async script + container div) in place of a placeholder, while keeping the rest of the layout unchanged.",
@@ -524,6 +524,30 @@
         "REQ-64"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-site-wide-seo-configuration-so-the-global-meta-title-is-exactly-h-s-online-earn-platform-md-habibur-rahman-and-the-global-meta-description-is-exactly-join-h-s-online-earn-platform-for-easy-online-typing-and-data-entry-jobs-start-earning-today-with-free-training-from-md-habibur-rahman",
+      "title": "Update the site-wide SEO configuration so the global Meta Title is exactly \"H★S Online Earn Platform | Md. Habibur Rahman\" and the global Meta Description is exactly \"Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.\".",
+      "reqIds": [
+        "REQ-65"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-site-is-configured-to-allow-search-engines-to-index-the-site-no-noindex-directives-including-adding-an-explicit-robots-meta-tag-if-needed",
+      "title": "Ensure the site is configured to allow search engines to index the site (no \"noindex\" directives), including adding an explicit robots meta tag if needed.",
+      "reqIds": [
+        "REQ-66"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-any-visible-header-brand-text-mhs-habibur-blog-with-the-previously-uploaded-logo-asset-ensuring-the-logo-is-the-primary-visible-brand-element-in-the-header-on-both-desktop-and-mobile",
+      "title": "Replace any visible header brand text \"MHS Habibur Blog\" with the previously uploaded logo asset, ensuring the logo is the primary visible brand element in the header on both desktop and mobile.",
+      "reqIds": [
+        "REQ-67"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -718,6 +742,12 @@
     {
       "id": "AR-40",
       "summary": "Change the \"Join My Team\" button link destination from the current Google Form to the user’s Facebook profile URL: https://www.facebook.com/share/1CPKURCrY8/",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "Update SEO settings: set global meta title to 'H★S Online Earn Platform | Md. Habibur Rahman', meta description to the provided text, and ensure search engines are allowed to index the site",
       "reqIds": [],
       "status": "pending"
     }

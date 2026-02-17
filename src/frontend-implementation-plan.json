@@ -1,35 +1,73 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Update \"Join My Team\" CTA destinations to Facebook profile URL",
+  "title": "Global SEO defaults, indexing configuration, and header logo branding update",
   "requirements": [
     {
-      "id": "REQ-63",
-      "summary": "Update Home page Hero section \"Join My Team ★\" CTA to navigate to the provided Facebook profile URL (external link) without changing its label or styling.",
+      "id": "REQ-65",
+      "summary": "Set global SEO meta title/description to the requested exact values and ensure the homepage does not override them.",
       "acceptanceCriteria": [
-        "On the Home page, clicking the Hero section \"Join My Team\" button navigates to https://www.facebook.com/share/1CPKURCrY8/.",
-        "The button label remains \"Join My Team ★\" (no user-facing text changes)."
+        "`frontend/src/lib/siteConfig.ts` is updated so the default SEO title resolves to exactly \"H★S Online Earn Platform | Md. Habibur Rahman\".",
+        "`frontend/src/lib/siteConfig.ts` is updated so the default SEO description resolves to exactly \"Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.\".",
+        "The homepage (route \"/\") uses the global title/description (i.e., it does not render a conflicting per-page title/description that overrides the requested global values)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/home/HeroSection.tsx",
+          "path": "frontend/src/lib/siteConfig.ts",
           "operation": "modify",
-          "description": "Replace the current internal router Link destination (currently /tasks/task-1) with an external navigation to https://www.facebook.com/share/1CPKURCrY8/ while preserving the existing button label (\"Join My Team ★\") and all existing classes/styling. Ensure only this CTA destination changes and no other task links are affected."
+          "description": "Update the exported siteConfig so `name` (global SEO title base) is exactly \"H★S Online Earn Platform | Md. Habibur Rahman\" and `description` is exactly \"Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.\"."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Update the HomePage `<Seo />` usage to rely on global defaults (remove per-page title/description overrides) while keeping `path=\"/\"` so the homepage uses the requested global Meta Title/Description."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Align the initial HTML `<title>` with the new global Meta Title (\"H★S Online Earn Platform | Md. Habibur Rahman\") so first paint and crawlers see consistent global branding before the React SEO updates run."
         }
       ]
     },
     {
-      "id": "REQ-64",
-      "summary": "Update the Mobile Menu \"Join Team\" item to navigate to the provided Facebook profile URL while keeping the rest of the mobile menu structure/labels unchanged.",
+      "id": "REQ-66",
+      "summary": "Ensure search engine indexing is allowed (no noindex) and add an explicit robots meta tag allowing indexing.",
       "acceptanceCriteria": [
-        "In the mobile hamburger menu, clicking \"Join Team\" navigates to https://www.facebook.com/share/1CPKURCrY8/.",
-        "The rest of the mobile menu structure and labels remain unchanged."
+        "`frontend/public/robots.txt` continues to allow crawling (User-agent: * / Allow: /) and references `/sitemap.xml`.",
+        "There is no `meta name=\"robots\" content=\"noindex\"` (or equivalent) being injected by the app at runtime.",
+        "The HTML entry (`frontend/index.html`) includes an explicit robots meta tag that allows indexing (e.g., `index,follow`) OR the build verifies that indexing is allowed without it (no noindex present anywhere)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/layout/MobileMenu.tsx",
+          "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Change the \"Join Team\" menu item from an internal router Link (currently /tasks/task-1) to an external link that navigates to https://www.facebook.com/share/1CPKURCrY8/. Keep existing onClose behavior, styling classes, and all other menu items/labels unchanged; do not alter any other navigation destinations (Task 1/2/3, etc.)."
+          "description": "Add an explicit `<meta name=\"robots\" ...>` directive that allows indexing (e.g., `index,follow`) to ensure the app is configured to be indexable and does not ship with any noindex directives."
+        },
+        {
+          "path": "frontend/src/components/seo/Seo.tsx",
+          "operation": "modify",
+          "description": "Ensure the runtime SEO layer never injects a `noindex` directive by explicitly setting/updating the robots meta tag to allow indexing (e.g., `index,follow`) alongside other meta tags."
+        },
+        {
+          "path": "frontend/public/robots.txt",
+          "operation": "modify",
+          "description": "Verify robots.txt continues to allow crawling and references `/sitemap.xml`; make any minimal adjustments needed to keep it compliant with the acceptance criteria."
+        }
+      ]
+    },
+    {
+      "id": "REQ-67",
+      "summary": "Replace visible header brand text with the uploaded logo as the primary header brand on desktop and mobile.",
+      "acceptanceCriteria": [
+        "`frontend/src/components/layout/SiteHeader.tsx` renders the header brand as an `<img>` using the uploaded logo asset (the existing `/assets/generated/site-logo-header.dim_512x512.png`), not visible brand text.",
+        "The old brand text \"MHS Habibur Blog\" is not visibly displayed in the header UI (it may remain as screen-reader-only text for accessibility).",
+        "The logo has a descriptive English `alt` text aligned with the updated branding (includes \"H★S Online Earn Platform\" and \"Md. Habibur Rahman\") and displays with professional sizing/spacing on mobile and desktop."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/layout/SiteHeader.tsx",
+          "operation": "modify",
+          "description": "Update the header branding to use the existing logo image at `frontend/public/assets/generated/site-logo-header.dim_512x512.png` as the primary visible brand element; remove any visible \"MHS Habibur Blog\" text (keep SR-only text if desired) and update the image `alt` text to a descriptive English string including \"H★S Online Earn Platform\" and \"Md. Habibur Rahman\"."
         }
       ]
     }

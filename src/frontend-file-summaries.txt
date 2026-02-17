@@ -1,20 +1,20 @@
 {
   "frontend/src/App.tsx": "Main application component with TanStack Router setup defining routes for Home, Blog list, Blog post detail, About, and three new Task pages (Task 1, Task 2, Task 3), all wrapped in the SiteLayout component.",
   "frontend/src/components/layout/SiteLayout.tsx": "Root layout component with fixed parallax background layer, dark overlay for readability, and content wrapper containing header, main content area, and footer with proper z-index layering.",
-  "frontend/src/components/layout/SiteHeader.tsx": "Responsive site header with the new H*S logo image replacing the text title, desktop navigation links including a \"Work Tasks\" dropdown menu (with Task 1, Task 2, Task 3 sub-links), mobile hamburger menu button, and proper accessibility with sr-only text and descriptive alt attribute.",
+  "frontend/src/components/layout/SiteHeader.tsx": "Responsive site header with logo image and updated alt text describing \"H★S Online Earn Platform by Md. Habibur Rahman - Online typing and data entry jobs\" and screen-reader-only text matching the new branding.",
   "frontend/src/components/layout/SiteFooter.tsx": "Professional footer using TanStack Router Links for internal navigation (Home, Blog, About Me), shared help links from helpLinks module, maintaining four sections with enhanced backdrop blur and translucent background.",
   "frontend/src/components/home/HeroSection.tsx": "Hero section with background image, English headline \"Welcome to H★S Online Earn Platform!\", Bengali sub-headline, and \"Join My Team ★\" CTA button now linking to the Facebook profile URL (https://www.facebook.com/share/1CPKURCrY8/) as an external link.",
   "frontend/src/components/monetization/AdPlaceholder.tsx": "Reusable advertisement placeholder component supporting banner, sidebar, and in-content variants with dashed borders and labels.",
   "frontend/src/components/monetization/AffiliateLinkPlaceholder.tsx": "Reusable affiliate link placeholder component styled as a card with icon, title, description, and call-to-action button.",
   "frontend/src/components/blog/BlogPostCard.tsx": "Blog post card component with neon subheading styling and readable card background for improved contrast.",
-  "frontend/src/components/seo/Seo.tsx": "SEO helper component that dynamically sets document title, meta description, Open Graph tags, Twitter Card tags, and canonical URL for each page.",
-  "frontend/src/pages/HomePage.tsx": "Home page displaying the updated HeroSection and WelcomeSection components with SEO metadata, removing the duplicate \"Join My Team\" card section.",
+  "frontend/src/components/seo/Seo.tsx": "SEO helper component now explicitly sets robots meta tag to \"index,follow\" to ensure search engine indexing is allowed.",
+  "frontend/src/pages/HomePage.tsx": "Home page component using global SEO defaults (no title/description overrides) to display the requested meta title and description.",
   "frontend/src/pages/BlogListPage.tsx": "Blog list page with neon animated heading, readable text blocks, and consistent readability treatment for all content.",
   "frontend/src/pages/BlogPostPage.tsx": "Blog post detail page with neon heading for title, readable text blocks and cards for improved contrast over background image.",
   "frontend/src/pages/AboutPage.tsx": "About page with neon headings for sections, readable cards for biography and contact information with improved text visibility.",
   "frontend/src/hooks/useBlogPosts.ts": "React Query hooks for fetching blog posts from the backend with fallback to sample data, including useGetPosts, useGetPost, and useSearchPosts with correct import path.",
   "frontend/src/lib/blogSampleFallback.ts": "Contains exactly 5 professional blog posts about Online Income and Digital Marketing with catchy titles, comprehensive content, unique slugs, excerpts, and realistic timestamps.",
-  "frontend/src/lib/siteConfig.ts": "Site-wide configuration updated with \"MHS Habibur Blog\" name and description focused on online income and digital marketing.",
+  "frontend/src/lib/siteConfig.ts": "Site-wide configuration updated with new SEO meta title \"H★S Online Earn Platform | Md. Habibur Rahman\" and meta description about online typing and data entry jobs with free training.",
   "frontend/src/index.css": "Global styles with OKLCH color system, neon animations, glass-background utility, and new Bengali text styling (.bengali-text) with appropriate font-family stack and line-height for improved readability of Bengali script.",
   "frontend/tailwind.config.js": "Tailwind configuration with extended neon and rainbow color tokens, neon-flow and rainbow-flow animation keyframes for gradient effects.",
   "frontend/public/robots.txt": "Robots.txt file allowing all search engines to crawl and index the site with sitemap reference.",
@@ -32,5 +32,6 @@
   "frontend/src/pages/Task1Page.tsx": "Task 1 page component with heading, SEO metadata, \"How to Complete This Task\" instructions section, TaskInteractionCard configured with the first ShrinkMe task URL, and a \"Back to Home\" button at the bottom.",
   "frontend/src/pages/Task2Page.tsx": "Task 2 page component with heading, SEO metadata, \"How to Complete This Task\" instructions section, TaskInteractionCard configured with the second ShrinkMe task URL, and a \"Back to Home\" button at the bottom.",
   "frontend/src/pages/Task3Page.tsx": "Task 3 page component with heading, SEO metadata, \"How to Complete This Task\" instructions section, TaskInteractionCard configured with the third ShrinkMe task URL, and a \"Back to Home\" button at the bottom.",
-  "frontend/src/components/tasks/TaskHowToCompleteSection.tsx": "Reusable task instruction component displaying a \"How to Complete This Task\" heading with a 4-step numbered bullet list styled in cyan color for consistent task page guidance."
+  "frontend/src/components/tasks/TaskHowToCompleteSection.tsx": "Reusable task instruction component displaying a \"How to Complete This Task\" heading with a 4-step numbered bullet list styled in cyan color for consistent task page guidance.",
+  "frontend/index.html": "HTML entry point updated with new meta title, description, and explicit robots meta tag allowing indexing (index,follow)."
 }

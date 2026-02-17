@@ -2,10 +2,12 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-change-the-home-page-hero-section-join-my-team-button-so-it-links-to-the-facebook-profile-url-https-www-facebook-com-share-1cpkurcry8-instead-of-routing-to-an-internal-task-page-or-a-google-form",
-      "featureTitle": "Change the Home page Hero section \"Join My Team\" button so it links to the Facebook profile URL https://www.facebook.com/share/1CPKURCrY8/ instead of routing to an internal Task page or a Google Form.",
+      "featureId": "feature-update-the-site-wide-seo-configuration-so-the-global-meta-title-is-exactly-h-s-online-earn-platform-md-habibur-rahman-and-the-global-meta-description-is-exactly-join-h-s-online-earn-platform-for-easy-online-typing-and-data-entry-jobs-start-earning-today-with-free-training-from-md-habibur-rahman",
+      "featureTitle": "Update the site-wide SEO configuration so the global Meta Title is exactly \"H★S Online Earn Platform | Md. Habibur Rahman\" and the global Meta Description is exactly \"Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.\".",
       "files": [
-        "frontend/src/components/home/HeroSection.tsx"
+        "frontend/index.html",
+        "frontend/src/lib/siteConfig.ts",
+        "frontend/src/pages/HomePage.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -15,15 +17,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-63"
+        "REQ-65"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-change-the-mobile-menu-join-team-link-so-it-navigates-to-https-www-facebook-com-share-1cpkurcry8-the-same-destination-as-the-home-page-join-my-team-cta",
-      "featureTitle": "Change the Mobile Menu \"Join Team\" link so it navigates to https://www.facebook.com/share/1CPKURCrY8/ (the same destination as the Home page \"Join My Team\" CTA).",
+      "featureId": "feature-ensure-the-site-is-configured-to-allow-search-engines-to-index-the-site-no-noindex-directives-including-adding-an-explicit-robots-meta-tag-if-needed",
+      "featureTitle": "Ensure the site is configured to allow search engines to index the site (no \"noindex\" directives), including adding an explicit robots meta tag if needed.",
       "files": [
-        "frontend/src/components/layout/MobileMenu.tsx"
+        "frontend/index.html",
+        "frontend/src/components/seo/Seo.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -33,7 +36,25 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-64"
+        "REQ-66"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-replace-any-visible-header-brand-text-mhs-habibur-blog-with-the-previously-uploaded-logo-asset-ensuring-the-logo-is-the-primary-visible-brand-element-in-the-header-on-both-desktop-and-mobile",
+      "featureTitle": "Replace any visible header brand text \"MHS Habibur Blog\" with the previously uploaded logo asset, ensuring the logo is the primary visible brand element in the header on both desktop and mobile.",
+      "files": [
+        "frontend/src/components/layout/SiteHeader.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-67"
       ],
       "confidence": "high"
     }

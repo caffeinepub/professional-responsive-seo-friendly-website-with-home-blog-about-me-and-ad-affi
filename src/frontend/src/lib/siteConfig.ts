@@ -3,9 +3,9 @@
  * Update these values to match your site's information.
  */
 export const siteConfig = {
-  name: 'MHS Habibur Blog',
+  name: 'H★S Online Earn Platform | Md. Habibur Rahman',
   description:
-    'A professional blog sharing insights on online income strategies, digital marketing tactics, and expertise to help you succeed in the digital economy.',
+    'Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.',
   url: typeof window !== 'undefined' ? window.location.origin : 'https://myblog.com',
   defaultImage: '/assets/generated/hero-banner.dim_1600x600.png',
 };

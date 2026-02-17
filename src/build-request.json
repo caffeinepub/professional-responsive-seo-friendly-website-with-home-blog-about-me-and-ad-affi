@@ -1,28 +1,52 @@
 {
   "kind": "build_request",
-  "title": "Add Bengali welcome section, fix mobile header menu, and improve text readability over background",
-  "priority": "high",
+  "title": "Update Home hero section welcome message for team members",
+  "projectName": "MHS Habibur Blog",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-31",
-      "text": "Add a new large Welcome section at the very top of the Home page (route \"/\"), above the existing Hero section, that renders exactly this Bengali text (verbatim) as the first content on the page: \"আসসালামু আলাইকুম। আমি Md. Habibur Rahman, এই ওয়েবসাইটটি আমার। এখানে অতি শীঘ্রই আমি বিভিন্ন ধরনের ইনকাম সাইট এড করবো এবং সম্পূর্ণ ফ্রিতে কাজ শিখিয়ে দিবো। বি:দ্র: অনেক সহজ কাজ এড করবো, যেটা আপনি ১০-৩০ মিনিটের মধ্যে শিখে যাবেন। কোনো প্রয়োজনে আমার ফেসবুক আইডিতে যোগাযোগ করতে পারেন।\"",
+      "id": "REQ-44",
+      "text": "Update the Home page hero section copy in `frontend/src/components/home/HeroSection.tsx` by replacing the current heading and description text with the provided professional team-member welcome message, and ensure the text is styled with a clean, modern font and uses white or light-yellow coloring to remain clearly visible against the dark background while maintaining a professional agency landing-page look.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-1"
+          "msg-7",
+          "msg-8",
+          "msg-9"
         ],
         "quotes": [
-          "Add Welcome Message: Add a large, colorful section at the top with this Bengali text: 'আসসালামু আলাইকুম...'] },",
-          "acceptanceCriteria=["
+          "Please update the main hero section of my blog 'MHS Habibur Blog'. Replace the current text with a professional welcome message for my team members. The message should state: 'Assalamu Alaikum, I am Md. Habibur Rahman. I amworking on professional typing projects in international marketplaces and building a skilled working team here. You can join my team, learn simple typing tasks in 10-15 minutes, and start earning with us.' Use a clean, modern font. The text should be white or light yellow to be clearly visible against the dark background. Make it look like a professional agency landing page.",
+          "Yes, proceed"
         ]
       },
-      "acceptanceCriteria": []
+      "acceptanceCriteria": [
+        "`frontend/src/components/home/HeroSection.tsx` no longer displays the old heading (“Welcome to My Blog”) or the old description paragraph.",
+        "The hero section displays the exact message text (verbatim, including punctuation and the \"10-15 minutes\" range): \"Assalamu Alaikum, I am Md. Habibur Rahman. I am working on professional typing projects in international marketplaces and building a skilled working team here. You can join my team, learn simple typing tasks in 10-15 minutes, and start earning with us.\"",
+        "The hero message text is rendered in a clean, modern font style and appears in white or light-yellow (or a white-to-light-yellow treatment) with sufficient contrast against the existing dark/overlay hero background.",
+        "The updated hero section looks consistent with the site’s existing professional/neon theme and remains responsive on mobile and desktop without overlapping or truncation."
+      ]
     }
   ],
-  "constraints": [],
-  "nonGoals": [],
+  "constraints": [
+    "Do not edit files in `frontend/src/components/ui` or any paths listed as immutable in SYSTEM_CONTEXT.",
+    "Keep changes scoped to updating the hero section messaging and its styling; do not alter routes, ad components, or other home page sections."
+  ],
+  "nonGoals": [
+    "Do not change the existing Home page section order or remove any existing sections (Welcome, Daily Task, TimeBucks, guide, TranscribeMe, ads, or blog CTA).",
+    "Do not add new authentication, backend endpoints, or new pages as part of this change."
+  ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

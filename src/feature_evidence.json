@@ -2,11 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-a-new-large-welcome-section-at-the-very-top-of-the-home-page-route-above-the-existing-hero-section-that-renders-exactly-this-bengali-text-verbatim-as-the-first-content-on-the-page-md-habibur-rahman",
-      "featureTitle": "Add a new large Welcome section at the very top of the Home page (route \"/\"), above the existing Hero section, that renders exactly this Bengali text (verbatim) as the first content on the page: \"আসসালামু আলাইকুম। আমি Md. Habibur Rahman, এই ওয়েবসাইটটি আমার। এখানে অতি শীঘ্রই আমি বিভিন্ন ধরনের ইনকাম সাইট এড করবো এবং সম্পূর্ণ ফ্রিতে কাজ শিখিয়ে দিবো। বি:দ্র: অনেক সহজ কাজ এড করবো, যেটা আপনি ১০-৩০ মিনিটের মধ্যে শিখে যাবেন। কোনো প্রয়োজনে আমার ফেসবুক আইডিতে যোগাযোগ করতে পারেন।\"",
+      "featureId": "feature-update-the-home-page-hero-section-copy-in-frontend-src-components-home-herosection-tsx-by-replacing-the-current-heading-and-description-text-with-the-provided-professional-team-member-welcome-message-and-ensure-the-text-is-styled-with-a-clean-modern-font-and-uses-white-or-light-yellow-coloring-to-remain-clearly-visible-against-the-dark-background-while-maintaining-a-professional-agency-landing-page-look",
+      "featureTitle": "Update the Home page hero section copy in `frontend/src/components/home/HeroSection.tsx` by replacing the current heading and description text with the provided professional team-member welcome message, and ensure the text is styled with a clean, modern font and uses white or light-yellow coloring to remain clearly visible against the dark background while maintaining a professional agency landing-page look.",
       "files": [
-        "frontend/src/components/home/WelcomeSection.tsx",
-        "frontend/src/pages/HomePage.tsx"
+        "frontend/src/components/home/HeroSection.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -16,7 +15,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-31"
+        "REQ-44"
       ],
       "confidence": "high"
     }

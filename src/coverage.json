@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-16T12:55:23.805Z",
+  "generatedAt": "2026-02-17T14:57:52.646Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,16 +11,14 @@
     "implemented": 1,
     "items": [
       {
-        "id": "REQ-31",
-        "summary": "Add a new large Welcome section at the very top of the Home page (route \"/\"), above the existing Hero section, that renders exactly this Bengali text (verbatim) as the first content on the page: \"আসসালামু আলাইকুম। আমি Md. Habibur Rahman, এই ওয়েবসাইটটি আমার। এখানে অতি শীঘ্রই আমি বিভিন্ন ধরনের ইনকাম সাইট এড করবো এবং সম্পূর্ণ ফ্রিতে কাজ শিখিয়ে দিবো। বি:দ্র: অনেক সহজ কাজ এড করবো, যেটা আপনি ১০-৩০ মিনিটের মধ্যে শিখে যাবেন। কোনো প্রয়োজনে আমার ফেসবুক আইডিতে যোগাযোগ করতে পারেন।\"",
+        "id": "REQ-44",
+        "summary": "Update the Home page hero section copy in `frontend/src/components/home/HeroSection.tsx` by replacing the current heading and description text with the provided professional team-member welcome message, and ensure the text is styled with a clean, modern font and uses white or light-yellow coloring to remain clearly visible against the dark background while maintaining a professional agency landing-page look.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/home/WelcomeSection.tsx",
-          "frontend/src/pages/HomePage.tsx"
+          "frontend/src/components/home/HeroSection.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/home/WelcomeSection.tsx",
-          "frontend/src/pages/HomePage.tsx"
+          "frontend/src/components/home/HeroSection.tsx"
         ]
       }
     ]
@@ -30,12 +28,7 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/home/WelcomeSection.tsx",
-    "frontend/src/components/layout/MobileMenu.tsx",
-    "frontend/src/components/layout/SiteHeader.tsx",
-    "frontend/src/index.css",
-    "frontend/src/pages/HomePage.tsx",
-    "frontend/tailwind.config.js",
+    "frontend/src/components/home/HeroSection.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

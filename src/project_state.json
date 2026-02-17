@@ -1,21 +1,25 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 17,
-  "summary": "Professional, responsive, SEO-friendly website with clean layout, full-screen fixed background image theme (with dark overlay for readability), ad/affiliate placeholders, core pages (Home, Blog, About Me), plus a working mobile hamburger menu and enhanced modern/neon styling for improved readability and visual impact.",
+  "projectStateVersion": 27,
+  "summary": "Professional, responsive, SEO-friendly website with clean layout, full-screen fixed background image theme (with dark overlay for readability), ad/affiliate placeholders, core pages (Home, Blog, About Me), a working mobile hamburger menu and enhanced modern/neon styling, plus a 'Daily Task' section where the 'কাজ শুরু করুন' button opens a randomly selected task link and the task instructions/submission UX supports repeated submissions without page reload, a featured TimeBucks 'Mega Earning Task' section with a button that opens the referral link in a new tab plus a Step-by-Step Guide section below it, and a new TranscribeMe card section placed directly under the TimeBucks Step-by-Step Guide.",
   "architectural_notes": [
     "Home page ad region should support embedding third-party ad network code (external async script + container div) in place of a placeholder, while keeping the rest of the layout unchanged.",
     "Site-wide visual theme should support a full-screen fixed background image (parallax-style) with a dark overlay layer to preserve text contrast/readability; must be responsive across mobile and desktop.",
     "Mobile navigation must include a hamburger menu icon on small screens; on open, it must reveal 'কাজ', 'পেমেন্ট প্রুফ', and 'সাহায্য' items and preserve the existing Help submenu links (Admin 1/Admin 2).",
     "Because the site uses a full-screen background image, all text blocks must maintain sufficient contrast via a subtle dark translucent backing and/or text-shadow; ensure readability on mobile and desktop.",
     "Home page should include a top-of-page Welcome section featuring provided Bengali text, center-aligned in a bold Bengali font, with neon/gradient glow styling and a slow rainbow animation; place the text inside a semi-transparent dark glassmorphism container to maintain readability over the fixed background image.",
-    "Welcome section Bengali text is explicitly provided and must be used verbatim, styled bold + center-aligned with rainbow light animation: 'আসসালামু আলাইকুম। আমি Md. Habibur Rahman, এই ওয়েবসাইটটি আমার। এখানে অতি শীঘ্রই আমি বিভিন্ন ধরনের ইনকাম সাইট এড করবো এবং সম্পূর্ণ ফ্রিতে কাজ শিখিয়ে দিবো। বি:দ্র: অনেক সহজ কাজ এড করবো, যেটা আপনি ১০-৩০ মিনিটের মধ্যে শিখে যাবেন। কোনো প্রয়োজনে আমার ফেসবুক আইডিতে যোগাযোগ করতে পারেন।'"
+    "Welcome section Bengali text is explicitly provided and must be used verbatim, styled bold + center-aligned with rainbow light animation: 'আসসালামু আলাইকুম। আমি Md. Habibur Rahman, এই ওয়েবসাইটটি আমার। এখানে অতি শীঘ্রই আমি বিভিন্ন ধরনের ইনকাম সাইট এড করবো এবং সম্পূর্ণ ফ্রিতে কাজ শিখিয়ে দিবো। বি:দ্র: অনেক সহজ কাজ এড করবো, যেটা আপনি ১০-৩০ মিনিটের মধ্যে শিখে যাবেন। কোনো প্রয়োজনে আমার ফেসবুক আইডিতে যোগাযোগ করতে পারেন।'",
+    "Header brand/title text “MHS Habibur Blog” should render in Bright Gold with a white text-shadow to improve contrast over the background.",
+    "Welcome section black/glass box Bengali text should use a Neon Yellow + White mixed color treatment and apply a glow effect to all text in the box to look illuminated.",
+    "Within the Welcome Bengali text, the substring “Md. Habibur Rahman” should be specially highlighted using a rainbow/gradient light animated effect.",
+    "Mobile hamburger (three-line) menu icon should be white with a visible glow so it’s easy to see on mobile."
   ],
   "known_issues": [
     "Mobile hamburger menu icon is missing on mobile view, preventing access to navigation.",
     "Text is not clearly readable against the background image; insufficient contrast/overlay/text-shadow.",
     "Deployment/build did not complete successfully (deployment error reported)."
   ],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-create-a-responsive-site-layout-with-a-clean-professional-design-including-a-header-navigation-home-blog-about-me-footer-and-consistent-spacing-typography-across-pages",
@@ -256,6 +260,110 @@
         "REQ-31"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-header-brand-title-text-mhs-habibur-blog-to-use-a-bright-gold-color-and-a-clearly-visible-white-text-shadow-so-it-stands-out-over-the-background-on-all-screen-sizes",
+      "title": "Update the header brand title text “MHS Habibur Blog” to use a Bright Gold color and a clearly visible white text shadow so it stands out over the background on all screen sizes.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-welcome-section-text-styling-inside-the-existing-glass-black-box-so-the-bengali-paragraph-uses-a-neon-yellow-white-mixed-look-not-full-rainbow-for-the-entire-paragraph-and-add-a-glow-effect-to-all-text-within-the-box-so-it-looks-illuminated-while-remaining-readable",
+      "title": "Update the Welcome section text styling inside the existing glass/black box so the Bengali paragraph uses a Neon Yellow + White mixed look (not full rainbow for the entire paragraph) and add a glow effect to all text within the box so it looks illuminated while remaining readable.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-welcome-section-text-highlight-only-the-substring-md-habibur-rahman-using-the-existing-rainbow-gradient-light-animation-effect-while-keeping-the-rest-of-the-bengali-paragraph-in-the-neon-yellow-white-styling",
+      "title": "In the Welcome section text, highlight only the substring “Md. Habibur Rahman” using the existing rainbow/gradient light animation effect while keeping the rest of the Bengali paragraph in the Neon Yellow + White styling.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-mobile-hamburger-three-line-menu-icon-white-and-glowing-so-it-is-easily-visible-on-mobile-against-the-site-background-and-header-styling",
+      "title": "Make the mobile hamburger (three-line) menu icon white and glowing so it is easily visible on mobile against the site background and header styling.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-new-text-shadow-glow-styles-as-reusable-css-utilities-classes-in-frontend-src-index-css-or-tailwind-utility-composition-so-the-look-is-colorful-professional-and-consistent-with-the-site-s-existing-neon-theme",
+      "title": "Implement the new text/shadow/glow styles as reusable CSS utilities/classes in `frontend/src/index.css` (or Tailwind utility composition) so the look is colorful, professional, and consistent with the site’s existing neon theme.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-existing-daily-task-section-so-the-button-randomly-selects-exactly-one-url-from-the-provided-shrinkme-link-list-on-every-click-and-then-navigates-to-that-selected-url-preserving-the-current-navigation-behavior-e-g-same-tab-vs-new-tab-unless-the-section-already-defines-it",
+      "title": "Update the existing “Daily Task” section so the “কাজ শুরু করুন” button randomly selects exactly one URL from the provided ShrinkMe link list on every click, and then navigates to that selected URL (preserving the current navigation behavior, e.g., same tab vs new tab, unless the section already defines it).",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-daily-task-section-to-display-the-provided-bengali-instruction-text-exactly-as-given-verbatim-in-the-daily-task-instructions-area",
+      "title": "Update the “Daily Task” section to display the provided Bengali instruction text exactly as given (verbatim), in the Daily Task instructions area.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-daily-task-submission-ux-so-that-clicking-submit-does-not-reload-or-navigate-away-from-the-current-page-and-the-submission-form-remains-visible-usable-immediately-for-the-next-task-anti-spam-rapid-repeat-workflow",
+      "title": "Update the “Daily Task” submission UX so that clicking “Submit” does not reload or navigate away from the current page, and the submission form remains visible/usable immediately for the next task (anti-spam / rapid repeat workflow).",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-new-featured-mega-earning-task-section-card-for-timebucks-on-the-home-page-route-using-exactly-the-user-provided-bengali-title-subtitle-bonus-text-cta-button-label-and-trust-note-text",
+      "title": "Add a new featured \"Mega Earning Task\" section/card for TimeBucks on the Home page (route \"/\"), using exactly the user-provided Bengali title, subtitle, bonus text, CTA button label, and trust note text.",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-step-by-step-guide-section-directly-below-the-timebucks-task-card-on-the-home-page-rendering-the-provided-bengali-guide-content-verbatim-including-the-heading-line-steps-1-5-and-the-final-note-line",
+      "title": "Add a \"Step-by-Step Guide\" section directly below the TimeBucks task card on the Home page, rendering the provided Bengali guide content verbatim (including the heading line, steps 1–5, and the final note line).",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-home-page-section-card-for-transcribeme-using-the-user-provided-title-description-step-by-step-guide-content-important-tip-cta-button-text-and-cta-link-and-style-it-as-a-clean-professional-card-with-a-light-blue-border-and-a-visible-now-hiring-tag-in-the-top-corner",
+      "title": "Create a new Home page section/card for “TranscribeMe” using the user-provided title, description, step-by-step guide content, important tip, CTA button text, and CTA link, and style it as a clean professional card with a light-blue border and a visible “Now Hiring” tag in the top corner.",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-place-the-new-transcribeme-section-directly-under-the-existing-timebucks-step-by-step-guide-section-on-the-home-page-route-without-changing-the-order-of-the-other-existing-home-page-sections",
+      "title": "Place the new TranscribeMe section directly under the existing TimeBucks Step-by-Step Guide section on the Home page route ('/'), without changing the order of the other existing Home page sections.",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-home-page-hero-section-copy-in-frontend-src-components-home-herosection-tsx-by-replacing-the-current-heading-and-description-text-with-the-provided-professional-team-member-welcome-message-and-ensure-the-text-is-styled-with-a-clean-modern-font-and-uses-white-or-light-yellow-coloring-to-remain-clearly-visible-against-the-dark-background-while-maintaining-a-professional-agency-landing-page-look",
+      "title": "Update the Home page hero section copy in `frontend/src/components/home/HeroSection.tsx` by replacing the current heading and description text with the provided professional team-member welcome message, and ensure the text is styled with a clean, modern font and uses white or light-yellow coloring to remain clearly visible against the dark background while maintaining a professional agency landing-page look.",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -348,6 +456,54 @@
     {
       "id": "AR-20",
       "summary": "Add a large, stylish Bengali Welcome Section at the very top of the Home page with center-aligned text in a bold Bengali font, using a neon glow/gradient light effect plus slow-moving rainbow color animation, displayed inside a semi-transparent dark glass-style box for readability over the background image.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Update text styling for clearer visibility and premium colorful look: header title bright gold with white shadow; Welcome Bengali text neon yellow/white with glow; highlight 'Md. Habibur Rahman' with rainbow gradient animation; hamburger icon white and glowing",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Update the 'Daily Task' section so the 'কাজ শুরু করুন' button randomly selects and opens one of the provided ShrinkMe task links on each click",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Update the 'Daily Task' section to display the provided Bengali instruction text explaining unlimited tasks and submitting the hidden code",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Update the 'Daily Task' submission form so after clicking 'Submit' the form remains on the page (no reload) to allow immediately starting the next task",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Add a featured 'Mega Earning Task' (TimeBucks) section/card on the Home page with provided Bengali title/subtitle/bonus text, a CTA button that opens the referral link in a new tab, and a small trust note below the button",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Add a 'Step-by-Step Guide' section directly below the TimeBucks task card showing the provided Bengali instructions on how to earn from TimeBucks",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Add a new 'TranscribeMe' section/card on the Home page (directly under the TimeBucks Step-by-Step Guide) with provided Bengali title/description/step-by-step guide, a 'Now Hiring' tag, light blue border, and a CTA button linking to https://www.transcribeme.com/jobs/",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Update the main Hero section text on 'MHS Habibur Blog' to a professional team-member welcome message (provided verbatim), using a clean modern font and white/light-yellow text for visibility over the dark background, styled like a professional agency landing page",
       "reqIds": [],
       "status": "pending"
     }

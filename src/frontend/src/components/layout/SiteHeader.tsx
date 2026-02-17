@@ -23,7 +23,7 @@ export function SiteHeader() {
               alt="Site Logo"
               className="h-10 w-10 object-contain"
             />
-            <span className="text-xl font-bold tracking-tight">MHS Habibur Blog</span>
+            <span className="header-brand-gold text-xl tracking-tight">MHS Habibur Blog</span>
           </Link>
           
           {/* Desktop Navigation */}
@@ -61,7 +61,7 @@ export function SiteHeader() {
             aria-label="Open menu"
             aria-expanded={isMobileMenuOpen}
           >
-            <Menu className="h-6 w-6" />
+            <Menu className="icon-white-glow h-6 w-6" />
           </button>
         </div>
       </header>

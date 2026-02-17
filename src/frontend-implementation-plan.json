@@ -1,25 +1,22 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add Bengali welcome section at top of Home page",
+  "title": "Update Home hero section welcome message and styling",
   "requirements": [
     {
-      "id": "REQ-31",
-      "summary": "Add a large, colorful Welcome section at the very top of the Home page that renders the provided Bengali text verbatim above the existing Hero section.",
+      "id": "REQ-44",
+      "summary": "Replace HeroSection heading/description with the provided team-member welcome message and adjust typography/colors for high-contrast, modern agency look on the existing dark hero background.",
       "acceptanceCriteria": [
-        "On route \"/\", the first visible content on the page is the Welcome section containing exactly the provided Bengali text verbatim.",
-        "The Welcome section renders above (before) the existing Hero section."
+        "`frontend/src/components/home/HeroSection.tsx` no longer displays the old heading (“Welcome to My Blog”) or the old description paragraph.",
+        "The hero section displays the exact message text (verbatim, including punctuation and the \"10-15 minutes\" range): \"Assalamu Alaikum, I am Md. Habibur Rahman. I am working on professional typing projects in international marketplaces and building a skilled working team here. You can join my team, learn simple typing tasks in 10-15 minutes, and start earning with us.\"",
+        "The hero message text is rendered in a clean, modern font style and appears in white or light-yellow (or a white-to-light-yellow treatment) with sufficient contrast against the existing dark/overlay hero background.",
+        "The updated hero section looks consistent with the site’s existing professional/neon theme and remains responsive on mobile and desktop without overlapping or truncation."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/home/WelcomeSection.tsx",
-          "operation": "create",
-          "description": "Create a new Home page Welcome section component with prominent styling (large, colorful) that renders the Bengali welcome text verbatim as its primary content."
-        },
-        {
-          "path": "frontend/src/pages/HomePage.tsx",
+          "path": "frontend/src/components/home/HeroSection.tsx",
           "operation": "modify",
-          "description": "Wire the new WelcomeSection into the Home page so it appears at the very top of the page (before the existing HeroSection) on route \"/\"."
+          "description": "Update the hero heading and paragraph to the exact provided welcome message (verbatim, including \"10-15 minutes\"), removing the old \"Welcome to My Blog\" text and prior description. Adjust Tailwind classes within this component to use a clean modern font treatment (e.g., font-sans, balanced weights/leading) and set text color to white and/or light-yellow with sufficient contrast against the current dark/overlay background, while keeping the existing hero layout and CTA links unchanged and responsive."
         }
       ]
     }

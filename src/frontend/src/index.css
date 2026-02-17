@@ -41,6 +41,12 @@
         --neon-cyan: 0.75 0.20 195;
         --neon-white: 0.98 0 0;
         
+        /* Bright gold for header */
+        --bright-gold: 0.80 0.22 75;
+        
+        /* Neon yellow for welcome text */
+        --neon-yellow: 0.90 0.25 100;
+        
         /* Rainbow colors for welcome text */
         --rainbow-red: 0.65 0.25 25;
         --rainbow-orange: 0.70 0.22 50;
@@ -153,6 +159,50 @@
         background: rgba(0, 0, 0, 0.85);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Header brand bright gold with white glow */
+    .header-brand-gold {
+        color: oklch(var(--bright-gold));
+        text-shadow: 
+            0 0 10px rgba(255, 255, 255, 0.8),
+            0 0 20px rgba(255, 255, 255, 0.6),
+            0 0 30px rgba(255, 255, 255, 0.4),
+            0 2px 4px rgba(0, 0, 0, 0.5);
+        font-weight: 700;
+    }
+
+    /* Neon yellow + white mixed text for welcome paragraph */
+    .neon-yellow-white-text {
+        background: linear-gradient(
+            90deg,
+            oklch(var(--neon-yellow)),
+            oklch(var(--neon-white)),
+            oklch(var(--neon-yellow)),
+            oklch(var(--neon-white)),
+            oklch(var(--neon-yellow))
+        );
+        background-size: 200% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Glowing text effect for welcome box */
+    .text-glow {
+        text-shadow: 
+            0 0 10px rgba(255, 255, 255, 0.6),
+            0 0 20px rgba(255, 255, 100, 0.4),
+            0 0 30px rgba(255, 255, 100, 0.3),
+            0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    /* White glowing icon for hamburger menu */
+    .icon-white-glow {
+        color: white;
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))
+                drop-shadow(0 0 16px rgba(255, 255, 255, 0.6))
+                drop-shadow(0 0 24px rgba(255, 255, 255, 0.4));
     }
 
     /* Rainbow animation for welcome text */

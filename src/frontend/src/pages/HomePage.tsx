@@ -1,5 +1,9 @@
 import { HeroSection } from '../components/home/HeroSection';
 import { WelcomeSection } from '../components/home/WelcomeSection';
+import { DailyTaskSection } from '../components/home/DailyTaskSection';
+import { TimeBucksMegaEarningTaskCard } from '../components/home/TimeBucksMegaEarningTaskCard';
+import { TimeBucksStepByStepGuideSection } from '../components/home/TimeBucksStepByStepGuideSection';
+import { TranscribeMeSectionCard } from '../components/home/TranscribeMeSectionCard';
 import { AdsterraNativeBanner } from '../components/monetization/AdsterraNativeBanner';
 import { Seo } from '../components/seo/Seo';
 import { Newspaper, Target, TrendingUp } from 'lucide-react';
@@ -14,6 +18,10 @@ export default function HomePage() {
       />
       <WelcomeSection />
       <HeroSection />
+      <DailyTaskSection />
+      <TimeBucksMegaEarningTaskCard />
+      <TimeBucksStepByStepGuideSection />
+      <TranscribeMeSectionCard />
 
       <section className="container py-12 md:py-16">
         <AdsterraNativeBanner className="mb-12" />

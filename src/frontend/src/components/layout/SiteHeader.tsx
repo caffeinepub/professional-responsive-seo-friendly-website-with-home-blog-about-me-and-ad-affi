@@ -23,13 +23,13 @@ export function SiteHeader() {
     <>
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
         <div className="container flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center">
             <img
-              src="/assets/generated/site-logo.dim_512x512.png"
-              alt="Site Logo"
-              className="h-10 w-10 object-contain"
+              src="/assets/generated/site-logo-header.dim_512x512.png"
+              alt="MHS Habibur Blog - H*S Online earn platform"
+              className="h-12 w-auto object-contain sm:h-14"
             />
-            <span className="header-brand-gold text-xl tracking-tight">MHS Habibur Blog</span>
+            <span className="sr-only">MHS Habibur Blog</span>
           </Link>
           
           {/* Desktop Navigation */}
@@ -59,12 +59,12 @@ export function SiteHeader() {
               About Me
             </Link>
             
-            {/* Tasks Dropdown Menu */}
+            {/* Work Tasks Dropdown Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger className={`flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors hover:text-foreground/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                 isActive('/tasks') ? 'text-foreground' : 'text-foreground/60'
               }`}>
-                Tasks
+                Work Tasks
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-40">

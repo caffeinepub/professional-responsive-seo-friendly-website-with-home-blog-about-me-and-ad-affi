@@ -1,33 +1,48 @@
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden">
+      {/* Background image with responsive variants */}
       <div className="absolute inset-0">
-        <img
-          src="/assets/generated/hero-banner.dim_1600x600.png"
-          alt="Hero Banner"
-          className="h-full w-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-background" />
+        <picture>
+          <source
+            media="(max-width: 768px)"
+            srcSet="/assets/generated/hero-bg-mobile.dim_1080x1350.png"
+          />
+          <img
+            src="/assets/generated/hero-bg.dim_1600x900.png"
+            alt="Hero Background"
+            className="h-full w-full object-cover"
+          />
+        </picture>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-background" />
       </div>
+
+      {/* Content */}
       <div className="container relative py-16 md:py-24 lg:py-32">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="readable-text-block">
-            <p className="text-lg leading-relaxed text-white sm:text-xl md:text-2xl lg:text-3xl font-light tracking-wide drop-shadow-[0_2px_8px_rgba(255,255,255,0.3)]">
-              Assalamu Alaikum, I am <span className="font-semibold text-yellow-200">Md. Habibur Rahman</span>. I am working on professional typing projects in international marketplaces and building a skilled working team here. You can join my team, learn simple typing tasks in 10-15 minutes, and start earning with us.
+          {/* Headline - White and Bold */}
+          <h1 className="mb-6 text-3xl font-bold text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] sm:text-4xl md:text-5xl lg:text-6xl">
+            Welcome to H★S Online Earn Platform!
+          </h1>
+
+          {/* Bengali Sub-headline */}
+          <div className="readable-text-block mb-10">
+            <p className="bengali-text text-base leading-relaxed text-white/95 sm:text-lg md:text-xl lg:text-2xl font-normal tracking-wide">
+              আসসালামু আলাইকুম, আমি Md. Habibur Rahman। আমাদের টিমে যুক্ত হয়ে সহজ টাইপিং এবং ডাটা এন্ট্রির কাজ করে আজই আয় শুরু করুন। কোনো অভিজ্ঞতা ছাড়াই ১০ মিনিটে কাজ শিখে নিন। এগুলো ছাড়াও আরও অনেক কাজ আপনি আমাদের এই ওয়েবসাইটে পেয়ে যাবেন।
+              <br />
+              প্রতিদিন নতুন নতুন কাজ পেতে ওয়েবটি জিভিট করুন.
             </p>
           </div>
-          <div className="flex flex-col gap-4 sm:flex-row sm:justify-center mt-10">
+
+          {/* Single CTA Button */}
+          <div className="flex justify-center">
             <a
-              href="/blog"
-              className="neon-button neon-button-primary inline-flex h-11 items-center justify-center rounded-md px-8 text-sm font-medium shadow transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              href="https://www.facebook.com/share/1CPKURCrY8/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="neon-button neon-button-primary inline-flex h-12 items-center justify-center rounded-md px-10 text-base font-semibold shadow-lg transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:h-14 md:px-12 md:text-lg"
             >
-              Explore Articles
-            </a>
-            <a
-              href="/about"
-              className="neon-button neon-button-secondary inline-flex h-11 items-center justify-center rounded-md border px-8 text-sm font-medium shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              Learn More
+              Join My Team ★
             </a>
           </div>
         </div>

@@ -161,6 +161,13 @@
         -webkit-backdrop-filter: blur(12px);
     }
 
+    /* Bengali text styling for better readability */
+    .bengali-text {
+        font-family: 'Noto Sans Bengali', 'Hind Siliguri', 'Mukta', system-ui, -apple-system, sans-serif;
+        line-height: 1.8;
+        letter-spacing: 0.01em;
+    }
+
     /* Header brand bright gold with white glow */
     .header-brand-gold {
         color: oklch(var(--bright-gold));

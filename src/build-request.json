@@ -1,151 +1,53 @@
 {
   "kind": "build_request",
-  "title": "Move Daily Task off homepage into new Tasks menu with Task 1–3 pages",
-  "projectName": "MHS Habibur Tasks",
+  "title": "Update 'Join My Team' CTA to link to Facebook profile",
+  "projectName": "MHS Habibur Blog",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-45",
-      "text": "Simplify the Home page (route \"/\") so it only renders the existing Welcome section and a single call-to-action button labeled \"Join My Team\"; remove the Daily Task section and remove all other current Home page sections (hero, TimeBucks sections, TranscribeMe card, ad banner block, feature cards, and \"Latest from the Blog\" block) from the landing page.",
+      "id": "REQ-63",
+      "text": "Change the Home page Hero section \"Join My Team\" button so it links to the Facebook profile URL https://www.facebook.com/share/1CPKURCrY8/ instead of routing to an internal Task page or a Google Form.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-1"
         ],
         "quotes": [
-          "I want to clean up my homepage. Please remove the 'Daily Task' section from the main landing page... The homepage should only show my welcome message and the 'Join My Team' button."
+          "Please change the 'Join My Team' button link. Instead of a Google Form, link the button to my Facebook Profile.\n\nMy Facebook URL:https://www.facebook.com/share/1CPKURCrY8/"
         ]
       },
       "acceptanceCriteria": [
-        "Visiting \"/\" displays the Welcome section and exactly one prominent button labeled \"Join My Team\".",
-        "The \"Daily Task\" section no longer appears on the Home page.",
-        "The Home page no longer renders the hero section, TimeBucks/TranscribeMe sections, ad banner section, feature cards, or the \"Latest from the Blog\" section.",
-        "The Home page continues to set SEO metadata via the existing Seo component (title/description/path)."
+        "On the Home page, clicking the Hero section \"Join My Team\" button navigates to https://www.facebook.com/share/1CPKURCrY8/.",
+        "The button label remains \"Join My Team ★\" (no user-facing text changes)."
       ]
     },
     {
-      "id": "REQ-46",
-      "text": "Implement the \"Join My Team\" button on the Home page with an explicit destination URL and styling consistent with the existing neon button system.",
+      "id": "REQ-64",
+      "text": "Change the Mobile Menu \"Join Team\" link so it navigates to https://www.facebook.com/share/1CPKURCrY8/ (the same destination as the Home page \"Join My Team\" CTA).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-1"
         ],
         "quotes": [
-          "The homepage should only show my welcome message and the 'Join My Team' button."
+          "Please change the 'Join My Team' button link. Instead of a Google Form, link the button to my Facebook Profile.\n\nMy Facebook URL:https://www.facebook.com/share/1CPKURCrY8/"
         ]
       },
       "acceptanceCriteria": [
-        "The \"Join My Team\" button is visible without requiring scrolling on common desktop/mobile viewports (where feasible).",
-        "Clicking \"Join My Team\" navigates the user to a defined in-app route (not a dead link).",
-        "Button has accessible focus styles and remains readable over the background theme."
-      ]
-    },
-    {
-      "id": "REQ-47",
-      "text": "Add a new top-level desktop navigation menu item labeled \"Tasks\" in the site header navigation bar, with sub-links labeled \"Task 1\", \"Task 2\", and \"Task 3\".",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "create a new menu item in the navigation bar called 'Tasks'. Under this 'Tasks' menu, create sub-pages or links named 'Task 1', 'Task 2', and 'Task 3'."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Desktop header navigation includes a visible \"Tasks\" item.",
-        "\"Tasks\" provides access to links labeled \"Task 1\", \"Task 2\", and \"Task 3\".",
-        "Each sub-link navigates to its corresponding dedicated task page route.",
-        "Existing header items (Home, Blog, About Me) remain present and functional."
-      ]
-    },
-    {
-      "id": "REQ-48",
-      "text": "Add a \"Tasks\" section to the mobile menu that includes links labeled \"Task 1\", \"Task 2\", and \"Task 3\", while keeping the existing Bengali-labeled sections (“কাজ”, “পেমেন্ট প্রুফ”, “সাহায্য”) and their current behavior unchanged.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "create a new menu item in the navigation bar called 'Tasks'. Under this 'Tasks' menu..."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Mobile menu includes a \"Tasks\" section with links \"Task 1\", \"Task 2\", and \"Task 3\".",
-        "The existing Bengali labels “কাজ”, “পেমেন্ট প্রুফ”, and “সাহায্য” remain exactly as-is and still render in the mobile menu.",
-        "The existing Admin 1/Admin 2 links under “সাহায্য” remain unchanged and still open their Facebook URLs.",
-        "Tapping any Tasks link closes the mobile menu and navigates to the correct task page."
-      ]
-    },
-    {
-      "id": "REQ-49",
-      "text": "Create three dedicated task pages/routes for \"Task 1\", \"Task 2\", and \"Task 3\" and register them in the TanStack Router route tree so they are accessible via navigation.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "Each task should have its own dedicated page... named 'Task 1', 'Task 2', and 'Task 3'."
-        ]
-      },
-      "acceptanceCriteria": [
-        "There are three distinct routes for Task 1, Task 2, and Task 3.",
-        "Each route renders a page with an appropriate page title/heading (Task 1/2/3).",
-        "Routes are reachable directly by URL entry and via navigation links.",
-        "Each task page sets SEO metadata (title/description/path) using the existing Seo component."
-      ]
-    },
-    {
-      "id": "REQ-50",
-      "text": "On each Task page (Task 1/2/3), render the previously designed task interaction UI: a \"Start Work\" button that opens a task link and a \"Secret Code\" submission box with a submit action that does not reload or navigate away from the current page.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "Each task should have its own dedicated page with the 'Secret Code' submission box and the 'Start Work' button that you previously designed."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Each Task page includes a button labeled \"Start Work\" that opens a task link in a new tab/window (matching the existing behavior used previously).",
-        "Each Task page includes a labeled input field \"Secret Code\" and a \"Submit\" button.",
-        "Submitting a non-empty secret code shows an on-page success state/message and clears the input without full-page reload or route navigation.",
-        "User-facing text for the task UI on these pages is in English (at minimum: \"Start Work\", \"Secret Code\", \"Submit\", and the success message)."
-      ]
-    },
-    {
-      "id": "REQ-51",
-      "text": "Update the static sitemap at `frontend/public/sitemap.xml` to include the new Task 1/Task 2/Task 3 page URLs in addition to the existing routes.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "create sub-pages... 'Task 1', 'Task 2', and 'Task 3'. Each task should have its own dedicated page"
-        ]
-      },
-      "acceptanceCriteria": [
-        "`frontend/public/sitemap.xml` contains entries for the three new task page URLs.",
-        "Existing sitemap entries for Home, Blog, About, and blog posts remain present and unchanged unless required for correctness.",
-        "The sitemap remains valid XML."
+        "In the mobile hamburger menu, clicking \"Join Team\" navigates to https://www.facebook.com/share/1CPKURCrY8/.",
+        "The rest of the mobile menu structure and labels remain unchanged."
       ]
     }
   ],
   "constraints": [
-    "Frontend immutable paths must not be edited: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui (compose these components; do not modify them).",
-    "Keep backend as a single Motoko actor; no backend changes are required for this request.",
-    "Use English for any new user-facing UI text introduced by this change (e.g., Tasks menu labels and Task page UI labels/messages)."
+    "Frontend immutable paths must not be edited: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
+    "Do not add or change backend functionality; this change is frontend navigation only.",
+    "Do not change any other navigation destinations (e.g., Task 1/2/3 links) besides the \"Join My Team\" / \"Join Team\" CTA destinations."
   ],
   "nonGoals": [
-    "Do not add or change backend data models or persistence for tasks.",
-    "Do not introduce third-party authentication beyond Internet Identity.",
-    "Do not add new advertisement/affiliate placements as part of this change.",
-    "Do not change existing blog and about page functionality beyond navigation updates needed to add the Tasks menu."
+    "Do not redesign the Hero section or change button styling.",
+    "Do not add new pages or routes.",
+    "Do not modify SEO metadata, sitemap.xml, or robots.txt for this change."
   ],
   "imageRequirements": {
     "required": [],

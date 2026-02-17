@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { SiFacebook, SiX, SiLinkedin, SiGithub } from 'react-icons/si';
 import { Heart, ExternalLink } from 'lucide-react';
 import { HELP_LINKS } from '../../lib/helpLinks';
@@ -22,19 +23,19 @@ export function SiteFooter() {
             <h3 className="mb-3 text-sm font-semibold">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
                   Blog
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">
                   About Me
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 29,
-  "summary": "Homepage will be simplified to only the Welcome message and a \"Join My Team\" button; the previous \"Daily Task\" functionality will be moved off the landing page into a new top-level \"Tasks\" navigation menu with dedicated pages for Task 1/2/3, each containing the previously designed \"Start Work\" button and \"Secret Code\" submission box.",
+  "projectStateVersion": 37,
+  "summary": "Homepage should include an updated Hero section using the uploaded image as its background, with a Bengali headline/sub-headline, a bright \"Join My Team\" button directly below the hero text, and the old yellow text box removed entirely. Other existing navigation/task/footer requirements remain as previously specified.",
   "architectural_notes": [
     "Home page ad region should support embedding third-party ad network code (external async script + container div) in place of a placeholder, while keeping the rest of the layout unchanged.",
     "Site-wide visual theme should support a full-screen fixed background image (parallax-style) with a dark overlay layer to preserve text contrast/readability; must be responsive across mobile and desktop.",
@@ -420,6 +420,110 @@
         "REQ-51"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-desktop-header-navigation-so-the-existing-tasks-dropdown-is-labeled-exactly-work-tasks-instead-of-tasks-and-contains-links-to-task-1-task-2-and-task-3",
+      "title": "Update the desktop header navigation so the existing tasks dropdown is labeled exactly \"Work Tasks\" (instead of \"Tasks\") and contains links to \"Task 1\", \"Task 2\", and \"Task 3\".",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-mobile-top-right-hamburger-menu-so-users-can-see-a-top-level-home-link-a-work-tasks-section-with-sub-links-task-1-task-2-task-3-and-a-join-team-link-that-navigates-to-the-same-destination-as-the-existing-home-page-join-my-team-cta-currently-tasks-task-1",
+      "title": "Update the mobile (top-right hamburger) menu so users can see a top-level \"Home\" link, a \"Work Tasks\" section with sub-links \"Task 1\", \"Task 2\", \"Task 3\", and a \"Join Team\" link that navigates to the same destination as the existing Home page \"Join My Team\" CTA (currently /tasks/task-1).",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-site-wide-about-and-quick-links-footer-sections-are-present-on-every-page-by-keeping-the-global-layout-footer-applied-across-all-routes-home-blog-about-blog-post-task-1-2-3",
+      "title": "Ensure the site-wide \"About\" and \"Quick Links\" footer sections are present on every page by keeping the global layout/footer applied across all routes (Home, Blog, About, Blog Post, Task 1/2/3).",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-task-1-task-2-and-task-3-pages-add-a-section-titled-exactly-how-to-complete-this-task-placed-before-the-existing-start-work-button-ui-the-section-must-display-a-simple-bullet-list-with-these-exact-instruction-items-in-this-order-start-work-find-the-secret-code-paste-the-code-submit-style-the-instruction-text-using-a-light-blue-or-soft-green-color-for-readability",
+      "title": "On Task 1, Task 2, and Task 3 pages, add a section titled exactly \"How to Complete This Task\" placed before the existing \"Start Work\" button UI. The section must display a simple bullet list with these exact instruction items in this order: \"Start work\", \"Find the secret code\", \"Paste the code\", \"Submit\". Style the instruction text using a light blue or soft green color for readability.",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-small-back-to-home-button-at-the-bottom-of-each-task-page-task-1-task-2-task-3-that-navigates-to-the-home-route-while-keeping-the-rest-of-the-task-page-design-consistent-with-the-existing-task-1-interaction-ui-start-work-button-secret-code-submission-box",
+      "title": "Add a small \"Back to Home\" button at the bottom of each Task page (Task 1, Task 2, Task 3) that navigates to the Home route \"/\" while keeping the rest of the Task page design consistent with the existing Task 1 interaction UI (Start Work button + Secret Code submission box).",
+      "reqIds": [
+        "REQ-56"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-uploaded-logo-image-gemini-generated-image-e9bv7ne9bv7ne9bv-png-to-the-app-as-an-optimized-static-asset-under-frontend-public-assets-generated-and-use-that-asset-as-the-header-brand-logo",
+      "title": "Add the uploaded logo image (Gemini_Generated_Image_e9bv7ne9bv7ne9bv.png) to the app as an optimized static asset under `frontend/public/assets/generated`, and use that asset as the header brand logo.",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-components-layout-siteheader-tsx-so-the-navigation-bar-brand-uses-the-new-logo-image-instead-of-the-visible-text-title-mhs-habibur-blog-and-ensure-the-logo-sizing-and-spacing-look-professional-and-fit-well-on-both-mobile-and-desktop",
+      "title": "Update `frontend/src/components/layout/SiteHeader.tsx` so the navigation bar brand uses the new logo image instead of the visible text title “MHS Habibur Blog”, and ensure the logo sizing and spacing look professional and fit well on both mobile and desktop.",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-two-newly-uploaded-images-gemini-generated-image-2gqjsp2gqjsp2gqj-png-and-gemini-generated-image-2gqjsp2gqjsp2gqj-1-png-to-the-frontend-as-optimized-static-assets-under-frontend-public-assets-generated-and-choose-one-of-them-as-the-hero-section-background-image",
+      "title": "Add the two newly uploaded images (Gemini_Generated_Image_2gqjsp2gqjsp2gqj.png and Gemini_Generated_Image_2gqjsp2gqjsp2gqj-1.png) to the frontend as optimized static assets under frontend/public/assets/generated, and choose one of them as the Hero section background image.",
+      "reqIds": [
+        "REQ-59"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-components-home-herosection-tsx-to-use-the-selected-uploaded-image-as-the-hero-background-replace-the-existing-hero-text-with-the-provided-headline-and-bengali-sub-headline-and-ensure-1-the-headline-is-white-and-bold-2-the-bengali-text-uses-a-clean-readable-font-and-3-the-old-yellow-text-box-styling-element-is-removed-entirely-from-the-hero",
+      "title": "Update frontend/src/components/home/HeroSection.tsx to use the selected uploaded image as the Hero background, replace the existing Hero text with the provided headline and Bengali sub-headline, and ensure: (1) the headline is white and bold, (2) the Bengali text uses a clean, readable font, and (3) the old yellow text box styling/element is removed entirely from the Hero.",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-bright-join-my-team-call-to-action-button-directly-below-the-hero-text-in-frontend-src-components-home-herosection-tsx-linking-to-the-same-destination-currently-used-by-the-home-page-join-my-team-cta-tasks-task-1-and-remove-the-old-hero-call-to-action-buttons-e-g-explore-articles-learn-more-from-the-hero",
+      "title": "Add a bright \"Join My Team\" call-to-action button directly below the Hero text in frontend/src/components/home/HeroSection.tsx, linking to the same destination currently used by the Home page \"Join My Team\" CTA (/tasks/task-1), and remove the old Hero call-to-action buttons (e.g., \"Explore Articles\" / \"Learn More\") from the Hero.",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-the-updated-hero-section-on-the-home-route-frontend-src-pages-homepage-tsx-in-a-way-that-matches-the-new-homepage-goal-the-home-page-should-include-the-welcomesection-plus-the-updated-hero-with-its-in-hero-join-my-team-cta-and-should-not-show-a-second-redundant-join-my-team-card-below-if-it-duplicates-the-same-cta",
+      "title": "Render the updated Hero section on the Home route (frontend/src/pages/HomePage.tsx) in a way that matches the new homepage goal: the Home page should include the WelcomeSection plus the updated Hero with its in-hero \"Join My Team\" CTA (and should not show a second, redundant \"Join My Team\" card below if it duplicates the same CTA).",
+      "reqIds": [
+        "REQ-62"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-change-the-home-page-hero-section-join-my-team-button-so-it-links-to-the-facebook-profile-url-https-www-facebook-com-share-1cpkurcry8-instead-of-routing-to-an-internal-task-page-or-a-google-form",
+      "title": "Change the Home page Hero section \"Join My Team\" button so it links to the Facebook profile URL https://www.facebook.com/share/1CPKURCrY8/ instead of routing to an internal Task page or a Google Form.",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-change-the-mobile-menu-join-team-link-so-it-navigates-to-https-www-facebook-com-share-1cpkurcry8-the-same-destination-as-the-home-page-join-my-team-cta",
+      "title": "Change the Mobile Menu \"Join Team\" link so it navigates to https://www.facebook.com/share/1CPKURCrY8/ (the same destination as the Home page \"Join My Team\" CTA).",
+      "reqIds": [
+        "REQ-64"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -566,6 +670,54 @@
     {
       "id": "AR-32",
       "summary": "Update the Home page content to only show the Welcome message and the 'Join My Team' button (remove other main landing sections as needed to match this requirement)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Rename/organize navigation so Task 1/2/3 are grouped under a main dropdown menu item labeled 'Work Tasks' (more professional menu structure)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Update the mobile/top-right menu to show: Home, Work Tasks (with Task 1/2/3 as sub-options), and Join Team",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Ensure 'About' section and 'Quick Links' footer appear on every page site-wide for a more professional feel",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Add a small 'Back to Home' button at the bottom of each Task page (Task 1/2/3)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "On Task 1/2/3 pages, add a 'How to Complete This Task' section before the Start Work button with bullet instructions (Start work, find secret code, paste code, submit) styled in light blue or soft green text",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Replace the header/navigation brand text “MHS Habibur Blog” with the newly uploaded logo image, sized responsively to look professional on both mobile and desktop",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Update the Home page Hero section: use uploaded image as hero background; set headline to \"Welcome to H★S Online Earn Platform!\" (white, bold) and sub-headline to provided Bengali text in a clean readable font; add a bright \"Join My Team\" button below; remove the old yellow text box entirely",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-40",
+      "summary": "Change the \"Join My Team\" button link destination from the current Google Form to the user’s Facebook profile URL: https://www.facebook.com/share/1CPKURCrY8/",
       "reqIds": [],
       "status": "pending"
     }

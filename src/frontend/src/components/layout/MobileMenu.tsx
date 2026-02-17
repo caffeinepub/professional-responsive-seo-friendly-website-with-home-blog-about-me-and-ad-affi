@@ -65,10 +65,19 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
           {/* Menu Items */}
           <nav className="flex-1 space-y-2">
-            {/* Tasks Section */}
+            {/* Home Link */}
+            <Link
+              to="/"
+              onClick={onClose}
+              className="neon-menu-item block rounded-lg px-4 py-3 text-lg font-semibold transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Home
+            </Link>
+
+            {/* Work Tasks Section */}
             <div className="mb-4">
               <div className="neon-menu-item mb-2 px-4 py-3 text-lg font-semibold">
-                Tasks
+                Work Tasks
               </div>
               <div className="ml-4 space-y-2">
                 <Link
@@ -94,6 +103,17 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 </Link>
               </div>
             </div>
+
+            {/* Join Team Link */}
+            <a
+              href="https://www.facebook.com/share/1CPKURCrY8/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={onClose}
+              className="neon-menu-item block rounded-lg px-4 py-3 text-lg font-semibold transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Join Team
+            </a>
 
             <a
               href="/blog"

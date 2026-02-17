@@ -1,22 +1,152 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Update Home hero section welcome message and styling",
+  "title": "Move Daily Task off homepage into new Tasks menu with Task 1–3 pages",
   "requirements": [
     {
-      "id": "REQ-44",
-      "summary": "Replace HeroSection heading/description with the provided team-member welcome message and adjust typography/colors for high-contrast, modern agency look on the existing dark hero background.",
+      "id": "REQ-45",
+      "summary": "Simplify the Home page to only show the existing Welcome section and a single \"Join My Team\" call-to-action while keeping existing SEO metadata.",
       "acceptanceCriteria": [
-        "`frontend/src/components/home/HeroSection.tsx` no longer displays the old heading (“Welcome to My Blog”) or the old description paragraph.",
-        "The hero section displays the exact message text (verbatim, including punctuation and the \"10-15 minutes\" range): \"Assalamu Alaikum, I am Md. Habibur Rahman. I am working on professional typing projects in international marketplaces and building a skilled working team here. You can join my team, learn simple typing tasks in 10-15 minutes, and start earning with us.\"",
-        "The hero message text is rendered in a clean, modern font style and appears in white or light-yellow (or a white-to-light-yellow treatment) with sufficient contrast against the existing dark/overlay hero background.",
-        "The updated hero section looks consistent with the site’s existing professional/neon theme and remains responsive on mobile and desktop without overlapping or truncation."
+        "Visiting \"/\" displays the Welcome section and exactly one prominent button labeled \"Join My Team\".",
+        "The \"Daily Task\" section no longer appears on the Home page.",
+        "The Home page no longer renders the hero section, TimeBucks/TranscribeMe sections, ad banner section, feature cards, or the \"Latest from the Blog\" section.",
+        "The Home page continues to set SEO metadata via the existing Seo component (title/description/path)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/home/HeroSection.tsx",
+          "path": "frontend/src/pages/HomePage.tsx",
           "operation": "modify",
-          "description": "Update the hero heading and paragraph to the exact provided welcome message (verbatim, including \"10-15 minutes\"), removing the old \"Welcome to My Blog\" text and prior description. Adjust Tailwind classes within this component to use a clean modern font treatment (e.g., font-sans, balanced weights/leading) and set text color to white and/or light-yellow with sufficient contrast against the current dark/overlay background, while keeping the existing hero layout and CTA links unchanged and responsive."
+          "description": "Remove HeroSection, DailyTaskSection, TimeBucks, TranscribeMe, ads, feature cards, and blog teaser blocks so the page renders only: (1) the existing WelcomeSection and (2) a single prominent \"Join My Team\" CTA, while retaining the existing Seo usage (title/description/path). Use the existing neon button class system for styling (consistent with current neon buttons)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-46",
+      "summary": "Implement the Home page \"Join My Team\" button with an explicit in-app destination and neon-consistent accessible styling.",
+      "acceptanceCriteria": [
+        "The \"Join My Team\" button is visible without requiring scrolling on common desktop/mobile viewports (where feasible).",
+        "Clicking \"Join My Team\" navigates the user to a defined in-app route (not a dead link).",
+        "Button has accessible focus styles and remains readable over the background theme."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Implement the \"Join My Team\" CTA as an in-app navigation link (TanStack Router Link) targeting the chosen Tasks route (e.g., Task 1 page) and style it using the existing neon button classes with visible focus ring. If using shadcn-ui elements (e.g., Button), compose them from existing components without modification. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-47",
+      "summary": "Add a new desktop header navigation menu item \"Tasks\" with sub-links to Task 1, Task 2, and Task 3 routes while preserving existing header links.",
+      "acceptanceCriteria": [
+        "Desktop header navigation includes a visible \"Tasks\" item.",
+        "\"Tasks\" provides access to links labeled \"Task 1\", \"Task 2\", and \"Task 3\".",
+        "Each sub-link navigates to its corresponding dedicated task page route.",
+        "Existing header items (Home, Blog, About Me) remain present and functional."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/layout/SiteHeader.tsx",
+          "operation": "modify",
+          "description": "Add a \"Tasks\" desktop navigation item that reveals sub-links \"Task 1\", \"Task 2\", and \"Task 3\" using TanStack Router Link, ensuring existing Home/Blog/About Me remain unchanged and active-state logic still works for existing items."
+        }
+      ]
+    },
+    {
+      "id": "REQ-48",
+      "summary": "Add a \"Tasks\" section to the mobile menu with Task 1–3 links while preserving existing Bengali sections and Admin Facebook links/behavior.",
+      "acceptanceCriteria": [
+        "Mobile menu includes a \"Tasks\" section with links \"Task 1\", \"Task 2\", and \"Task 3\".",
+        "The existing Bengali labels “কাজ”, “পেমেন্ট প্রুফ”, and “সাহায্য” remain exactly as-is and still render in the mobile menu.",
+        "The existing Admin 1/Admin 2 links under “সাহায্য” remain unchanged and still open their Facebook URLs.",
+        "Tapping any Tasks link closes the mobile menu and navigates to the correct task page."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/layout/MobileMenu.tsx",
+          "operation": "modify",
+          "description": "Add a new \"Tasks\" section with in-app links to Task 1/2/3 that call onClose when tapped (to close the menu) and navigate without full reload. Keep existing Bengali items (“কাজ”, “পেমেন্ট প্রুফ”, “সাহায্য”) and HELP_LINKS mapping exactly as-is and unchanged in behavior."
+        }
+      ]
+    },
+    {
+      "id": "REQ-49",
+      "summary": "Create and register Task 1/2/3 pages as TanStack Router routes, each with Seo metadata.",
+      "acceptanceCriteria": [
+        "There are three distinct routes for Task 1, Task 2, and Task 3.",
+        "Each route renders a page with an appropriate page title/heading (Task 1/2/3).",
+        "Routes are reachable directly by URL entry and via navigation links.",
+        "Each task page sets SEO metadata (title/description/path) using the existing Seo component."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Task1Page.tsx",
+          "operation": "create",
+          "description": "Create the Task 1 page component that renders a Task 1 heading, uses the existing Seo component (title/description/path), and includes the shared task interaction UI component."
+        },
+        {
+          "path": "frontend/src/pages/Task2Page.tsx",
+          "operation": "create",
+          "description": "Create the Task 2 page component that renders a Task 2 heading, uses the existing Seo component (title/description/path), and includes the shared task interaction UI component."
+        },
+        {
+          "path": "frontend/src/pages/Task3Page.tsx",
+          "operation": "create",
+          "description": "Create the Task 3 page component that renders a Task 3 heading, uses the existing Seo component (title/description/path), and includes the shared task interaction UI component."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register three new TanStack Router routes for Task 1/Task 2/Task 3 in the route tree so they can be navigated to by URL and from the new navigation links."
+        }
+      ]
+    },
+    {
+      "id": "REQ-50",
+      "summary": "Render the task interaction UI on each Task page with a \"Start Work\" external link action and an in-page Secret Code submission success flow (no reload/navigation).",
+      "acceptanceCriteria": [
+        "Each Task page includes a button labeled \"Start Work\" that opens a task link in a new tab/window (matching the existing behavior used previously).",
+        "Each Task page includes a labeled input field \"Secret Code\" and a \"Submit\" button.",
+        "Submitting a non-empty secret code shows an on-page success state/message and clears the input without full-page reload or route navigation.",
+        "User-facing text for the task UI on these pages is in English (at minimum: \"Start Work\", \"Secret Code\", \"Submit\", and the success message)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/tasks/TaskInteractionCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable task interaction component that provides: a \"Start Work\" action that opens a provided task URL in a new tab/window, and a controlled \"Secret Code\" input with \"Submit\" handling that prevents default, shows an on-page English success message, and clears the input without reloading/navigating. Compose UI using shadcn-ui components (Button/Input/Label from the existing frontend/src/components/ui library) without modifying them; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/Task1Page.tsx",
+          "operation": "modify",
+          "description": "Wire TaskInteractionCard into Task 1 with a concrete task link value and ensure all UI labels/messages are in English. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/Task2Page.tsx",
+          "operation": "modify",
+          "description": "Wire TaskInteractionCard into Task 2 with a concrete task link value and ensure all UI labels/messages are in English. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/Task3Page.tsx",
+          "operation": "modify",
+          "description": "Wire TaskInteractionCard into Task 3 with a concrete task link value and ensure all UI labels/messages are in English. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-51",
+      "summary": "Update the static sitemap.xml to include the three new Task page URLs while keeping existing entries intact and valid.",
+      "acceptanceCriteria": [
+        "`frontend/public/sitemap.xml` contains entries for the three new task page URLs.",
+        "Existing sitemap entries for Home, Blog, About, and blog posts remain present and unchanged unless required for correctness.",
+        "The sitemap remains valid XML."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/sitemap.xml",
+          "operation": "modify",
+          "description": "Add three new <url> entries for the Task 1, Task 2, and Task 3 routes (matching the new in-app route paths) while preserving existing entries and ensuring the file remains valid XML."
         }
       ]
     }

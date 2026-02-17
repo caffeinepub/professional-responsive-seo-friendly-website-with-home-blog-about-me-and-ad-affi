@@ -21,6 +21,25 @@
     <priority>0.8</priority>
   </url>
   
+  <!-- Task Pages -->
+  <url>
+    <loc>https://myblog.com/tasks/task-1</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://myblog.com/tasks/task-2</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://myblog.com/tasks/task-3</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
   <!-- Blog Posts -->
   <url>
     <loc>https://myblog.com/blog/proven-strategies-passive-income-online-2026</loc>

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from '@tanstack/react-router';
 import { X } from 'lucide-react';
 import { HELP_LINKS } from '../../lib/helpLinks';
 
@@ -64,6 +65,36 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
           {/* Menu Items */}
           <nav className="flex-1 space-y-2">
+            {/* Tasks Section */}
+            <div className="mb-4">
+              <div className="neon-menu-item mb-2 px-4 py-3 text-lg font-semibold">
+                Tasks
+              </div>
+              <div className="ml-4 space-y-2">
+                <Link
+                  to="/tasks/task-1"
+                  onClick={onClose}
+                  className="block rounded-lg px-4 py-2 text-base font-medium text-white/90 transition-colors hover:bg-accent hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  Task 1
+                </Link>
+                <Link
+                  to="/tasks/task-2"
+                  onClick={onClose}
+                  className="block rounded-lg px-4 py-2 text-base font-medium text-white/90 transition-colors hover:bg-accent hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  Task 2
+                </Link>
+                <Link
+                  to="/tasks/task-3"
+                  onClick={onClose}
+                  className="block rounded-lg px-4 py-2 text-base font-medium text-white/90 transition-colors hover:bg-accent hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  Task 3
+                </Link>
+              </div>
+            </div>
+
             <a
               href="/blog"
               onClick={onClose}

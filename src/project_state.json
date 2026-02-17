@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 27,
-  "summary": "Professional, responsive, SEO-friendly website with clean layout, full-screen fixed background image theme (with dark overlay for readability), ad/affiliate placeholders, core pages (Home, Blog, About Me), a working mobile hamburger menu and enhanced modern/neon styling, plus a 'Daily Task' section where the 'কাজ শুরু করুন' button opens a randomly selected task link and the task instructions/submission UX supports repeated submissions without page reload, a featured TimeBucks 'Mega Earning Task' section with a button that opens the referral link in a new tab plus a Step-by-Step Guide section below it, and a new TranscribeMe card section placed directly under the TimeBucks Step-by-Step Guide.",
+  "projectStateVersion": 29,
+  "summary": "Homepage will be simplified to only the Welcome message and a \"Join My Team\" button; the previous \"Daily Task\" functionality will be moved off the landing page into a new top-level \"Tasks\" navigation menu with dedicated pages for Task 1/2/3, each containing the previously designed \"Start Work\" button and \"Secret Code\" submission box.",
   "architectural_notes": [
     "Home page ad region should support embedding third-party ad network code (external async script + container div) in place of a placeholder, while keeping the rest of the layout unchanged.",
     "Site-wide visual theme should support a full-screen fixed background image (parallax-style) with a dark overlay layer to preserve text contrast/readability; must be responsive across mobile and desktop.",
@@ -364,6 +364,62 @@
         "REQ-44"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-simplify-the-home-page-route-so-it-only-renders-the-existing-welcome-section-and-a-single-call-to-action-button-labeled-join-my-team-remove-the-daily-task-section-and-remove-all-other-current-home-page-sections-hero-timebucks-sections-transcribeme-card-ad-banner-block-feature-cards-and-latest-from-the-blog-block-from-the-landing-page",
+      "title": "Simplify the Home page (route \"/\") so it only renders the existing Welcome section and a single call-to-action button labeled \"Join My Team\"; remove the Daily Task section and remove all other current Home page sections (hero, TimeBucks sections, TranscribeMe card, ad banner block, feature cards, and \"Latest from the Blog\" block) from the landing page.",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-join-my-team-button-on-the-home-page-with-an-explicit-destination-url-and-styling-consistent-with-the-existing-neon-button-system",
+      "title": "Implement the \"Join My Team\" button on the Home page with an explicit destination URL and styling consistent with the existing neon button system.",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-new-top-level-desktop-navigation-menu-item-labeled-tasks-in-the-site-header-navigation-bar-with-sub-links-labeled-task-1-task-2-and-task-3",
+      "title": "Add a new top-level desktop navigation menu item labeled \"Tasks\" in the site header navigation bar, with sub-links labeled \"Task 1\", \"Task 2\", and \"Task 3\".",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-tasks-section-to-the-mobile-menu-that-includes-links-labeled-task-1-task-2-and-task-3-while-keeping-the-existing-bengali-labeled-sections-and-their-current-behavior-unchanged",
+      "title": "Add a \"Tasks\" section to the mobile menu that includes links labeled \"Task 1\", \"Task 2\", and \"Task 3\", while keeping the existing Bengali-labeled sections (“কাজ”, “পেমেন্ট প্রুফ”, “সাহায্য”) and their current behavior unchanged.",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-three-dedicated-task-pages-routes-for-task-1-task-2-and-task-3-and-register-them-in-the-tanstack-router-route-tree-so-they-are-accessible-via-navigation",
+      "title": "Create three dedicated task pages/routes for \"Task 1\", \"Task 2\", and \"Task 3\" and register them in the TanStack Router route tree so they are accessible via navigation.",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-each-task-page-task-1-2-3-render-the-previously-designed-task-interaction-ui-a-start-work-button-that-opens-a-task-link-and-a-secret-code-submission-box-with-a-submit-action-that-does-not-reload-or-navigate-away-from-the-current-page",
+      "title": "On each Task page (Task 1/2/3), render the previously designed task interaction UI: a \"Start Work\" button that opens a task link and a \"Secret Code\" submission box with a submit action that does not reload or navigate away from the current page.",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-static-sitemap-at-frontend-public-sitemap-xml-to-include-the-new-task-1-task-2-task-3-page-urls-in-addition-to-the-existing-routes",
+      "title": "Update the static sitemap at `frontend/public/sitemap.xml` to include the new Task 1/Task 2/Task 3 page URLs in addition to the existing routes.",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -466,24 +522,6 @@
       "status": "pending"
     },
     {
-      "id": "AR-22",
-      "summary": "Update the 'Daily Task' section so the 'কাজ শুরু করুন' button randomly selects and opens one of the provided ShrinkMe task links on each click",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-23",
-      "summary": "Update the 'Daily Task' section to display the provided Bengali instruction text explaining unlimited tasks and submitting the hidden code",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-24",
-      "summary": "Update the 'Daily Task' submission form so after clicking 'Submit' the form remains on the page (no reload) to allow immediately starting the next task",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
       "id": "AR-25",
       "summary": "Add a featured 'Mega Earning Task' (TimeBucks) section/card on the Home page with provided Bengali title/subtitle/bonus text, a CTA button that opens the referral link in a new tab, and a small trust note below the button",
       "reqIds": [],
@@ -504,6 +542,30 @@
     {
       "id": "AR-28",
       "summary": "Update the main Hero section text on 'MHS Habibur Blog' to a professional team-member welcome message (provided verbatim), using a clean modern font and white/light-yellow text for visibility over the dark background, styled like a professional agency landing page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Remove the existing 'Daily Task' section from the Home (landing) page so it no longer appears on the main landing content",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Add a new top-level navigation bar menu item called 'Tasks' with links/sub-items: 'Task 1', 'Task 2', and 'Task 3'",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Create dedicated pages/routes for 'Task 1', 'Task 2', and 'Task 3', each containing the previously designed 'Start Work' button and 'Secret Code' submission box UX",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Update the Home page content to only show the Welcome message and the 'Join My Team' button (remove other main landing sections as needed to match this requirement)",
       "reqIds": [],
       "status": "pending"
     }

@@ -1,12 +1,7 @@
-import { HeroSection } from '../components/home/HeroSection';
+import { Link } from '@tanstack/react-router';
 import { WelcomeSection } from '../components/home/WelcomeSection';
-import { DailyTaskSection } from '../components/home/DailyTaskSection';
-import { TimeBucksMegaEarningTaskCard } from '../components/home/TimeBucksMegaEarningTaskCard';
-import { TimeBucksStepByStepGuideSection } from '../components/home/TimeBucksStepByStepGuideSection';
-import { TranscribeMeSectionCard } from '../components/home/TranscribeMeSectionCard';
-import { AdsterraNativeBanner } from '../components/monetization/AdsterraNativeBanner';
 import { Seo } from '../components/seo/Seo';
-import { Newspaper, Target, TrendingUp } from 'lucide-react';
+import { Users } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -17,64 +12,26 @@ export default function HomePage() {
         path="/"
       />
       <WelcomeSection />
-      <HeroSection />
-      <DailyTaskSection />
-      <TimeBucksMegaEarningTaskCard />
-      <TimeBucksStepByStepGuideSection />
-      <TranscribeMeSectionCard />
-
+      
       <section className="container py-12 md:py-16">
-        <AdsterraNativeBanner className="mb-12" />
-
-        <div className="grid gap-8 md:grid-cols-3">
-          <div className="glass-background rounded-lg border border-border p-6 shadow-sm">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-              <Newspaper className="h-6 w-6 text-primary" />
-            </div>
-            <h2 className="mb-2 text-xl font-semibold text-white">Quality Content</h2>
-            <p className="text-white/90">
-              In-depth articles and insights crafted with care and expertise to help you learn and grow.
-            </p>
-          </div>
-
-          <div className="glass-background rounded-lg border border-border p-6 shadow-sm">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-              <Target className="h-6 w-6 text-primary" />
-            </div>
-            <h2 className="mb-2 text-xl font-semibold text-white">Focused Topics</h2>
-            <p className="text-white/90">
-              Carefully curated content covering the subjects that matter most to our community.
-            </p>
-          </div>
-
-          <div className="glass-background rounded-lg border border-border p-6 shadow-sm">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-              <TrendingUp className="h-6 w-6 text-primary" />
-            </div>
-            <h2 className="mb-2 text-xl font-semibold text-white">Regular Updates</h2>
-            <p className="text-white/90">
-              Fresh perspectives and new articles published regularly to keep you informed and engaged.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-muted/30 py-12 md:py-16">
-        <div className="container">
-          <div className="glass-background mx-auto max-w-3xl rounded-2xl p-8">
-            <h2 className="neon-heading mb-8 text-center text-3xl font-bold tracking-tight">Latest from the Blog</h2>
-            <div className="text-center">
-              <p className="mb-6 text-lg text-white">
-                Explore our latest articles covering a wide range of topics designed to inform, inspire, and engage.
-              </p>
-              <a
-                href="/blog"
-                className="neon-button neon-button-primary inline-flex h-11 items-center justify-center rounded-md px-8 text-sm font-medium shadow transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              >
-                View All Posts
-              </a>
+        <div className="glass-background mx-auto max-w-2xl rounded-2xl p-8 md:p-12 text-center">
+          <div className="mb-6 flex justify-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 backdrop-blur-sm">
+              <Users className="h-8 w-8 text-primary" />
             </div>
           </div>
+          <h2 className="neon-heading mb-4 text-3xl font-bold tracking-tight md:text-4xl">
+            Join My Team
+          </h2>
+          <p className="mb-8 text-lg text-white/90 md:text-xl">
+            Start your journey with us today. Complete tasks, earn rewards, and grow together as a team.
+          </p>
+          <Link
+            to="/tasks/task-1"
+            className="neon-button neon-button-primary inline-flex h-12 items-center justify-center rounded-md px-8 text-base font-semibold shadow-lg transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            Join My Team
+          </Link>
         </div>
       </section>
     </>

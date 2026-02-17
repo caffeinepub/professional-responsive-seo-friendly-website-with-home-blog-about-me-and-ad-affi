@@ -1,24 +1,102 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-17T14:57:52.646Z",
+  "generatedAt": "2026-02-17T15:09:03.436Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 1,
-    "implemented": 1,
+    "total": 7,
+    "implemented": 7,
     "items": [
       {
-        "id": "REQ-44",
-        "summary": "Update the Home page hero section copy in `frontend/src/components/home/HeroSection.tsx` by replacing the current heading and description text with the provided professional team-member welcome message, and ensure the text is styled with a clean, modern font and uses white or light-yellow coloring to remain clearly visible against the dark background while maintaining a professional agency landing-page look.",
+        "id": "REQ-45",
+        "summary": "Simplify the Home page (route \"/\") so it only renders the existing Welcome section and a single call-to-action button labeled \"Join My Team\"; remove the Daily Task section and remove all other current Home page sections (hero, TimeBucks sections, TranscribeMe card, ad banner block, feature cards, and \"Latest from the Blog\" block) from the landing page.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/home/HeroSection.tsx"
+          "frontend/src/pages/HomePage.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/home/HeroSection.tsx"
+          "frontend/src/pages/HomePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-46",
+        "summary": "Implement the \"Join My Team\" button on the Home page with an explicit destination URL and styling consistent with the existing neon button system.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/HomePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/HomePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-47",
+        "summary": "Add a new top-level desktop navigation menu item labeled \"Tasks\" in the site header navigation bar, with sub-links labeled \"Task 1\", \"Task 2\", and \"Task 3\".",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/layout/SiteHeader.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/layout/SiteHeader.tsx"
+        ]
+      },
+      {
+        "id": "REQ-48",
+        "summary": "Add a \"Tasks\" section to the mobile menu that includes links labeled \"Task 1\", \"Task 2\", and \"Task 3\", while keeping the existing Bengali-labeled sections (“কাজ”, “পেমেন্ট প্রুফ”, “সাহায্য”) and their current behavior unchanged.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/layout/MobileMenu.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/layout/MobileMenu.tsx"
+        ]
+      },
+      {
+        "id": "REQ-49",
+        "summary": "Create three dedicated task pages/routes for \"Task 1\", \"Task 2\", and \"Task 3\" and register them in the TanStack Router route tree so they are accessible via navigation.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/Task1Page.tsx",
+          "frontend/src/pages/Task2Page.tsx",
+          "frontend/src/pages/Task3Page.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/Task1Page.tsx",
+          "frontend/src/pages/Task2Page.tsx",
+          "frontend/src/pages/Task3Page.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-50",
+        "summary": "On each Task page (Task 1/2/3), render the previously designed task interaction UI: a \"Start Work\" button that opens a task link and a \"Secret Code\" submission box with a submit action that does not reload or navigate away from the current page.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/tasks/TaskInteractionCard.tsx",
+          "frontend/src/pages/Task1Page.tsx",
+          "frontend/src/pages/Task2Page.tsx",
+          "frontend/src/pages/Task3Page.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/tasks/TaskInteractionCard.tsx",
+          "frontend/src/pages/Task1Page.tsx",
+          "frontend/src/pages/Task2Page.tsx",
+          "frontend/src/pages/Task3Page.tsx"
+        ]
+      },
+      {
+        "id": "REQ-51",
+        "summary": "Update the static sitemap at `frontend/public/sitemap.xml` to include the new Task 1/Task 2/Task 3 page URLs in addition to the existing routes.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/sitemap.xml"
+        ],
+        "matchedFiles": [
+          "frontend/public/sitemap.xml"
         ]
       }
     ]
@@ -28,7 +106,15 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/home/HeroSection.tsx",
+    "frontend/public/sitemap.xml",
+    "frontend/src/App.tsx",
+    "frontend/src/components/layout/MobileMenu.tsx",
+    "frontend/src/components/layout/SiteHeader.tsx",
+    "frontend/src/components/tasks/TaskInteractionCard.tsx",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/Task1Page.tsx",
+    "frontend/src/pages/Task2Page.tsx",
+    "frontend/src/pages/Task3Page.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

@@ -7,6 +7,9 @@ import AboutPage from './pages/AboutPage';
 import Task1Page from './pages/Task1Page';
 import Task2Page from './pages/Task2Page';
 import Task3Page from './pages/Task3Page';
+import PaymentProofPage from './pages/PaymentProofPage';
+import SupportPage from './pages/SupportPage';
+import RegistrationPage from './pages/RegistrationPage';
 
 const rootRoute = createRootRoute({
   component: SiteLayout,
@@ -54,6 +57,24 @@ const task3Route = createRoute({
   component: Task3Page,
 });
 
+const paymentProofRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/payment-proof',
+  component: PaymentProofPage,
+});
+
+const supportRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/support',
+  component: SupportPage,
+});
+
+const registrationRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/registration',
+  component: RegistrationPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   blogRoute,
@@ -62,6 +83,9 @@ const routeTree = rootRoute.addChildren([
   task1Route,
   task2Route,
   task3Route,
+  paymentProofRoute,
+  supportRoute,
+  registrationRoute,
 ]);
 
 const router = createRouter({ routeTree });

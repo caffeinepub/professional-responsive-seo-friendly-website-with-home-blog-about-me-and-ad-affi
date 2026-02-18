@@ -1,89 +1,57 @@
 {
   "kind": "build_request",
-  "title": "Update global SEO meta title/description, ensure indexing enabled, and use uploaded logo in header",
-  "projectName": "H★S Earn Platform",
-  "priority": "normal",
+  "title": "Embed Google Form on Registration page and ensure /registration is live",
+  "projectName": "H★S Online Earn Platform",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-65",
-      "text": "Update the site-wide SEO configuration so the global Meta Title is exactly \"H★S Online Earn Platform | Md. Habibur Rahman\" and the global Meta Description is exactly \"Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.\".",
+      "id": "REQ-98",
+      "text": "Configure the Registration page to embed the user-provided Google Form link https://forms.gle/HFbiXDq74sSw1tPg6 so the form renders directly on the /registration page (inside the existing iframe area) and users can fill it out on-site.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-6"
         ],
         "quotes": [
-          "Set Meta Title to: 'H★S Online Earn Platform | Md. Habibur Rahman'",
-          "Set Meta Description to: 'Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.'"
+          "I have my Google Form ready. Please embed this link: https://forms.gle/HFbiXDq74sSw1tPg6 into the registration page so users can see and fill out the form directly on the website."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/lib/siteConfig.ts` is updated so the default SEO title resolves to exactly \"H★S Online Earn Platform | Md. Habibur Rahman\".",
-        "`frontend/src/lib/siteConfig.ts` is updated so the default SEO description resolves to exactly \"Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.\".",
-        "The homepage (route \"/\") uses the global title/description (i.e., it does not render a conflicting per-page title/description that overrides the requested global values)."
+        "frontend/src/lib/registrationConfig.ts is updated so registrationConfig.googleFormEmbedUrl is set to use the provided form (https://forms.gle/HFbiXDq74sSw1tPg6) in a way that works in an iframe (i.e., the embedded form loads successfully on the page).",
+        "Visiting /registration shows the embedded form (not the placeholder state).",
+        "The embedded form is usable (scrollable if needed) on both mobile and desktop viewports."
       ]
     },
     {
-      "id": "REQ-66",
-      "text": "Ensure the site is configured to allow search engines to index the site (no \"noindex\" directives), including adding an explicit robots meta tag if needed.",
+      "id": "REQ-99",
+      "text": "Ensure the Registration page is live and accessible in production at the stable route /registration, including direct navigation and browser refresh without a 404.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-6"
         ],
         "quotes": [
-          "Make sure the site is set to 'Allow search engines to index this site'."
+          "Also, make the page live."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/public/robots.txt` continues to allow crawling (User-agent: * / Allow: /) and references `/sitemap.xml`.",
-        "There is no `meta name=\"robots\" content=\"noindex\"` (or equivalent) being injected by the app at runtime.",
-        "The HTML entry (`frontend/index.html`) includes an explicit robots meta tag that allows indexing (e.g., `index,follow`) OR the build verifies that indexing is allowed without it (no noindex present anywhere)."
-      ]
-    },
-    {
-      "id": "REQ-67",
-      "text": "Replace any visible header brand text \"MHS Habibur Blog\" with the previously uploaded logo asset, ensuring the logo is the primary visible brand element in the header on both desktop and mobile.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "Also, replace the current 'MHS Habibur Blog' text in the header with the logo I uploaded earlier."
-        ]
-      },
-      "acceptanceCriteria": [
-        "`frontend/src/components/layout/SiteHeader.tsx` renders the header brand as an `<img>` using the uploaded logo asset (the existing `/assets/generated/site-logo-header.dim_512x512.png`), not visible brand text.",
-        "The old brand text \"MHS Habibur Blog\" is not visibly displayed in the header UI (it may remain as screen-reader-only text for accessibility).",
-        "The logo has a descriptive English `alt` text aligned with the updated branding (includes \"H★S Online Earn Platform\" and \"Md. Habibur Rahman\") and displays with professional sizing/spacing on mobile and desktop."
+        "The TanStack Router route for /registration remains registered in frontend/src/App.tsx.",
+        "Directly loading /registration in the deployed site (including browser refresh) serves the SPA and renders the Registration page content.",
+        "The existing SPA fallback entrypoints for /registration (frontend/public/registration.html and frontend/public/registration/index.html) continue to be present and correctly mount the app."
       ]
     }
   ],
   "constraints": [
-    "Do not edit any files under `frontend/src/components/ui` (read-only components).",
-    "Do not edit any paths listed under `frontend.immutablePaths` in SYSTEM_CONTEXT.",
-    "Keep the backend architecture as a single Motoko actor; no backend changes are required for this SEO/header update."
+    "Do not edit files under frontend/immutablePaths (frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui).",
+    "Preserve the single-actor backend architecture; no backend changes are required for this request."
   ],
   "nonGoals": [
-    "Do not change blog post content or routes.",
-    "Do not add new pages or navigation items beyond what is required for SEO/header branding.",
-    "Do not introduce any third-party SEO services or external integrations."
+    "Do not change the Google Form questions/fields; only embed the form in the website.",
+    "Do not add new authentication or user account features.",
+    "Do not add any new backend persistence for registration submissions (submissions remain managed by Google Forms)."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [
-      "Use English for any user-facing text in the build request."
-    ],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

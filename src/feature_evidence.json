@@ -2,12 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-site-wide-seo-configuration-so-the-global-meta-title-is-exactly-h-s-online-earn-platform-md-habibur-rahman-and-the-global-meta-description-is-exactly-join-h-s-online-earn-platform-for-easy-online-typing-and-data-entry-jobs-start-earning-today-with-free-training-from-md-habibur-rahman",
-      "featureTitle": "Update the site-wide SEO configuration so the global Meta Title is exactly \"H★S Online Earn Platform | Md. Habibur Rahman\" and the global Meta Description is exactly \"Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.\".",
+      "featureId": "feature-configure-the-registration-page-to-embed-the-user-provided-google-form-link-https-forms-gle-hfbixdq74ssw1tpg6-so-the-form-renders-directly-on-the-registration-page-inside-the-existing-iframe-area-and-users-can-fill-it-out-on-site",
+      "featureTitle": "Configure the Registration page to embed the user-provided Google Form link https://forms.gle/HFbiXDq74sSw1tPg6 so the form renders directly on the /registration page (inside the existing iframe area) and users can fill it out on-site.",
       "files": [
-        "frontend/index.html",
-        "frontend/src/lib/siteConfig.ts",
-        "frontend/src/pages/HomePage.tsx"
+        "frontend/src/lib/registrationConfig.ts",
+        "frontend/src/pages/RegistrationPage.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -17,44 +16,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-65"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-the-site-is-configured-to-allow-search-engines-to-index-the-site-no-noindex-directives-including-adding-an-explicit-robots-meta-tag-if-needed",
-      "featureTitle": "Ensure the site is configured to allow search engines to index the site (no \"noindex\" directives), including adding an explicit robots meta tag if needed.",
-      "files": [
-        "frontend/index.html",
-        "frontend/src/components/seo/Seo.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-66"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-replace-any-visible-header-brand-text-mhs-habibur-blog-with-the-previously-uploaded-logo-asset-ensuring-the-logo-is-the-primary-visible-brand-element-in-the-header-on-both-desktop-and-mobile",
-      "featureTitle": "Replace any visible header brand text \"MHS Habibur Blog\" with the previously uploaded logo asset, ensuring the logo is the primary visible brand element in the header on both desktop and mobile.",
-      "files": [
-        "frontend/src/components/layout/SiteHeader.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-67"
+        "REQ-98"
       ],
       "confidence": "high"
     }

@@ -1,73 +1,52 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Global SEO defaults, indexing configuration, and header logo branding update",
+  "title": "Embed Google Form on Registration page and keep /registration route live",
   "requirements": [
     {
-      "id": "REQ-65",
-      "summary": "Set global SEO meta title/description to the requested exact values and ensure the homepage does not override them.",
+      "id": "REQ-98",
+      "summary": "Embed the provided Google Form on the /registration page iframe area and make it usable on mobile/desktop.",
       "acceptanceCriteria": [
-        "`frontend/src/lib/siteConfig.ts` is updated so the default SEO title resolves to exactly \"H★S Online Earn Platform | Md. Habibur Rahman\".",
-        "`frontend/src/lib/siteConfig.ts` is updated so the default SEO description resolves to exactly \"Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.\".",
-        "The homepage (route \"/\") uses the global title/description (i.e., it does not render a conflicting per-page title/description that overrides the requested global values)."
+        "frontend/src/lib/registrationConfig.ts is updated so registrationConfig.googleFormEmbedUrl is set to use the provided form (https://forms.gle/HFbiXDq74sSw1tPg6) in a way that works in an iframe (i.e., the embedded form loads successfully on the page).",
+        "Visiting /registration shows the embedded form (not the placeholder state).",
+        "The embedded form is usable (scrollable if needed) on both mobile and desktop viewports."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/lib/siteConfig.ts",
+          "path": "frontend/src/lib/registrationConfig.ts",
           "operation": "modify",
-          "description": "Update the exported siteConfig so `name` (global SEO title base) is exactly \"H★S Online Earn Platform | Md. Habibur Rahman\" and `description` is exactly \"Join H★S Online Earn Platform for easy online typing and data entry jobs. Start earning today with free training from Md. Habibur Rahman.\"."
+          "description": "Set registrationConfig.googleFormEmbedUrl to the user-provided Google Form link (https://forms.gle/HFbiXDq74sSw1tPg6) using an iframe-compatible embed form (e.g., ensure the configured URL is an embeddable Google Forms URL or includes the needed embedded rendering parameters)."
         },
         {
-          "path": "frontend/src/pages/HomePage.tsx",
+          "path": "frontend/src/pages/RegistrationPage.tsx",
           "operation": "modify",
-          "description": "Update the HomePage `<Seo />` usage to rely on global defaults (remove per-page title/description overrides) while keeping `path=\"/\"` so the homepage uses the requested global Meta Title/Description."
-        },
-        {
-          "path": "frontend/index.html",
-          "operation": "modify",
-          "description": "Align the initial HTML `<title>` with the new global Meta Title (\"H★S Online Earn Platform | Md. Habibur Rahman\") so first paint and crawlers see consistent global branding before the React SEO updates run."
+          "description": "Update the embedded iframe rendering to reliably load the configured embed URL and improve usability across viewports (responsive sizing/min-height and scroll behavior as needed) while keeping the embed inside the existing iframe area. Use existing shadcn-ui components already on the page (Button, Card) as-is for layout consistency; verify the component's usage instructions before implementing."
         }
       ]
     },
     {
-      "id": "REQ-66",
-      "summary": "Ensure search engine indexing is allowed (no noindex) and add an explicit robots meta tag allowing indexing.",
+      "id": "REQ-99",
+      "summary": "Keep /registration registered in the SPA router and ensure static SPA fallbacks exist for direct loads/refresh without 404.",
       "acceptanceCriteria": [
-        "`frontend/public/robots.txt` continues to allow crawling (User-agent: * / Allow: /) and references `/sitemap.xml`.",
-        "There is no `meta name=\"robots\" content=\"noindex\"` (or equivalent) being injected by the app at runtime.",
-        "The HTML entry (`frontend/index.html`) includes an explicit robots meta tag that allows indexing (e.g., `index,follow`) OR the build verifies that indexing is allowed without it (no noindex present anywhere)."
+        "The TanStack Router route for /registration remains registered in frontend/src/App.tsx.",
+        "Directly loading /registration in the deployed site (including browser refresh) serves the SPA and renders the Registration page content.",
+        "The existing SPA fallback entrypoints for /registration (frontend/public/registration.html and frontend/public/registration/index.html) continue to be present and correctly mount the app."
       ],
       "file_operations": [
         {
-          "path": "frontend/index.html",
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Add an explicit `<meta name=\"robots\" ...>` directive that allows indexing (e.g., `index,follow`) to ensure the app is configured to be indexable and does not ship with any noindex directives."
+          "description": "Verify /registration remains a stable TanStack Router route (registered in the route tree with path exactly '/registration') and keep it wired to RegistrationPage so in-app navigation renders correctly."
         },
         {
-          "path": "frontend/src/components/seo/Seo.tsx",
+          "path": "frontend/public/registration.html",
           "operation": "modify",
-          "description": "Ensure the runtime SEO layer never injects a `noindex` directive by explicitly setting/updating the robots meta tag to allow indexing (e.g., `index,follow`) alongside other meta tags."
+          "description": "Ensure the /registration SPA fallback HTML continues to correctly mount the React app (root mount element present and main module script included) so direct navigation/refresh does not 404 in production."
         },
         {
-          "path": "frontend/public/robots.txt",
+          "path": "frontend/public/registration/index.html",
           "operation": "modify",
-          "description": "Verify robots.txt continues to allow crawling and references `/sitemap.xml`; make any minimal adjustments needed to keep it compliant with the acceptance criteria."
-        }
-      ]
-    },
-    {
-      "id": "REQ-67",
-      "summary": "Replace visible header brand text with the uploaded logo as the primary header brand on desktop and mobile.",
-      "acceptanceCriteria": [
-        "`frontend/src/components/layout/SiteHeader.tsx` renders the header brand as an `<img>` using the uploaded logo asset (the existing `/assets/generated/site-logo-header.dim_512x512.png`), not visible brand text.",
-        "The old brand text \"MHS Habibur Blog\" is not visibly displayed in the header UI (it may remain as screen-reader-only text for accessibility).",
-        "The logo has a descriptive English `alt` text aligned with the updated branding (includes \"H★S Online Earn Platform\" and \"Md. Habibur Rahman\") and displays with professional sizing/spacing on mobile and desktop."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/layout/SiteHeader.tsx",
-          "operation": "modify",
-          "description": "Update the header branding to use the existing logo image at `frontend/public/assets/generated/site-logo-header.dim_512x512.png` as the primary visible brand element; remove any visible \"MHS Habibur Blog\" text (keep SR-only text if desired) and update the image `alt` text to a descriptive English string including \"H★S Online Earn Platform\" and \"Md. Habibur Rahman\"."
+          "description": "Ensure the /registration/index.html SPA fallback HTML continues to correctly mount the React app (root mount element present and main module script included) to support deployments that serve index.html for nested paths."
         }
       ]
     }

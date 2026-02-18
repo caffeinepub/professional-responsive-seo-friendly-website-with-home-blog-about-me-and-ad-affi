@@ -1,7 +1,6 @@
 import { Link } from '@tanstack/react-router';
-import { SiFacebook, SiX, SiLinkedin, SiGithub } from 'react-icons/si';
-import { Heart, ExternalLink } from 'lucide-react';
-import { HELP_LINKS } from '../../lib/helpLinks';
+import { SiWhatsapp } from 'react-icons/si';
+import { Heart } from 'lucide-react';
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
@@ -10,98 +9,69 @@ export function SiteFooter() {
     : 'unknown-app';
 
   return (
-    <footer className="border-t border-border/40 bg-muted/40 backdrop-blur-sm">
+    <footer className="border-t border-border/40 bg-gradient-to-b from-slate-900 to-black">
       <div className="container py-8 md:py-12">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <h3 className="mb-3 text-sm font-semibold">About</h3>
-            <p className="text-sm text-muted-foreground">
-              A professional blog sharing insights on online income strategies and digital marketing tactics to help you succeed.
+        {/* Main Footer Content */}
+        <div className="grid gap-8 md:grid-cols-3">
+          {/* Copyright & Owner Info */}
+          <div className="md:col-span-2">
+            <p className="mb-2 text-base font-semibold text-white md:text-lg">
+              © {currentYear} H★S Online Earn Platform. All Rights Reserved.
+            </p>
+            <p className="text-sm text-yellow-400/90 md:text-base">
+              Designed & Managed by Md. Habibur Rahman.
             </p>
           </div>
-          <div>
-            <h3 className="mb-3 text-sm font-semibold">Quick Links</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">
-                  About Me
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-3 text-sm font-semibold">সাহায্য</h3>
-            <ul className="space-y-2 text-sm">
-              {HELP_LINKS.map((link) => (
-                <li key={link.url}>
-                  <a 
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
-                  >
-                    {link.label}
-                    <ExternalLink className="h-3 w-3" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-3 text-sm font-semibold">Connect</h3>
-            <div className="flex space-x-4">
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Facebook"
-              >
-                <SiFacebook className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="X (Twitter)"
-              >
-                <SiX className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="LinkedIn"
-              >
-                <SiLinkedin className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="GitHub"
-              >
-                <SiGithub className="h-5 w-5" />
-              </a>
-            </div>
+
+          {/* Social Icons */}
+          <div className="flex items-center gap-4 md:justify-end">
+            <a
+              href="https://wa.me/8801704186771"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-green-600 text-white transition-all hover:bg-green-700 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              aria-label="WhatsApp"
+            >
+              <SiWhatsapp className="h-6 w-6" />
+            </a>
           </div>
         </div>
-        <div className="mt-8 border-t border-border/40 pt-8 text-center text-sm text-muted-foreground">
-          <p>
-            © {currentYear} MHS Habibur Blog. All rights reserved.
-          </p>
-          <p className="mt-2 flex items-center justify-center gap-1">
+
+        {/* Quick Links */}
+        <div className="mt-6 border-t border-white/10 pt-6">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-white/70 md:gap-6">
+            <Link
+              to="/"
+              className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            >
+              Home
+            </Link>
+            <span className="text-white/30">•</span>
+            <Link
+              to="/payment-proof"
+              className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            >
+              Payment Proof
+            </Link>
+            <span className="text-white/30">•</span>
+            <Link
+              to="/support"
+              className="transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            >
+              Contact Support
+            </Link>
+          </div>
+        </div>
+
+        {/* Caffeine Attribution */}
+        <div className="mt-6 border-t border-white/10 pt-6 text-center text-sm text-white/60">
+          <p className="flex items-center justify-center gap-1">
             Built with <Heart className="h-4 w-4 fill-red-500 text-red-500" /> using{' '}
             <a
               href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${appIdentifier}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium hover:underline"
+              className="font-medium text-white/80 hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               caffeine.ai
             </a>

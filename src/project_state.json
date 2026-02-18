@@ -1,25 +1,27 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 39,
-  "summary": "Homepage should include an updated Hero section using the uploaded image as its background, with a Bengali headline/sub-headline, a bright \"Join My Team\" button directly below the hero text, and the old yellow text box removed entirely. Other existing navigation/task/footer requirements remain as previously specified.",
+  "projectStateVersion": 51,
+  "summary": "Update the homepage Hero CTA: rename the single button from \"Contact on Facebook\" to \"রেজিস্ট্রেশন করুন\" and link it to the new Registration page (\"/registration\"). Embed the provided Google Form (https://forms.gle/HFbiXDq74sSw1tPg6) directly on the Registration page so users can fill it out on-site. Ensure the Registration page is actually published/available on the live site and is clearly accessible from the Home page (primary CTA entrypoint).",
   "architectural_notes": [
     "Home page ad region should support embedding third-party ad network code (external async script + container div) in place of a placeholder, while keeping the rest of the layout unchanged.",
     "Site-wide visual theme should support a full-screen fixed background image (parallax-style) with a dark overlay layer to preserve text contrast/readability; must be responsive across mobile and desktop.",
-    "Mobile navigation must include a hamburger menu icon on small screens; on open, it must reveal 'কাজ', 'পেমেন্ট প্রুফ', and 'সাহায্য' items and preserve the existing Help submenu links (Admin 1/Admin 2).",
     "Because the site uses a full-screen background image, all text blocks must maintain sufficient contrast via a subtle dark translucent backing and/or text-shadow; ensure readability on mobile and desktop.",
     "Home page should include a top-of-page Welcome section featuring provided Bengali text, center-aligned in a bold Bengali font, with neon/gradient glow styling and a slow rainbow animation; place the text inside a semi-transparent dark glassmorphism container to maintain readability over the fixed background image.",
     "Welcome section Bengali text is explicitly provided and must be used verbatim, styled bold + center-aligned with rainbow light animation: 'আসসালামু আলাইকুম। আমি Md. Habibur Rahman, এই ওয়েবসাইটটি আমার। এখানে অতি শীঘ্রই আমি বিভিন্ন ধরনের ইনকাম সাইট এড করবো এবং সম্পূর্ণ ফ্রিতে কাজ শিখিয়ে দিবো। বি:দ্র: অনেক সহজ কাজ এড করবো, যেটা আপনি ১০-৩০ মিনিটের মধ্যে শিখে যাবেন। কোনো প্রয়োজনে আমার ফেসবুক আইডিতে যোগাযোগ করতে পারেন।'",
     "Header brand/title text “MHS Habibur Blog” should render in Bright Gold with a white text-shadow to improve contrast over the background.",
     "Welcome section black/glass box Bengali text should use a Neon Yellow + White mixed color treatment and apply a glow effect to all text in the box to look illuminated.",
     "Within the Welcome Bengali text, the substring “Md. Habibur Rahman” should be specially highlighted using a rainbow/gradient light animated effect.",
-    "Mobile hamburger (three-line) menu icon should be white with a visible glow so it’s easy to see on mobile."
+    "Header navigation should be simplified to only: Home, Work Tasks (dropdown with Task 1/2/3), Payment Proof, and Support (Support is a direct external link to the user’s Facebook).",
+    "Payment Proof gallery page should include a top \"Upload New Proof\" CTA button that links externally to the provided Google Form (no in-site file upload handling)."
   ],
   "known_issues": [
     "Mobile hamburger menu icon is missing on mobile view, preventing access to navigation.",
     "Text is not clearly readable against the background image; insufficient contrast/overlay/text-shadow.",
-    "Deployment/build did not complete successfully (deployment error reported)."
+    "Deployment/build did not complete successfully (deployment error reported).",
+    "Registration page is not visible/accessible on the live site; ensure /registration route is published and reachable from the Home page CTA.",
+    "Registration page still needs the Google Form embedded using https://forms.gle/HFbiXDq74sSw1tPg6 and must be verified live/accessible on production."
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-a-responsive-site-layout-with-a-clean-professional-design-including-a-header-navigation-home-blog-about-me-footer-and-consistent-spacing-typography-across-pages",
@@ -548,6 +550,238 @@
         "REQ-67"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-desktop-header-navigation-so-the-menu-bar-contains-only-home-work-tasks-dropdown-with-task-1-task-2-task-3-payment-proof-and-support-an-external-link-to-the-user-s-facebook-profile-https-www-facebook-com-share-1cpkurcry8-remove-the-blog-and-about-me-links-from-the-header-menu-bar",
+      "title": "Update the desktop header navigation so the menu bar contains only: Home, Work Tasks (dropdown with Task 1/Task 2/Task 3), Payment Proof, and Support (an external link to the user’s Facebook profile: https://www.facebook.com/share/1CPKURCrY8/). Remove the Blog and About Me links from the header menu bar.",
+      "reqIds": [
+        "REQ-68"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-mobile-hamburger-menu-content-so-it-matches-the-simplified-navigation-home-work-tasks-task-1-2-3-payment-proof-and-support-external-link-to-https-www-facebook-com-share-1cpkurcry8-remove-the-existing-extra-sections-links-including-any-bengali-labeled-sections-and-any-join-team-entry-from-the-mobile-menu-panel",
+      "title": "Update the mobile hamburger menu content so it matches the simplified navigation: Home, Work Tasks (Task 1/2/3), Payment Proof, and Support (external link to https://www.facebook.com/share/1CPKURCrY8/). Remove the existing extra sections/links (including any Bengali-labeled sections and any Join Team entry) from the mobile menu panel.",
+      "reqIds": [
+        "REQ-69"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-home-page-hero-section-to-remove-any-old-black-transparent-text-box-and-yellow-glow-styling-elements-and-present-the-headline-and-bengali-sub-headline-directly-on-the-hero-background-image-with-a-dark-overlay-for-readability",
+      "title": "Update the Home page Hero section to remove any old black transparent text box and yellow-glow styling elements, and present the headline and Bengali sub-headline directly on the hero background image with a dark overlay for readability.",
+      "reqIds": [
+        "REQ-70"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-set-the-hero-headline-to-exactly-welcome-to-h-s-online-earn-platform-and-set-the-bengali-sub-headline-to-exactly-the-user-provided-bengali-text-verbatim-including-punctuation-and-spacing-md-habibur-rahman",
+      "title": "Set the Hero headline to exactly: \"Welcome to H★S Online Earn Platform!\" and set the Bengali sub-headline to exactly the user-provided Bengali text (verbatim, including punctuation and spacing): \"আসসালামু আলাইকুম, আমি Md. Habibur Rahman।আমাদের টিমে যুক্ত হয়ে সহজ টাইপিং এবং ডাটা এন্ট্রির কাজ করে আজই আয় শুরু করুন। কোনো অভিজ্ঞতা ছাড়াই ১০-১৫ মিনিটে কাজ শিখে নিতে পারবেন। এগুলো ছাড়াও আরও অনেক কাজ আপনি আমাদের এই ওয়েবসাইটে পেয়ে যাবেন।\"",
+      "reqIds": [
+        "REQ-71"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-hero-call-to-action-button-with-a-single-button-labeled-exactly-contact-on-facebook-that-links-to-the-user-s-facebook-profile-url-https-www-facebook-com-share-1cpkurcry8",
+      "title": "Replace the current Hero call-to-action button with a single button labeled exactly \"Contact on Facebook\" that links to the user’s Facebook profile URL: https://www.facebook.com/share/1CPKURCrY8/",
+      "reqIds": [
+        "REQ-72"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-dedicated-payment-proof-page-section-that-is-a-static-gallery-with-no-public-upload-button-and-no-ui-for-visitors-to-add-images-the-gallery-content-must-be-admin-provided-by-updating-code-assets-when-images-are-provided-through-chat",
+      "title": "Create a new dedicated Payment Proof page/section that is a static gallery with no public upload button and no UI for visitors to add images. The gallery content must be admin-provided by updating code/assets when images are provided through chat.",
+      "reqIds": [
+        "REQ-73"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-payment-proof-page-render-the-section-title-and-subtitle-exactly-as-provided-verbatim-title-subtitle",
+      "title": "On the Payment Proof page, render the section title and subtitle exactly as provided (verbatim): Title: \"আমাদের পেমেন্ট প্রুফ সমূহ\"; Subtitle: \"মেম্বারদের সফলতার কিছু চিত্র।\"",
+      "reqIds": [
+        "REQ-74"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-register-the-new-payment-proof-page-in-the-tanstack-router-route-tree-so-it-is-accessible-via-a-stable-url-path-and-wire-the-header-mobile-navigation-payment-proof-link-to-that-route",
+      "title": "Register the new Payment Proof page in the TanStack Router route tree so it is accessible via a stable URL path, and wire the header/mobile navigation “Payment Proof” link to that route.",
+      "reqIds": [
+        "REQ-75"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-global-seo-defaults-so-the-meta-title-is-exactly-h-s-online-earn-platform-md-habibur-rahman-and-the-meta-description-is-exactly-join-h-s-online-earn-platform-for-easy-typing-jobs-start-earning-today-with-free-training-from-habibur-rahman",
+      "title": "Update global SEO defaults so the Meta Title is exactly \"H★S Online Earn Platform | Md. Habibur Rahman\" and the Meta Description is exactly \"Join H★S Online Earn Platform for easy typing jobs. Start earning today with free training from Habibur Rahman.\"",
+      "reqIds": [
+        "REQ-76"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-static-sitemap-frontend-public-sitemap-xml-to-include-the-new-payment-proof-page-url-in-addition-to-the-existing-routes",
+      "title": "Update the static sitemap (frontend/public/sitemap.xml) to include the new Payment Proof page URL in addition to the existing routes.",
+      "reqIds": [
+        "REQ-78"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-payment-proof-page-route-payment-proof-to-replace-the-current-static-placeholder-message-with-a-professional-gallery-section-that-includes-1-the-existing-bengali-heading-text-and-subtitle-verbatim-2-a-top-action-button-labeled-exactly-upload-new-proof-that-links-to-https-forms-gle-f5gd1zuaqdwmo7n98-open-in-a-new-tab-and-3-a-responsive-3-column-image-grid-of-payment-proof-screenshots-1-column-on-mobile-2-on-medium-screens-3-on-large-screens",
+      "title": "Update the Payment Proof page (route \"/payment-proof\") to replace the current static placeholder message with a professional gallery section that includes: (1) the existing Bengali heading text \"আমাদের পেমেন্ট প্রুফ সমূহ\" and subtitle \"মেম্বারদের সফলতার কিছু চিত্র।\" (verbatim), (2) a top action button labeled exactly \"Upload New Proof\" that links to https://forms.gle/F5GD1zuaqDWMo7n98 (open in a new tab), and (3) a responsive 3-column image grid of payment proof screenshots (1 column on mobile, 2 on medium screens, 3 on large screens).",
+      "reqIds": [
+        "REQ-79"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-3-4-professional-looking-placeholder-payment-proof-images-as-static-assets-under-frontend-public-assets-generated-and-render-them-on-the-payment-proof-page-gallery-grid-using-standard-img-tags-with-meaningful-alt-text",
+      "title": "Add 3–4 professional-looking placeholder payment proof images as static assets under \"frontend/public/assets/generated\" and render them on the Payment Proof page gallery grid using standard <img> tags with meaningful alt text.",
+      "reqIds": [
+        "REQ-80"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-dedicated-support-page-section-that-lets-users-contact-administrators-directly-and-make-it-accessible-via-a-stable-route-e-g-support-in-the-tanstack-router-route-tree",
+      "title": "Create a new dedicated Support page/section that lets users contact administrators directly, and make it accessible via a stable route (e.g., \"/support\") in the TanStack Router route tree.",
+      "reqIds": [
+        "REQ-81"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-support-page-render-an-admin-contact-section-showing-exactly-two-admins-with-professional-facebook-icons-next-to-their-names-and-place-their-contact-buttons-side-by-side-on-desktop-and-stacked-or-comfortably-wrapped-on-mobile-using-the-exact-labels-and-urls-provided-admin-1-name-habibur-rahman-with-a-button-labeled-exactly-contact-habibur-linking-to-https-www-facebook-com-md-habibur-rahman-62356-admin-2-name-sumaiya-sumi-with-a-button-labeled-exactly-contact-sumi-linking-to-https-www-facebook-com-profile-php-id-61575236122760",
+      "title": "On the Support page, render an 'Admin Contact' section showing exactly two admins with professional Facebook icons next to their names, and place their contact buttons side-by-side on desktop (and stacked or comfortably wrapped on mobile), using the exact labels and URLs provided: Admin 1 name 'Habibur Rahman' with a button labeled exactly 'Contact Habibur' linking to https://www.facebook.com/md.habibur.rahman.62356; Admin 2 name 'Sumaiya / Sumi' with a button labeled exactly 'Contact Sumi' linking to https://www.facebook.com/profile.php?id=61575236122760.",
+      "reqIds": [
+        "REQ-82"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-the-global-footer-frontend-src-components-layout-sitefooter-tsx-to-a-premium-dark-theme-and-update-its-content-to-match-the-provided-english-copy-and-link-requirements-show-the-exact-copyright-text-2026-h-s-online-earn-platform-all-rights-reserved-show-the-exact-owner-info-designed-managed-by-md-habibur-rahman-include-a-whatsapp-icon-linked-using-the-provided-number-01704186771-and-include-quick-links-small-text-links-for-home-payment-proof-payment-proof-and-contact-support-link-to-the-new-support-page-route",
+      "title": "Redesign the global footer (frontend/src/components/layout/SiteFooter.tsx) to a premium dark theme and update its content to match the provided English copy and link requirements: show the exact copyright text '© 2026 H★S Online Earn Platform. All Rights Reserved.'; show the exact owner info 'Designed & Managed by Md. Habibur Rahman.'; include a WhatsApp icon linked using the provided number 01704186771; and include Quick Links (small text links) for 'Home' (\"/\"), 'Payment Proof' (\"/payment-proof\"), and 'Contact Support' (link to the new Support page route).",
+      "reqIds": [
+        "REQ-83"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-footer-buttons-icons-and-the-support-page-contact-buttons-are-mobile-friendly-and-easy-to-click-including-adequate-spacing-and-accessible-labels-aria-label-for-the-social-icons",
+      "title": "Ensure footer buttons/icons and the Support page contact buttons are mobile-friendly and easy to click, including adequate spacing and accessible labels (aria-label) for the social icons.",
+      "reqIds": [
+        "REQ-84"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-static-sitemap-frontend-public-sitemap-xml-to-include-the-new-support-page-url-path-once-the-support-page-route-is-added",
+      "title": "Update the static sitemap (frontend/public/sitemap.xml) to include the new Support page URL path once the Support page route is added.",
+      "reqIds": [
+        "REQ-85"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-dedicated-registration-page-titled-registration-and-register-it-in-the-tanstack-router-route-tree-at-a-stable-path-for-example-registration-the-page-must-use-the-global-sitelayout-background-header-footer-like-other-routes",
+      "title": "Create a new dedicated Registration page titled \"Registration\" and register it in the TanStack Router route tree at a stable path (for example: \"/registration\"). The page must use the global SiteLayout (background + header + footer) like other routes.",
+      "reqIds": [
+        "REQ-86"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-get-started-entrypoint-so-that-when-users-click-get-started-they-are-taken-to-the-registration-page-registration-this-should-be-discoverable-on-both-desktop-and-mobile-navigation-experiences",
+      "title": "Add a \"Get Started\" entrypoint so that when users click \"Get Started\" they are taken to the Registration page (\"/registration\"). This should be discoverable on both desktop and mobile navigation experiences.",
+      "reqIds": [
+        "REQ-87"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-registration-page-hero-section-design-with-a-professional-clean-tech-style-background-image-and-a-readability-overlay-render-the-following-user-provided-bengali-copy-verbatim-in-the-hero-main-heading-h-s-bold-gold-white-styling-sub-heading",
+      "title": "Implement the Registration page hero section design with a professional, clean tech-style background image and a readability overlay. Render the following user-provided Bengali copy verbatim in the hero: Main heading: \"H★S অনলাইন আর্নিং প্ল্যাটফর্মে আপনাকে স্বাগতম!\" (bold, gold/white styling). Sub-heading: \"আমাদের সাথে কাজ শুরু করতে নিচের ফর্মটি নির্ভুলভাবে পূরণ করে রেজিস্ট্রেশন সম্পন্ন করুন।\"",
+      "reqIds": [
+        "REQ-88"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-registration-form-section-that-embeds-the-admin-provided-google-form-via-an-iframe-or-if-a-final-google-form-embed-url-is-not-yet-configured-render-a-clean-placeholder-container-that-clearly-reserves-space-for-the-embed-without-breaking-layout",
+      "title": "Add a Registration form section that embeds the admin-provided Google Form (via an iframe) OR, if a final Google Form embed URL is not yet configured, render a clean placeholder container that clearly reserves space for the embed without breaking layout.",
+      "reqIds": [
+        "REQ-89"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-below-the-form-embed-section-add-a-large-primary-button-with-this-bengali-label-verbatim-link-this-button-to-the-work-tasks-destination-use-the-existing-first-work-task-route-tasks-task-1",
+      "title": "Below the form embed section, add a large primary button with this Bengali label verbatim: \"রেজিস্ট্রেশন শেষ? এখানে ক্লিক করে কাজ শুরু করুন\". Link this button to the Work Tasks destination (use the existing first Work Task route: \"/tasks/task-1\").",
+      "reqIds": [
+        "REQ-90"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-why-register-benefits-section-below-the-form-cta-area-containing-exactly-three-small-cards-each-showing-the-following-bengali-benefit-lines-verbatim-one-per-card-1-2-3",
+      "title": "Add a \"Why Register\" benefits section below the form/CTA area containing exactly three small cards, each showing the following Bengali benefit lines verbatim (one per card): (1) \"১০০% পেমেন্ট গ্যারান্টি।\" (2) \"সহজ টাইপিং কাজ।\" (3) \"২৪/৭ অ্যাডমিন সাপোর্ট।\"",
+      "reqIds": [
+        "REQ-91"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-small-security-note-at-the-bottom-of-the-registration-page-content-area-with-this-bengali-text-verbatim",
+      "title": "Add a small security note at the bottom of the Registration page content area with this Bengali text verbatim: \"আপনার তথ্য আমাদের কাছে সম্পূর্ণ নিরাপদ।\"",
+      "reqIds": [
+        "REQ-92"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-seo-metadata-for-the-registration-page-using-the-existing-seo-system-including-a-canonical-path-for-the-route-and-a-sensible-page-title-that-includes-registration-user-facing-text-in-the-build-request-is-english-the-page-itself-may-show-bengali-as-specified",
+      "title": "Add SEO metadata for the Registration page using the existing SEO system, including a canonical path for the route and a sensible page title that includes \"Registration\" (user-facing text in the build request is English; the page itself may show Bengali as specified).",
+      "reqIds": [
+        "REQ-93"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-static-sitemap-at-frontend-public-sitemap-xml-to-include-the-new-registration-page-url",
+      "title": "Update the static sitemap at frontend/public/sitemap.xml to include the new Registration page URL.",
+      "reqIds": [
+        "REQ-94"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-home-page-hero-section-cta-so-the-button-text-is-exactly-and-clicking-it-navigates-to-the-internal-registration-route-registration-do-not-open-a-new-tab-and-do-not-link-to-facebook",
+      "title": "Update the Home page Hero section CTA so the button text is exactly \"রেজিস্ট্রেশন করুন\" and clicking it navigates to the internal Registration route \"/registration\" (do not open a new tab, and do not link to Facebook).",
+      "reqIds": [
+        "REQ-95"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-registration-page-is-accessible-on-the-live-site-by-verifying-the-registration-route-is-included-in-the-app-route-tree-and-that-direct-navigation-and-browser-refresh-at-registration-do-not-produce-a-404-spa-fallback-to-the-app-entrypoint-works-in-production",
+      "title": "Ensure the Registration page is accessible on the live site by verifying the \"/registration\" route is included in the app route tree and that direct navigation and browser refresh at \"/registration\" do not produce a 404 (SPA fallback to the app entrypoint works in production).",
+      "reqIds": [
+        "REQ-96"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-configure-the-registration-page-to-embed-the-user-provided-google-form-link-https-forms-gle-hfbixdq74ssw1tpg6-so-the-form-renders-directly-on-the-registration-page-inside-the-existing-iframe-area-and-users-can-fill-it-out-on-site",
+      "title": "Configure the Registration page to embed the user-provided Google Form link https://forms.gle/HFbiXDq74sSw1tPg6 so the form renders directly on the /registration page (inside the existing iframe area) and users can fill it out on-site.",
+      "reqIds": [
+        "REQ-98"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -604,18 +838,6 @@
     {
       "id": "AR-14",
       "summary": "Use the uploaded image as a full-screen fixed (parallax-style) background across the entire site with a dark overlay for text readability; ensure professional appearance on mobile and desktop",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-15",
-      "summary": "Under the 'সাহায্য' (Help) menu section, add two clickable sub-options/buttons linking to the two provided Facebook admin profiles (Admin 1 and Admin 2), while keeping 'কাজ' and 'পেমেন্ট প্রুফ' menu items for later.",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-16",
-      "summary": "Add a working mobile hamburger menu (three-line icon) in the top-right that reveals the menu items 'কাজ', 'পেমেন্ট প্রুফ', and 'সাহায্য' (including its Admin 1/Admin 2 links) and works perfectly on mobile.",
       "reqIds": [],
       "status": "pending"
     },
@@ -704,12 +926,6 @@
       "status": "pending"
     },
     {
-      "id": "AR-34",
-      "summary": "Update the mobile/top-right menu to show: Home, Work Tasks (with Task 1/2/3 as sub-options), and Join Team",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
       "id": "AR-35",
       "summary": "Ensure 'About' section and 'Quick Links' footer appear on every page site-wide for a more professional feel",
       "reqIds": [],
@@ -749,6 +965,84 @@
       "id": "AR-41",
       "summary": "Update SEO settings: set global meta title to 'H★S Online Earn Platform | Md. Habibur Rahman', meta description to the provided text, and ensure search engines are allowed to index the site",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-42",
+      "summary": "Simplify header/menu to only: Home, Work Tasks (Task 1/2/3), Payment Proof, and Support (link to user’s Facebook); remove other/older menu groupings",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-44",
+      "summary": "Create a Payment Proof page/section as a static admin-managed gallery (no public upload), with title 'আমাদের পেমেন্ট প্রুফ সমূহ' and subtitle 'মেম্বারদের সফলতার কিছু চিত্র।'",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Update meta description to: 'Join H★S Online Earn Platform for easy typing jobs. Start earning today with free training from Habibur Rahman.' and ensure Google indexing is enabled",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-55",
+      "summary": "Ensure the site is configured to be indexed by Google (no noindex directives), including ensuring a robots meta tag is present with index/follow behavior and the existing robots.txt continues to allow indexing.",
+      "reqIds": [
+        "REQ-77"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-56",
+      "summary": "Add an \"Upload New Proof\" button on the Payment Proof gallery page linking to the provided Google Form, and populate the gallery with 3–4 placeholder payment-proof images (to be replaced later) in a responsive 3-column grid with rounded corners and soft shadow styling.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-57",
+      "summary": "Add a dedicated Admin Contact/Support section showing Admin 1 (Habibur Rahman) and Admin 2 (Sumaiya/Sumi) with Facebook icons and side-by-side 'Contact' buttons linking to their respective Facebook profiles",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-58",
+      "summary": "Add a premium dark-themed footer on every page with provided copyright text (© 2026 H★S Online Earn Platform...), owner info, WhatsApp icon link (01704186771), and quick links (Home, Payment Proof, Contact Support) styled mobile-friendly with white/gold text",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-59",
+      "summary": "Add a new 'Registration' gateway page (Get Started first step) with tech-style hero, embedded Google Form section, post-registration CTA to Work Tasks, 3 benefit cards, and security note (Bengali copy provided)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-60",
+      "summary": "Change the Home Hero CTA button label to \"রেজিস্ট্রেশন করুন\" and link it to the Registration page (/registration), and ensure the Registration page is published and clearly accessible from the Home page on the live site",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-63",
+      "summary": "Make the Registration page clearly accessible from the Home page by ensuring there is at least one prominent navigation path from Home to \"/registration\" (the Home Hero CTA qualifies) and that an additional consistent entrypoint exists in both desktop and mobile navigation labeled \"Get Started\" that links to \"/registration\".",
+      "reqIds": [
+        "REQ-97"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-64",
+      "summary": "Embed the provided Google Form (https://forms.gle/HFbiXDq74sSw1tPg6) on the Registration page so users can fill it out directly on the website, and ensure the page is live/published.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-66",
+      "summary": "Ensure the Registration page is live and accessible in production at the stable route /registration, including direct navigation and browser refresh without a 404.",
+      "reqIds": [
+        "REQ-99"
+      ],
       "status": "pending"
     }
   ],

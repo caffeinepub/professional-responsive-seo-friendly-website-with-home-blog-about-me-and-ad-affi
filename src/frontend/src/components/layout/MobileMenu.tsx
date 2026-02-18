@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 import { X } from 'lucide-react';
-import { HELP_LINKS } from '../../lib/helpLinks';
+import { Button } from '@/components/ui/button';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -65,6 +65,17 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
           {/* Menu Items */}
           <nav className="flex-1 space-y-2">
+            {/* Get Started Button */}
+            <Button
+              asChild
+              className="mb-4 w-full bg-gradient-to-r from-yellow-500 to-yellow-600 font-semibold text-black hover:from-yellow-400 hover:to-yellow-500"
+              onClick={onClose}
+            >
+              <Link to="/registration">
+                Get Started
+              </Link>
+            </Button>
+
             {/* Home Link */}
             <Link
               to="/"
@@ -104,52 +115,23 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               </div>
             </div>
 
-            {/* Join Team Link */}
-            <a
-              href="https://www.facebook.com/share/1CPKURCrY8/"
-              target="_blank"
-              rel="noopener noreferrer"
+            {/* Payment Proof Link */}
+            <Link
+              to="/payment-proof"
               onClick={onClose}
               className="neon-menu-item block rounded-lg px-4 py-3 text-lg font-semibold transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              Join Team
-            </a>
+              Payment Proof
+            </Link>
 
-            <a
-              href="/blog"
+            {/* Support Link */}
+            <Link
+              to="/support"
               onClick={onClose}
               className="neon-menu-item block rounded-lg px-4 py-3 text-lg font-semibold transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              কাজ
-            </a>
-            
-            <a
-              href="/blog"
-              onClick={onClose}
-              className="neon-menu-item block rounded-lg px-4 py-3 text-lg font-semibold transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              পেমেন্ট প্রুফ
-            </a>
-
-            {/* Help Section */}
-            <div className="pt-4">
-              <div className="neon-menu-item mb-2 px-4 py-3 text-lg font-semibold">
-                সাহায্য
-              </div>
-              <div className="ml-4 space-y-2">
-                {HELP_LINKS.map((link) => (
-                  <a
-                    key={link.url}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block rounded-lg px-4 py-2 text-base font-medium text-white/90 transition-colors hover:bg-accent hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </div>
+              Support
+            </Link>
           </nav>
         </div>
       </div>

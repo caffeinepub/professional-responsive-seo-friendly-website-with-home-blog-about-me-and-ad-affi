@@ -1,3 +1,5 @@
+import { Link } from '@tanstack/react-router';
+
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden">
@@ -26,24 +28,20 @@ export function HeroSection() {
           </h1>
 
           {/* Bengali Sub-headline */}
-          <div className="readable-text-block mb-10">
-            <p className="bengali-text text-base leading-relaxed text-white/95 sm:text-lg md:text-xl lg:text-2xl font-normal tracking-wide">
-              আসসালামু আলাইকুম, আমি Md. Habibur Rahman। আমাদের টিমে যুক্ত হয়ে সহজ টাইপিং এবং ডাটা এন্ট্রির কাজ করে আজই আয় শুরু করুন। কোনো অভিজ্ঞতা ছাড়াই ১০ মিনিটে কাজ শিখে নিন। এগুলো ছাড়াও আরও অনেক কাজ আপনি আমাদের এই ওয়েবসাইটে পেয়ে যাবেন।
-              <br />
-              প্রতিদিন নতুন নতুন কাজ পেতে ওয়েবটি জিভিট করুন.
+          <div className="mb-10">
+            <p className="bengali-text text-base leading-relaxed text-white/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:text-lg md:text-xl lg:text-2xl font-normal tracking-wide">
+              আসসালামু আলাইকুম, আমি Md. Habibur Rahman।আমাদের টিমে যুক্ত হয়ে সহজ টাইপিং এবং ডাটা এন্ট্রির কাজ করে আজই আয় শুরু করুন। কোনো অভিজ্ঞতা ছাড়াই ১০-১৫ মিনিটে কাজ শিখে নিতে পারবেন। এগুলো ছাড়াও আরও অনেক কাজ আপনি আমাদের এই ওয়েবসাইটে পেয়ে যাবেন।
             </p>
           </div>
 
-          {/* Single CTA Button */}
+          {/* Single CTA Button - Now links to Registration page */}
           <div className="flex justify-center">
-            <a
-              href="https://www.facebook.com/share/1CPKURCrY8/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/registration"
               className="neon-button neon-button-primary inline-flex h-12 items-center justify-center rounded-md px-10 text-base font-semibold shadow-lg transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:h-14 md:px-12 md:text-lg"
             >
-              Join My Team ★
-            </a>
+              রেজিস্ট্রেশন করুন
+            </Link>
           </div>
         </div>
       </div>

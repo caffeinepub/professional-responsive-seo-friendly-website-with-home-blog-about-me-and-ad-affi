@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useRouterState } from '@tanstack/react-router';
 import { Menu, ChevronDown } from 'lucide-react';
 import { MobileMenu } from './MobileMenu';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,22 +43,6 @@ export function SiteHeader() {
             >
               Home
             </Link>
-            <Link
-              to="/blog"
-              className={`px-3 py-2 text-sm font-medium transition-colors hover:text-foreground/80 ${
-                isActive('/blog') ? 'text-foreground' : 'text-foreground/60'
-              }`}
-            >
-              Blog
-            </Link>
-            <Link
-              to="/about"
-              className={`px-3 py-2 text-sm font-medium transition-colors hover:text-foreground/80 ${
-                isActive('/about') ? 'text-foreground' : 'text-foreground/60'
-              }`}
-            >
-              About Me
-            </Link>
             
             {/* Work Tasks Dropdown Menu */}
             <DropdownMenu>
@@ -85,6 +70,35 @@ export function SiteHeader() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            <Link
+              to="/payment-proof"
+              className={`px-3 py-2 text-sm font-medium transition-colors hover:text-foreground/80 ${
+                isActive('/payment-proof') ? 'text-foreground' : 'text-foreground/60'
+              }`}
+            >
+              Payment Proof
+            </Link>
+
+            <Link
+              to="/support"
+              className={`px-3 py-2 text-sm font-medium transition-colors hover:text-foreground/80 ${
+                isActive('/support') ? 'text-foreground' : 'text-foreground/60'
+              }`}
+            >
+              Support
+            </Link>
+
+            {/* Get Started Button */}
+            <Button
+              asChild
+              size="sm"
+              className="ml-2 bg-gradient-to-r from-yellow-500 to-yellow-600 font-semibold text-black hover:from-yellow-400 hover:to-yellow-500"
+            >
+              <Link to="/registration">
+                Get Started
+              </Link>
+            </Button>
           </nav>
 
           {/* Mobile Hamburger Button - Always visible on mobile */}

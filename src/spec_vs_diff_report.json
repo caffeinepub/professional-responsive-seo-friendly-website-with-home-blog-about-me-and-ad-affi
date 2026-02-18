@@ -1,26 +1,32 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-17T16:06:11.088Z",
-  "summary": "REQ-65 and REQ-67 appear implemented: global SEO title/description updated in siteConfig, HomePage uses global defaults, and SiteHeader shows the uploaded logo with SR-only brand text. Indexing support (REQ-66) is implemented via explicit robots meta tags in both Seo.tsx (runtime) and index.html. However, the header diff also introduces/retains a full navigation menu including a 'Work Tasks' dropdown, which is not requested and may violate the 'no new navigation items beyond what is required' non-goal.",
-  "missing_requirements": [],
-  "hallucinated_features": [
+  "generatedAt": "2026-02-18T14:26:17.649Z",
+  "summary": "REQ-98 appears implemented by updating registrationConfig.googleFormEmbedUrl to an embeddable Google Forms URL and rendering it via an iframe on the Registration page. Evidence for REQ-99 (route registration in App.tsx and presence/correctness of static SPA fallback entrypoints under frontend/public/registration*) is not present in the provided diff summary.",
+  "missing_requirements": [
     {
-      "description": "Header includes/introduces a 'Work Tasks' dropdown menu with links to Task 1/2/3 (additional navigation not required for SEO/header branding).",
-      "reason": "BuildRequest non-goal says not to add new pages or navigation items beyond what is required for SEO/header branding; REQ-67 only asks to replace visible brand text with the uploaded logo.",
+      "id": "REQ-99",
+      "requirement": "Ensure the Registration page is live and accessible in production at the stable route /registration, including direct navigation and browser refresh without a 404.",
+      "reason": "The diff summary does not show any changes or explicit confirmation for the required SPA fallback entrypoints (frontend/public/registration.html and frontend/public/registration/index.html), nor does it provide direct evidence from frontend/src/App.tsx that the /registration route remains registered (only a narrative description in a summary file).",
       "evidence": [
-        "frontend/src/components/layout/SiteHeader.tsx"
+        "frontend-file-summaries.txt (only descriptive text; no actual App.tsx or public/registration* file diff shown)"
       ]
     }
   ],
-  "confidence": 0.72,
+  "hallucinated_features": [
+    {
+      "description": "Major visual/content additions to the Registration page (hero section with background image/overlay, Bengali copy, \"Why Register\" section, and a CTA button linking to /tasks/task-1) beyond simply embedding the Google Form.",
+      "reason": "The BuildRequest focuses on embedding the Google Form and ensuring /registration is live; it does not request redesigning/expanding the Registration page content or adding task navigation CTAs.",
+      "evidence": [
+        "frontend/src/pages/RegistrationPage.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.66,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/index.html",
-    "frontend/src/components/layout/SiteHeader.tsx",
-    "frontend/src/components/seo/Seo.tsx",
-    "frontend/src/lib/siteConfig.ts",
-    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/lib/registrationConfig.ts",
+    "frontend/src/pages/RegistrationPage.tsx",
     "project_state.json"
   ]
 }

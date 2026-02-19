@@ -10,6 +10,9 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
+export type ApprovalStatus = { 'pending' : null } |
+  { 'approved' : null } |
+  { 'rejected' : null };
 export interface BlogPost {
   'title' : string,
   'content' : string,
@@ -18,12 +21,54 @@ export interface BlogPost {
   'excerpt' : string,
 }
 export type Time = bigint;
+export interface UserApprovalInfo {
+  'status' : ApprovalStatus,
+  'principal' : Principal,
+}
+export interface UserLoginProfile {
+  'groupNumber' : string,
+  'username' : string,
+  'email' : string,
+  'whatsappNumber' : string,
+  'registeredAt' : bigint,
+}
+export type UserLoginResponse = { 'error' : string } |
+  { 'success' : UserLoginProfile };
+export interface UserPublicProfile {
+  'groupNumber' : string,
+  'username' : string,
+  'email' : string,
+  'whatsappNumber' : string,
+  'registeredAt' : bigint,
+}
+export type UserRegistrationResponse = { 'error' : string } |
+  { 'success' : string };
+export type UserRole = { 'admin' : null } |
+  { 'user' : null } |
+  { 'guest' : null };
 export interface _SERVICE {
+  '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'createPost' : ActorMethod<[string, string, string, string], string>,
   'getAllPostSlugs' : ActorMethod<[], Array<string>>,
+  'getAllUsers' : ActorMethod<[], Array<UserPublicProfile>>,
+  'getCallerUserProfile' : ActorMethod<[], [] | [UserPublicProfile]>,
+  'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getPost' : ActorMethod<[string], BlogPost>,
   'getPosts' : ActorMethod<[], Array<BlogPost>>,
+  'getUserProfile' : ActorMethod<[Principal], [] | [UserPublicProfile]>,
+  'isCallerAdmin' : ActorMethod<[], boolean>,
+  'isCallerApproved' : ActorMethod<[], boolean>,
+  'listApprovals' : ActorMethod<[], Array<UserApprovalInfo>>,
+  'loginUser' : ActorMethod<[string, string], UserLoginResponse>,
+  'registerUser' : ActorMethod<
+    [string, string, string, string, string],
+    UserRegistrationResponse
+  >,
+  'requestApproval' : ActorMethod<[], undefined>,
+  'saveCallerUserProfile' : ActorMethod<[UserPublicProfile], undefined>,
   'searchPosts' : ActorMethod<[string], Array<BlogPost>>,
+  'setApproval' : ActorMethod<[Principal, ApprovalStatus], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

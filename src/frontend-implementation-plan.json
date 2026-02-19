@@ -1,52 +1,178 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Embed Google Form on Registration page and keep /registration route live",
+  "title": "Implement user registration, approval workflow, and admin dashboard (frontend)",
   "requirements": [
     {
-      "id": "REQ-98",
-      "summary": "Embed the provided Google Form on the /registration page iframe area and make it usable on mobile/desktop.",
+      "id": "REQ-111",
+      "summary": "Wire registration form to call backend registerUser function with form data and display success/error messages",
       "acceptanceCriteria": [
-        "frontend/src/lib/registrationConfig.ts is updated so registrationConfig.googleFormEmbedUrl is set to use the provided form (https://forms.gle/HFbiXDq74sSw1tPg6) in a way that works in an iframe (i.e., the embedded form loads successfully on the page).",
-        "Visiting /registration shows the embedded form (not the placeholder state).",
-        "The embedded form is usable (scrollable if needed) on both mobile and desktop viewports."
+        "Form submits data to backend registerUser function",
+        "Shows success message when registration succeeds",
+        "Displays error messages for failures",
+        "Form validates required fields before submission"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/lib/registrationConfig.ts",
+          "path": "frontend/src/components/registration/RegistrationForm.tsx",
           "operation": "modify",
-          "description": "Set registrationConfig.googleFormEmbedUrl to the user-provided Google Form link (https://forms.gle/HFbiXDq74sSw1tPg6) using an iframe-compatible embed form (e.g., ensure the configured URL is an embeddable Google Forms URL or includes the needed embedded rendering parameters)."
-        },
-        {
-          "path": "frontend/src/pages/RegistrationPage.tsx",
-          "operation": "modify",
-          "description": "Update the embedded iframe rendering to reliably load the configured embed URL and improve usability across viewports (responsive sizing/min-height and scroll behavior as needed) while keeping the embed inside the existing iframe area. Use existing shadcn-ui components already on the page (Button, Card) as-is for layout consistency; verify the component's usage instructions before implementing."
+          "description": "Update the form submit handler to call the backend registerUser function from the actor with all form fields (username, whatsappNumber, groupNumber, email, password). Handle the UserRegistrationResponse variant by displaying a success message when the response is 'success' and showing the error message when the response is 'error'. Add proper loading state during submission and disable the submit button while processing."
         }
       ]
     },
     {
-      "id": "REQ-99",
-      "summary": "Keep /registration registered in the SPA router and ensure static SPA fallbacks exist for direct loads/refresh without 404.",
+      "id": "REQ-112",
+      "summary": "Implement login authentication flow with backend loginUser call and session state management",
       "acceptanceCriteria": [
-        "The TanStack Router route for /registration remains registered in frontend/src/App.tsx.",
-        "Directly loading /registration in the deployed site (including browser refresh) serves the SPA and renders the Registration page content.",
-        "The existing SPA fallback entrypoints for /registration (frontend/public/registration.html and frontend/public/registration/index.html) continue to be present and correctly mount the app."
+        "Login button triggers authentication flow",
+        "Successful login stores user session state",
+        "Failed login shows clear error messages",
+        "Authentication state persists across page navigation"
       ],
       "file_operations": [
         {
+          "path": "frontend/src/components/registration/LoginForm.tsx",
+          "operation": "create",
+          "description": "Create a new login form component with fields for email/username and password. Include password visibility toggle. On form submit, call the backend loginUser function with the credentials. If the UserLoginResponse is 'success', store the user session using the auth context (from REQ-117). If 'error', display the error message. Add loading state and disable submit button during authentication."
+        },
+        {
+          "path": "frontend/src/pages/RegistrationPage.tsx",
+          "operation": "modify",
+          "description": "Add the new LoginForm component to the registration page. Create a tab or toggle UI that switches between the registration form (RegistrationForm) and the login form (LoginForm). Maintain existing layout structure and ensure both forms are styled consistently with the page design."
+        }
+      ]
+    },
+    {
+      "id": "REQ-113",
+      "summary": "Add route guards to task pages that check authentication and approval status, redirecting or showing Bengali blocking message as needed",
+      "acceptanceCriteria": [
+        "Task pages check user authentication status",
+        "Unauthenticated users are redirected to /registration",
+        "Pending users see the exact Bengali blocking message",
+        "Approved users can access task content normally"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/tasks/ApprovalGuard.tsx",
+          "operation": "create",
+          "description": "Create an ApprovalGuard wrapper component that checks authentication and approval status using the auth context. If not authenticated, redirect to /registration using TanStack Router navigation. If authenticated but approval status is 'pending', render a centered card displaying this exact Bengali message: 'আপনার অ্যাকাউন্টটি বর্তমানে যাচাই করা হচ্ছে। অ্যাডমিন অ্যাপ্রুভ করার পর আপনি কাজ শুরু করতে পারবেন।' If approved or admin, render the children prop. Show loading state while checking approval status."
+        },
+        {
+          "path": "frontend/src/pages/Task1Page.tsx",
+          "operation": "modify",
+          "description": "Wrap the existing task content in the ApprovalGuard component so that authentication and approval checks are enforced before rendering the TaskInteractionCard and instructions."
+        },
+        {
+          "path": "frontend/src/pages/Task2Page.tsx",
+          "operation": "modify",
+          "description": "Wrap the existing task content in the ApprovalGuard component so that authentication and approval checks are enforced before rendering the TaskInteractionCard and instructions."
+        },
+        {
+          "path": "frontend/src/pages/Task3Page.tsx",
+          "operation": "modify",
+          "description": "Wrap the existing task content in the ApprovalGuard component so that authentication and approval checks are enforced before rendering the TaskInteractionCard and instructions."
+        }
+      ]
+    },
+    {
+      "id": "REQ-114",
+      "summary": "Create Admin Panel page at /admin-panel with basic access control and SiteLayout integration",
+      "acceptanceCriteria": [
+        "Admin panel page exists at /admin-panel route",
+        "Page uses global SiteLayout for consistency",
+        "Basic access control prevents unauthorized viewing",
+        "Route is registered in the app route tree"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/AdminPanelPage.tsx",
+          "operation": "create",
+          "description": "Create the Admin Panel page component. Check if the current user is an admin using isCallerAdmin query from the backend via the actor. If not admin, show an access denied message. If admin, render a container div with heading 'Admin Panel' in English and 'অ্যাডমিন প্যানেল' in Bengali. Use the SiteLayout wrapper by default since it's configured in the router. Add loading state while checking admin status."
+        },
+        {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Verify /registration remains a stable TanStack Router route (registered in the route tree with path exactly '/registration') and keep it wired to RegistrationPage so in-app navigation renders correctly."
+          "description": "Register a new route '/admin-panel' in the TanStack Router route tree that renders AdminPanelPage. Place it alongside the existing routes (home, blog, about, tasks, etc). Ensure the route uses the same SiteLayout wrapper as other routes."
+        }
+      ]
+    },
+    {
+      "id": "REQ-115",
+      "summary": "Fetch and display all registered users in Admin Panel with clean responsive layout",
+      "acceptanceCriteria": [
+        "Admin panel fetches user list from backend",
+        "Displays username, WhatsApp number, and status for each user",
+        "Layout is clean and responsive",
+        "Shows loading state while fetching data"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/admin/UserListTable.tsx",
+          "operation": "create",
+          "description": "Create a UserListTable component that fetches all users using the getAllUsers query from the backend actor. Display the results in a responsive table or card grid showing each user's username, whatsappNumber, and approval status (use the status from the UserApprovalInfo type by matching principals with getAllUsers data). Show loading spinner while fetching. Handle empty state when no users exist. Use Tailwind styling consistent with the site's neon theme."
         },
         {
-          "path": "frontend/public/registration.html",
+          "path": "frontend/src/pages/AdminPanelPage.tsx",
           "operation": "modify",
-          "description": "Ensure the /registration SPA fallback HTML continues to correctly mount the React app (root mount element present and main module script included) so direct navigation/refresh does not 404 in production."
+          "description": "Import and render the UserListTable component inside the admin panel page content area, below the page heading. Ensure proper spacing and layout integration."
+        }
+      ]
+    },
+    {
+      "id": "REQ-116",
+      "summary": "Add Approve button next to pending users that calls backend approveUser and refreshes the list",
+      "acceptanceCriteria": [
+        "Approve button appears for each Pending user",
+        "Clicking button triggers backend approveUser call",
+        "User list refreshes to show updated status",
+        "Success message confirms approval action",
+        "Button is disabled or hidden for already-Approved users"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/admin/UserListTable.tsx",
+          "operation": "modify",
+          "description": "Add an 'Approve' action button in each user row/card for users with status 'pending'. When clicked, call the backend setApproval function with the user's principal and ApprovalStatus.approved. After successful approval, invalidate the relevant React Query cache keys to refresh the user list. Show a success toast/message confirming the approval. Disable the button while the approval request is processing. For users with status 'approved' or 'rejected', either hide the button or show a disabled badge indicating their current status."
+        }
+      ]
+    },
+    {
+      "id": "REQ-117",
+      "summary": "Create authentication context/hook to manage user state, login/logout, and session persistence",
+      "acceptanceCriteria": [
+        "Auth context/hook manages authentication state",
+        "Provides login and logout functions",
+        "Session persists across page refreshes",
+        "Exposes user approval status to components",
+        "Can be used by route guards and UI components"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useAuthContext.tsx",
+          "operation": "create",
+          "description": "Create a React context and provider for authentication state management. Use the authorization and user-approval components by calling isCallerApproved and getCallerUserRole from the backend to determine approval status and role. Store user session data (UserLoginProfile from backend) in state. Provide login function that stores session data after successful loginUser call. Provide logout function that clears session state and invalidates React Query cache. Persist session data to localStorage and restore on app initialization. Expose isAuthenticated, userProfile, isApproved, isAdmin, login, and logout values to consumers. Verify the authorization and user-approval component usage instructions before implementing."
         },
         {
-          "path": "frontend/public/registration/index.html",
+          "path": "frontend/src/main.tsx",
           "operation": "modify",
-          "description": "Ensure the /registration/index.html SPA fallback HTML continues to correctly mount the React app (root mount element present and main module script included) to support deployments that serve index.html for nested paths."
+          "description": "Wrap the App component with the AuthProvider from useAuthContext.tsx. Place it inside the QueryClientProvider and InternetIdentityProvider but outside the App component so authentication state is available throughout the application."
+        }
+      ]
+    },
+    {
+      "id": "REQ-118",
+      "summary": "Show success message after registration informing user about pending approval",
+      "acceptanceCriteria": [
+        "Success message appears after registration completes",
+        "Message explains pending approval status",
+        "User understands they cannot access tasks immediately",
+        "Message is displayed in Bengali for consistency"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/registration/RegistrationForm.tsx",
+          "operation": "modify",
+          "description": "After successful registration (when registerUser returns success response), display a success alert or modal with this Bengali message: 'আপনার নিবন্ধন সফল হয়েছে। আপনার অ্যাকাউন্টটি বর্তমানে অ্যাডমিনের অনুমোদনের জন্য অপেক্ষা করছে। অনুমোদন হলে আপনি কাজ শুরু করতে পারবেন।' Include an OK button that closes the message. Consider adding an English translation below for clarity: 'Your registration is successful. Your account is currently awaiting admin approval. You will be able to start tasks once approved.'"
         }
       ]
     }

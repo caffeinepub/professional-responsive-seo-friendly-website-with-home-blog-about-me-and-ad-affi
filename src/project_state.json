@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 51,
-  "summary": "Update the homepage Hero CTA: rename the single button from \"Contact on Facebook\" to \"রেজিস্ট্রেশন করুন\" and link it to the new Registration page (\"/registration\"). Embed the provided Google Form (https://forms.gle/HFbiXDq74sSw1tPg6) directly on the Registration page so users can fill it out on-site. Ensure the Registration page is actually published/available on the live site and is clearly accessible from the Home page (primary CTA entrypoint).",
+  "projectStateVersion": 57,
+  "summary": "Update the homepage Hero CTA: rename the single button from \"Contact on Facebook\" to \"রেজিস্ট্রেশন করুন\" and link it to the new Registration page (\"/registration\"). Replace the embedded Google Form on the Registration page with a professional built-in registration form containing Username, WhatsApp Number, Group Number, Email, and Password fields, styled with a clean white card background, blue Register button, and green Login button. Add a floating WhatsApp icon at the bottom right. (Admin approval system and access control are deferred for incremental implementation.)",
   "architectural_notes": [
     "Home page ad region should support embedding third-party ad network code (external async script + container div) in place of a placeholder, while keeping the rest of the layout unchanged.",
     "Site-wide visual theme should support a full-screen fixed background image (parallax-style) with a dark overlay layer to preserve text contrast/readability; must be responsive across mobile and desktop.",
@@ -18,10 +18,9 @@
     "Mobile hamburger menu icon is missing on mobile view, preventing access to navigation.",
     "Text is not clearly readable against the background image; insufficient contrast/overlay/text-shadow.",
     "Deployment/build did not complete successfully (deployment error reported).",
-    "Registration page is not visible/accessible on the live site; ensure /registration route is published and reachable from the Home page CTA.",
-    "Registration page still needs the Google Form embedded using https://forms.gle/HFbiXDq74sSw1tPg6 and must be verified live/accessible on production."
+    "Registration page is not visible/accessible on the live site; ensure /registration route is published and reachable from the Home page CTA."
   ],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-create-a-responsive-site-layout-with-a-clean-professional-design-including-a-header-navigation-home-blog-about-me-footer-and-consistent-spacing-typography-across-pages",
@@ -782,6 +781,118 @@
         "REQ-98"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-registration-page-google-form-embed-to-not-use-any-google-drive-embed-method-and-instead-embed-the-direct-google-form-link-via-an-iframe-using-this-exact-url-https-forms-gle-hfbixdq74ssw1tpg6-the-form-must-be-visible-and-fillable-directly-on-the-registration-page",
+      "title": "Update the Registration page Google Form embed to NOT use any Google Drive embed method and instead embed the direct Google Form link via an <iframe> using this exact URL: https://forms.gle/HFbiXDq74sSw1tPg6. The form must be visible and fillable directly on the /registration page.",
+      "reqIds": [
+        "REQ-100"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-google-form-embed-on-the-registration-page-registration-with-a-professional-built-in-registration-form-containing-exactly-these-fields-username-text-input-whatsapp-number-number-input-with-placeholder-01-group-number-text-input-email-email-input-and-password-password-input-with-show-hide-toggle-icon",
+      "title": "Replace the Google Form embed on the Registration page (/registration) with a professional built-in registration form containing exactly these fields: Username (text input), WhatsApp Number (number input with placeholder '01...'), Group Number (text input), Email (email input), and Password (password input with show/hide toggle icon).",
+      "reqIds": [
+        "REQ-101"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-style-the-registration-form-with-a-clean-white-card-background-container-that-stands-out-against-the-site-s-dark-background-theme-and-provides-clear-visual-separation-for-the-form-area",
+      "title": "Style the registration form with a clean white card background container that stands out against the site's dark background theme and provides clear visual separation for the form area.",
+      "reqIds": [
+        "REQ-102"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-two-action-buttons-below-the-registration-form-a-blue-register-button-primary-action-and-a-green-login-button-secondary-action-both-styled-with-proper-hover-states-and-accessibility-features",
+      "title": "Add two action buttons below the registration form: a blue 'Register' button (primary action) and a green 'Login' button (secondary action), both styled with proper hover states and accessibility features.",
+      "reqIds": [
+        "REQ-103"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-keep-the-existing-registration-page-hero-section-bengali-heading-and-sub-heading-benefits-cards-security-note-and-post-registration-cta-button-unchanged-while-replacing-only-the-google-form-embed-area-with-the-new-built-in-form",
+      "title": "Keep the existing Registration page hero section (Bengali heading and sub-heading), benefits cards, security note, and post-registration CTA button unchanged while replacing only the Google Form embed area with the new built-in form.",
+      "reqIds": [
+        "REQ-104"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-client-side-form-validation-for-the-registration-form-including-required-field-checks-email-format-validation-whatsapp-number-format-validation-bangladesh-format-starting-with-01-password-minimum-length-at-least-6-characters-and-display-inline-error-messages-for-invalid-inputs",
+      "title": "Implement client-side form validation for the registration form including required field checks, email format validation, WhatsApp number format validation (Bangladesh format starting with '01'), password minimum length (at least 6 characters), and display inline error messages for invalid inputs.",
+      "reqIds": [
+        "REQ-105"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-wire-the-registration-form-submit-handler-in-frontend-src-components-registration-registrationform-tsx-to-call-the-backend-registeruser-function-with-the-form-data-username-whatsappnumber-groupnumber-email-password-display-a-success-message-on-successful-registration-and-show-error-messages-for-validation-failures-or-backend-errors",
+      "title": "Wire the registration form submit handler in frontend/src/components/registration/RegistrationForm.tsx to call the backend registerUser function with the form data (username, whatsappNumber, groupNumber, email, password), display a success message on successful registration, and show error messages for validation failures or backend errors.",
+      "reqIds": [
+        "REQ-111"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-login-authentication-flow-where-the-login-button-on-the-registration-page-frontend-src-components-registration-registrationform-tsx-or-a-new-login-form-component-triggers-a-backend-loginuser-call-with-username-email-and-password-stores-authentication-state-user-session-token-on-success-and-displays-appropriate-error-messages-for-failed-login-attempts",
+      "title": "Implement a login authentication flow where the 'Login' button on the Registration page (frontend/src/components/registration/RegistrationForm.tsx or a new login form component) triggers a backend loginUser call with username/email and password, stores authentication state (user session/token) on success, and displays appropriate error messages for failed login attempts.",
+      "reqIds": [
+        "REQ-112"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-route-guards-to-the-task-pages-frontend-src-pages-task1page-tsx-task2page-tsx-task3page-tsx-that-check-the-current-user-s-authentication-status-and-approval-status-before-rendering-task-content-if-the-user-is-not-logged-in-redirect-to-the-registration-page-if-the-user-is-logged-in-but-has-status-pending-display-this-exact-bengali-message-instead-of-task-content",
+      "title": "Add route guards to the Task pages (frontend/src/pages/Task1Page.tsx, Task2Page.tsx, Task3Page.tsx) that check the current user's authentication status and approval status before rendering task content. If the user is not logged in, redirect to the Registration page. If the user is logged in but has status='Pending', display this exact Bengali message instead of task content: 'আপনার অ্যাকাউন্টটি বর্তমানে যাচাই করা হচ্ছে। অ্যাডমিন অ্যাপ্রুভ করার পর আপনি কাজ শুরু করতে পারবেন।'",
+      "reqIds": [
+        "REQ-113"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-admin-panel-page-component-at-frontend-src-pages-adminpanelpage-tsx-and-register-it-in-the-tanstack-router-route-tree-at-the-path-admin-panel-the-page-must-use-the-global-sitelayout-and-include-basic-access-control-e-g-password-prompt-or-simple-auth-check",
+      "title": "Create a new Admin Panel page component at frontend/src/pages/AdminPanelPage.tsx and register it in the TanStack Router route tree at the path '/admin-panel'. The page must use the global SiteLayout and include basic access control (e.g., password prompt or simple auth check).",
+      "reqIds": [
+        "REQ-114"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-admin-panel-page-frontend-src-pages-adminpanelpage-tsx-fetch-all-registered-users-from-the-backend-using-the-getallusers-query-function-and-display-them-in-a-clean-responsive-table-or-card-list-showing-each-user-s-name-username-whatsapp-number-and-current-status-pending-or-approved",
+      "title": "On the Admin Panel page (frontend/src/pages/AdminPanelPage.tsx), fetch all registered users from the backend using the getAllUsers query function and display them in a clean, responsive table or card list showing each user's Name (username), WhatsApp Number, and current Status ('Pending' or 'Approved').",
+      "reqIds": [
+        "REQ-115"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-approve-action-button-next-to-each-pending-user-in-the-admin-panel-user-list-that-when-clicked-calls-the-backend-approveuser-function-with-that-user-s-identifier-updates-the-user-s-status-to-approved-refreshes-the-user-list-to-show-the-updated-status-and-displays-a-success-confirmation-message",
+      "title": "Add an 'Approve' action button next to each 'Pending' user in the Admin Panel user list that, when clicked, calls the backend approveUser function with that user's identifier, updates the user's status to 'Approved', refreshes the user list to show the updated status, and displays a success confirmation message.",
+      "reqIds": [
+        "REQ-116"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-react-context-provider-or-authentication-hook-e-g-frontend-src-hooks-useauth-ts-or-useauthcontext-tsx-that-manages-user-authentication-state-logged-in-out-user-details-approval-status-provides-login-logout-functions-and-persists-the-session-across-page-refreshes-using-localstorage-or-sessionstorage",
+      "title": "Create a React context provider or authentication hook (e.g., frontend/src/hooks/useAuth.ts or useAuthContext.tsx) that manages user authentication state (logged in/out, user details, approval status), provides login/logout functions, and persists the session across page refreshes using localStorage or sessionStorage.",
+      "reqIds": [
+        "REQ-117"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-registration-page-frontend-src-pages-registrationpage-tsx-to-show-a-clear-success-message-after-successful-registration-informing-the-user-that-their-account-is-pending-admin-approval-and-they-will-be-notified-when-they-can-access-tasks",
+      "title": "Update the Registration page (frontend/src/pages/RegistrationPage.tsx) to show a clear success message after successful registration informing the user that their account is pending admin approval and they will be notified when they can access tasks.",
+      "reqIds": [
+        "REQ-118"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1042,6 +1153,82 @@
       "summary": "Ensure the Registration page is live and accessible in production at the stable route /registration, including direct navigation and browser refresh without a 404.",
       "reqIds": [
         "REQ-99"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-67",
+      "summary": "Replace the embedded Google Form on the Registration page with a professional built-in registration form containing fields: Username (text), WhatsApp Number (number, placeholder '01...'), Group Number (text), Email (email), Password (password with show/hide icon), and Confirm Password (password), styled with a clean white card background",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-68",
+      "summary": "Style the Registration form with a blue 'Register' button and a green 'Login' button, and add a floating WhatsApp icon at the bottom right of the page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-69",
+      "summary": "Set default status to 'Pending' for every newly registered user and implement user status management system in backend",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-70",
+      "summary": "Block task/job page access for 'Pending' users and show Bengali message: 'আপনার অ্যাকাউন্টটি বর্তমানে যাচাই করা হচ্ছে। অ্যাডমিন অ্যাপ্রুভ করার পর আপনি কাজ শুরু করতে পারবেন।'",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-71",
+      "summary": "Create a hidden admin panel at /admin-panel showing all registered users (Name, WhatsApp, Status) with an 'Approve' button to activate each user",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-72",
+      "summary": "Implement login logic that only allows users with 'Approved' status to access work/task pages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-73",
+      "summary": "Add a User data model to the backend (backend/main.mo) containing fields: username (Text), whatsappNumber (Text), groupNumber (Text), email (Text), passwordHash (Text), status (Text with values 'Pending' or 'Approved'), and registeredAt (Int timestamp).",
+      "reqIds": [
+        "REQ-106"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-74",
+      "summary": "Implement a registerUser backend function in backend/main.mo that accepts user registration data (username, whatsappNumber, groupNumber, email, password), hashes the password securely, creates a new User record with status='Pending', stores it in a stable data structure (Map or similar), and returns a success/error response.",
+      "reqIds": [
+        "REQ-107"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-75",
+      "summary": "Implement a loginUser backend function in backend/main.mo that accepts username/email and password, verifies credentials against stored user data, checks the user's status field, and returns authentication success with user details only if status='Approved', or returns an appropriate error if status='Pending' or credentials are invalid.",
+      "reqIds": [
+        "REQ-108"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-76",
+      "summary": "Implement a getAllUsers backend query function in backend/main.mo that returns a list of all registered users with their username, whatsappNumber, and status fields (do not include passwordHash in the response).",
+      "reqIds": [
+        "REQ-109"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-77",
+      "summary": "Implement an approveUser backend update function in backend/main.mo that accepts a user identifier (username or email), finds the user record, updates their status from 'Pending' to 'Approved', and returns a success/error response.",
+      "reqIds": [
+        "REQ-110"
       ],
       "status": "pending"
     }

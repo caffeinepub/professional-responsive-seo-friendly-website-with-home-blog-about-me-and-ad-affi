@@ -1,6 +1,6 @@
 // Configuration for the Registration page
 // Set the Google Form embed URL here when available
 export const registrationConfig = {
-  // Google Form embed URL - converted from short link to embeddable format
-  googleFormEmbedUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSfHFbiXDq74sSw1tPg6/viewform?embedded=true' as string | undefined,
+  // Google Form direct link - using forms.gle URL for iframe embed
+  googleFormEmbedUrl: 'https://forms.gle/HFbiXDq74sSw1tPg6' as string | undefined,
 };

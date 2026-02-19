@@ -1,11 +1,23 @@
+import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Seo } from '../components/seo/Seo';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle2, Shield, Clock } from 'lucide-react';
-import { registrationConfig } from '../lib/registrationConfig';
+import { RegistrationForm } from '../components/registration/RegistrationForm';
+import { LoginForm } from '../components/registration/LoginForm';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useAuth } from '../hooks/useAuthContext';
 
 export default function RegistrationPage() {
+  const [activeTab, setActiveTab] = useState<'register' | 'login'>('register');
+  const { isAuthenticated } = useAuth();
+
+  const handleLoginSuccess = () => {
+    // Optionally redirect or show a success message
+    console.log('Login successful');
+  };
+
   return (
     <>
       <Seo 
@@ -41,49 +53,58 @@ export default function RegistrationPage() {
 
       {/* Form Section */}
       <section className="relative z-10 py-12">
-        <div className="container max-w-4xl px-4">
-          <div className="glass-background rounded-2xl border border-white/10 p-6 shadow-2xl md:p-8">
-            {registrationConfig.googleFormEmbedUrl ? (
-              <div className="w-full overflow-hidden rounded-lg">
-                <iframe
-                  src={registrationConfig.googleFormEmbedUrl}
-                  width="100%"
-                  height="1200"
-                  frameBorder="0"
-                  marginHeight={0}
-                  marginWidth={0}
-                  className="min-h-[800px] w-full md:min-h-[1000px]"
-                  title="Registration Form"
-                  style={{ border: 'none' }}
-                >
-                  Loading…
-                </iframe>
-              </div>
-            ) : (
-              <div className="flex min-h-[400px] items-center justify-center rounded-lg border-2 border-dashed border-white/20 bg-black/20 p-8">
-                <div className="text-center">
-                  <div className="mb-4 text-6xl">📝</div>
-                  <h3 className="mb-2 text-xl font-semibold text-white">Registration Form</h3>
-                  <p className="bengali-text text-white/70">
-                    রেজিস্ট্রেশন ফর্ম এখানে প্রদর্শিত হবে
-                  </p>
+        <div className="container max-w-2xl px-4">
+          {isAuthenticated ? (
+            <Card className="glass-background border-green-500/30">
+              <CardContent className="p-8 text-center space-y-4">
+                <div className="flex justify-center">
+                  <div className="rounded-full bg-green-500/20 p-4">
+                    <CheckCircle2 className="h-16 w-16 text-green-400" />
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
+                <h2 className="text-2xl font-bold text-white">You are logged in!</h2>
+                <p className="text-white/80">You can now access the tasks.</p>
+                <Button
+                  asChild
+                  className="bg-blue-600 text-white hover:bg-blue-700"
+                >
+                  <Link to="/tasks/task-1">Go to Tasks</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'register' | 'login')}>
+              <TabsList className="grid w-full grid-cols-2 mb-6 bg-white/10">
+                <TabsTrigger value="register" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+                  Register
+                </TabsTrigger>
+                <TabsTrigger value="login" className="data-[state=active]:bg-green-600 data-[state=active]:text-white">
+                  Login
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="register">
+                <RegistrationForm onSwitchToLogin={() => setActiveTab('login')} />
+              </TabsContent>
+              <TabsContent value="login">
+                <LoginForm onSuccess={handleLoginSuccess} />
+              </TabsContent>
+            </Tabs>
+          )}
 
           {/* CTA Button */}
-          <div className="mt-8 text-center">
-            <Button
-              asChild
-              size="lg"
-              className="bengali-text bg-gradient-to-r from-yellow-500 to-yellow-600 px-8 py-6 text-lg font-bold text-black shadow-lg transition-all hover:scale-105 hover:from-yellow-400 hover:to-yellow-500 hover:shadow-xl md:text-xl"
-            >
-              <Link to="/tasks/task-1">
-                রেজিস্ট্রেশন শেষ? এখানে ক্লিক করে কাজ শুরু করুন
-              </Link>
-            </Button>
-          </div>
+          {!isAuthenticated && (
+            <div className="mt-8 text-center">
+              <Button
+                asChild
+                size="lg"
+                className="bengali-text bg-gradient-to-r from-yellow-500 to-yellow-600 px-8 py-6 text-lg font-bold text-black shadow-lg transition-all hover:scale-105 hover:from-yellow-400 hover:to-yellow-500 hover:shadow-xl md:text-xl"
+              >
+                <Link to="/tasks/task-1">
+                  রেজিস্ট্রেশন শেষ? এখানে ক্লিক করে কাজ শুরু করুন
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 

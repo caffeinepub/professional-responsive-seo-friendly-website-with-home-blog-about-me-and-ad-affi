@@ -8,6 +8,18 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
+export const UserPublicProfile = IDL.Record({
+  'groupNumber' : IDL.Text,
+  'username' : IDL.Text,
+  'email' : IDL.Text,
+  'whatsappNumber' : IDL.Text,
+  'registeredAt' : IDL.Int,
+});
 export const Time = IDL.Int;
 export const BlogPost = IDL.Record({
   'title' : IDL.Text,
@@ -16,22 +28,84 @@ export const BlogPost = IDL.Record({
   'slug' : IDL.Text,
   'excerpt' : IDL.Text,
 });
+export const ApprovalStatus = IDL.Variant({
+  'pending' : IDL.Null,
+  'approved' : IDL.Null,
+  'rejected' : IDL.Null,
+});
+export const UserApprovalInfo = IDL.Record({
+  'status' : ApprovalStatus,
+  'principal' : IDL.Principal,
+});
+export const UserLoginProfile = IDL.Record({
+  'groupNumber' : IDL.Text,
+  'username' : IDL.Text,
+  'email' : IDL.Text,
+  'whatsappNumber' : IDL.Text,
+  'registeredAt' : IDL.Int,
+});
+export const UserLoginResponse = IDL.Variant({
+  'error' : IDL.Text,
+  'success' : UserLoginProfile,
+});
+export const UserRegistrationResponse = IDL.Variant({
+  'error' : IDL.Text,
+  'success' : IDL.Text,
+});
 
 export const idlService = IDL.Service({
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
   'createPost' : IDL.Func(
       [IDL.Text, IDL.Text, IDL.Text, IDL.Text],
       [IDL.Text],
       [],
     ),
   'getAllPostSlugs' : IDL.Func([], [IDL.Vec(IDL.Text)], ['query']),
+  'getAllUsers' : IDL.Func([], [IDL.Vec(UserPublicProfile)], ['query']),
+  'getCallerUserProfile' : IDL.Func(
+      [],
+      [IDL.Opt(UserPublicProfile)],
+      ['query'],
+    ),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
   'getPost' : IDL.Func([IDL.Text], [BlogPost], ['query']),
   'getPosts' : IDL.Func([], [IDL.Vec(BlogPost)], ['query']),
+  'getUserProfile' : IDL.Func(
+      [IDL.Principal],
+      [IDL.Opt(UserPublicProfile)],
+      ['query'],
+    ),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'isCallerApproved' : IDL.Func([], [IDL.Bool], ['query']),
+  'listApprovals' : IDL.Func([], [IDL.Vec(UserApprovalInfo)], ['query']),
+  'loginUser' : IDL.Func([IDL.Text, IDL.Text], [UserLoginResponse], []),
+  'registerUser' : IDL.Func(
+      [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text],
+      [UserRegistrationResponse],
+      [],
+    ),
+  'requestApproval' : IDL.Func([], [], []),
+  'saveCallerUserProfile' : IDL.Func([UserPublicProfile], [], []),
   'searchPosts' : IDL.Func([IDL.Text], [IDL.Vec(BlogPost)], ['query']),
+  'setApproval' : IDL.Func([IDL.Principal, ApprovalStatus], [], []),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
+  const UserPublicProfile = IDL.Record({
+    'groupNumber' : IDL.Text,
+    'username' : IDL.Text,
+    'email' : IDL.Text,
+    'whatsappNumber' : IDL.Text,
+    'registeredAt' : IDL.Int,
+  });
   const Time = IDL.Int;
   const BlogPost = IDL.Record({
     'title' : IDL.Text,
@@ -40,17 +114,67 @@ export const idlFactory = ({ IDL }) => {
     'slug' : IDL.Text,
     'excerpt' : IDL.Text,
   });
+  const ApprovalStatus = IDL.Variant({
+    'pending' : IDL.Null,
+    'approved' : IDL.Null,
+    'rejected' : IDL.Null,
+  });
+  const UserApprovalInfo = IDL.Record({
+    'status' : ApprovalStatus,
+    'principal' : IDL.Principal,
+  });
+  const UserLoginProfile = IDL.Record({
+    'groupNumber' : IDL.Text,
+    'username' : IDL.Text,
+    'email' : IDL.Text,
+    'whatsappNumber' : IDL.Text,
+    'registeredAt' : IDL.Int,
+  });
+  const UserLoginResponse = IDL.Variant({
+    'error' : IDL.Text,
+    'success' : UserLoginProfile,
+  });
+  const UserRegistrationResponse = IDL.Variant({
+    'error' : IDL.Text,
+    'success' : IDL.Text,
+  });
   
   return IDL.Service({
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
     'createPost' : IDL.Func(
         [IDL.Text, IDL.Text, IDL.Text, IDL.Text],
         [IDL.Text],
         [],
       ),
     'getAllPostSlugs' : IDL.Func([], [IDL.Vec(IDL.Text)], ['query']),
+    'getAllUsers' : IDL.Func([], [IDL.Vec(UserPublicProfile)], ['query']),
+    'getCallerUserProfile' : IDL.Func(
+        [],
+        [IDL.Opt(UserPublicProfile)],
+        ['query'],
+      ),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
     'getPost' : IDL.Func([IDL.Text], [BlogPost], ['query']),
     'getPosts' : IDL.Func([], [IDL.Vec(BlogPost)], ['query']),
+    'getUserProfile' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Opt(UserPublicProfile)],
+        ['query'],
+      ),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'isCallerApproved' : IDL.Func([], [IDL.Bool], ['query']),
+    'listApprovals' : IDL.Func([], [IDL.Vec(UserApprovalInfo)], ['query']),
+    'loginUser' : IDL.Func([IDL.Text, IDL.Text], [UserLoginResponse], []),
+    'registerUser' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text],
+        [UserRegistrationResponse],
+        [],
+      ),
+    'requestApproval' : IDL.Func([], [], []),
+    'saveCallerUserProfile' : IDL.Func([UserPublicProfile], [], []),
     'searchPosts' : IDL.Func([IDL.Text], [IDL.Vec(BlogPost)], ['query']),
+    'setApproval' : IDL.Func([IDL.Principal, ApprovalStatus], [], []),
   });
 };
 

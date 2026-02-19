@@ -10,6 +10,7 @@ import Task3Page from './pages/Task3Page';
 import PaymentProofPage from './pages/PaymentProofPage';
 import SupportPage from './pages/SupportPage';
 import RegistrationPage from './pages/RegistrationPage';
+import AdminPanelPage from './pages/AdminPanelPage';
 
 const rootRoute = createRootRoute({
   component: SiteLayout,
@@ -75,6 +76,12 @@ const registrationRoute = createRoute({
   component: RegistrationPage,
 });
 
+const adminPanelRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin-panel',
+  component: AdminPanelPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   blogRoute,
@@ -86,6 +93,7 @@ const routeTree = rootRoute.addChildren([
   paymentProofRoute,
   supportRoute,
   registrationRoute,
+  adminPanelRoute,
 ]);
 
 const router = createRouter({ routeTree });

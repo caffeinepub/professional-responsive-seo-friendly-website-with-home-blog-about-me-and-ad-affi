@@ -1,46 +1,35 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-19T09:18:34.871Z",
+  "generatedAt": "2026-02-19T10:10:17.837Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
-    "implemented": 3,
+    "total": 2,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-143",
-        "summary": "Update the Admin Panel page authentication logic in frontend/src/pages/AdminPanelPage.tsx to use the admin credentials: username 'admin' and password 'habibur123' (replacing the current default credentials 'admin'/'admin123').",
+        "id": "REQ-161",
+        "summary": "Update the UserListTable component (frontend/src/components/admin/UserListTable.tsx) to implement a mobile-responsive stacked layout where each user is displayed as a card instead of a table row on small screens (< 768px), with the user's information (Username, WhatsApp Number, Status badge) stacked vertically and the 'Approve' button positioned directly below the status badge within each card.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/AdminPanelPage.tsx"
+          "frontend/src/components/admin/UserListTable.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/AdminPanelPage.tsx"
+          "frontend/src/components/admin/UserListTable.tsx"
         ]
       },
       {
-        "id": "REQ-144",
-        "summary": "Ensure the admin credentials are stored securely in the frontend code without plain-text exposure in console logs or client-side debugging tools, using basic client-side credential verification suitable for a simple admin access control system.",
+        "id": "REQ-162",
+        "summary": "Style the mobile card layout in UserListTable with proper spacing, borders, and background colors consistent with the site's dark theme and premium styling, ensuring each card is visually distinct and the 'Approve' button has adequate touch target size (minimum 44x44px) for mobile usability.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/AdminPanelPage.tsx"
+          "frontend/src/components/admin/UserListTable.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/AdminPanelPage.tsx"
-        ]
-      },
-      {
-        "id": "REQ-145",
-        "summary": "Test the updated admin authentication flow by verifying that an admin can successfully log in to /admin-panel using username 'admin' and password 'habibur123', view the list of registered users, and approve pending users without errors.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/AdminPanelPage.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/AdminPanelPage.tsx"
+          "frontend/src/components/admin/UserListTable.tsx"
         ]
       }
     ]
@@ -50,7 +39,7 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/pages/AdminPanelPage.tsx",
+    "frontend/src/components/admin/UserListTable.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

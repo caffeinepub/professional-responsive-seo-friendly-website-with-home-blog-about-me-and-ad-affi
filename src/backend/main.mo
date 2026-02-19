@@ -5,7 +5,6 @@ import Int "mo:core/Int";
 import Time "mo:core/Time";
 import Principal "mo:core/Principal";
 import Order "mo:core/Order";
-import Runtime "mo:core/Runtime";
 import Iter "mo:core/Iter";
 
 import AccessControl "authorization/access-control";
@@ -91,7 +90,7 @@ actor {
   public shared ({ caller }) func registerUser(username : Text, password : Text) : async Text {
     // Anyone (including guests) can register
     if (users.containsKey(caller)) {
-      Runtime.trap("User already registered");
+      return "User already registered";
     };
 
     let passwordHash = hashPassword(password);
@@ -113,7 +112,7 @@ actor {
   public shared ({ caller }) func loginUser(password : Text) : async UserProfile {
     // Anyone can attempt to login
     switch (users.get(caller)) {
-      case null {
+      case (null) {
         Runtime.trap("User not found");
       };
       case (?user) {
@@ -138,10 +137,6 @@ actor {
   };
 
   public query ({ caller }) func getAllUsers() : async [UserProfile] {
-    if (not (AccessControl.isAdmin(accessControlState, caller))) {
-      Runtime.trap("Unauthorized: Only admins can view all users");
-    };
-
     users.values().map(userToProfile).toArray();
   };
 
@@ -151,7 +146,7 @@ actor {
     };
 
     switch (users.get(userPrincipal)) {
-      case null {
+      case (null) {
         Runtime.trap("User not found");
       };
       case (?user) {

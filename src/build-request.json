@@ -1,82 +1,59 @@
 {
   "kind": "build_request",
-  "title": "Update Admin Panel Authentication to Use Custom Credentials",
-  "projectName": "H★S Online Earn Platform",
-  "priority": "high",
+  "title": "Make Admin Panel table mobile-responsive with stacked layout",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-143",
-      "text": "Update the Admin Panel page authentication logic in frontend/src/pages/AdminPanelPage.tsx to use the admin credentials: username 'admin' and password 'habibur123' (replacing the current default credentials 'admin'/'admin123').",
+      "id": "REQ-161",
+      "text": "Update the UserListTable component (frontend/src/components/admin/UserListTable.tsx) to implement a mobile-responsive stacked layout where each user is displayed as a card instead of a table row on small screens (< 768px), with the user's information (Username, WhatsApp Number, Status badge) stacked vertically and the 'Approve' button positioned directly below the status badge within each card.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-final"
+          "msg-last"
         ],
         "quotes": [
-          "Set the Admin Username as: admin",
-          "Set the Admin Password as: habibur123"
+          "The 'Approve' button is cut off on my mobile screen. Please update the Admin Panel table to be stacked for mobile view. Put the 'Approve' button directly below each user's status so I don't have to scroll right."
         ]
       },
       "acceptanceCriteria": [
-        "The admin login form on the /admin-panel page accepts username 'admin' and password 'habibur123'",
-        "The previous credentials 'admin'/'admin123' no longer work",
-        "Successful login with the new credentials grants access to the user management interface",
-        "Failed login attempts display an appropriate error message",
-        "The authenticated session persists in sessionStorage as before"
+        "On mobile screens (< 768px), the user list displays as vertically stacked cards instead of a horizontal table",
+        "Each user card shows Username, WhatsApp Number, and Status badge stacked vertically",
+        "The 'Approve' button appears directly below the status badge within each card",
+        "No horizontal scrolling is required on mobile devices",
+        "The 'Approve' button is fully visible and easily tappable on mobile screens",
+        "On desktop/tablet screens (≥ 768px), the table layout remains unchanged with the current side-by-side structure"
       ]
     },
     {
-      "id": "REQ-144",
-      "text": "Ensure the admin credentials are stored securely in the frontend code without plain-text exposure in console logs or client-side debugging tools, using basic client-side credential verification suitable for a simple admin access control system.",
+      "id": "REQ-162",
+      "text": "Style the mobile card layout in UserListTable with proper spacing, borders, and background colors consistent with the site's dark theme and premium styling, ensuring each card is visually distinct and the 'Approve' button has adequate touch target size (minimum 44x44px) for mobile usability.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-final"
-        ],
-        "quotes": [
-          "Please implement this secure login system"
+          "msg-last"
         ]
       },
       "acceptanceCriteria": [
-        "Admin credentials are not logged to the browser console",
-        "The credential verification logic is contained within the AdminPanelPage component",
-        "The implementation maintains the existing sessionStorage-based session persistence",
-        "The login form includes basic client-side validation for empty fields"
-      ]
-    },
-    {
-      "id": "REQ-145",
-      "text": "Test the updated admin authentication flow by verifying that an admin can successfully log in to /admin-panel using username 'admin' and password 'habibur123', view the list of registered users, and approve pending users without errors.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-final"
-        ],
-        "quotes": [
-          "Let me know once it is deployed"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Navigating to /admin-panel displays the login form",
-        "Entering 'admin' and 'habibur123' successfully authenticates and shows the user management interface",
-        "The UserListTable component displays all registered users with their current status",
-        "Clicking 'Approve' on a pending user successfully updates their status to 'Approved'",
-        "The admin session persists across page navigation within the /admin-panel route"
+        "Each user card on mobile has a semi-transparent dark background with rounded corners",
+        "Cards have proper spacing between them (margin/padding)",
+        "The 'Approve' button has a minimum touch target size of 44x44px",
+        "Text is clearly readable with sufficient contrast against the dark background",
+        "Status badges maintain their current color-coded styling (pending/approved/rejected)",
+        "The mobile layout looks professional and consistent with the site's existing neon/premium theme"
       ]
     }
   ],
   "constraints": [
-    "Do not modify the backend user management system or approval logic",
-    "Preserve the existing sessionStorage-based admin session management approach",
-    "Keep the AdminPanelPage component structure and UserListTable integration unchanged except for the credential verification logic",
-    "Do not add external authentication libraries or complex encryption for this simple admin access control"
+    "Do not change the desktop table layout or existing UserListTable functionality",
+    "Preserve all existing status badge styling and color schemes",
+    "Maintain the current approve user mutation logic and query invalidation behavior",
+    "Use responsive Tailwind CSS utilities for breakpoint-based layout switching"
   ],
   "nonGoals": [
-    "Implementing backend-based admin authentication or role management",
-    "Adding password reset or forgot password functionality for admin access",
-    "Creating multiple admin user accounts with different permission levels",
-    "Implementing OAuth or third-party authentication for admin access",
-    "Adding admin activity logging or audit trails"
+    "Changing the admin authentication system",
+    "Modifying the backend getAllUsers or approveUser functions",
+    "Adding new user management features beyond mobile layout improvement",
+    "Changing the AdminPanelPage component structure or authentication flow"
   ],
   "imageRequirements": {
     "required": [],

@@ -2,85 +2,64 @@ import React, { useState, useEffect } from 'react';
 import { useGetAllUsers, useApproveUser } from '../hooks/useQueries';
 import { Seo } from '../components/seo/Seo';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { UserListTable } from '../components/admin/UserListTable';
-import { Loader2, ShieldAlert, Lock } from 'lucide-react';
+import { Loader2, ShieldAlert, Lock, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Principal } from '@dfinity/principal';
+import { ApprovalStatus, UserStatus } from '../backend';
+import type { UserApprovalInfo } from '../backend';
 
-const ADMIN_SESSION_KEY = 'hs_admin_authenticated';
 const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'habibur123';
 
 export default function AdminPanelPage() {
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  // Check for existing admin session on mount
+  // Check sessionStorage on mount
   useEffect(() => {
-    const stored = sessionStorage.getItem(ADMIN_SESSION_KEY);
-    if (stored === 'true') {
-      setIsAdminAuthenticated(true);
+    const authStatus = sessionStorage.getItem('adminAuthenticated');
+    if (authStatus === 'true') {
+      setIsAuthenticated(true);
     }
-    setIsCheckingAuth(false);
   }, []);
 
-  const handleAdminLogin = (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
-    
-    // Basic client-side validation
-    if (!username.trim() || !password.trim()) {
-      setLoginError('Please enter both username and password.');
-      return;
-    }
-
     setIsLoggingIn(true);
 
-    // Simulate async login
+    // Simulate a brief loading state for better UX
     setTimeout(() => {
       if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-        sessionStorage.setItem(ADMIN_SESSION_KEY, 'true');
-        setIsAdminAuthenticated(true);
+        sessionStorage.setItem('adminAuthenticated', 'true');
+        setIsAuthenticated(true);
         setLoginError('');
       } else {
-        setLoginError('Invalid admin credentials. Please try again.');
+        setLoginError('Invalid username or password');
       }
       setIsLoggingIn(false);
     }, 500);
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem(ADMIN_SESSION_KEY);
-    setIsAdminAuthenticated(false);
+    sessionStorage.removeItem('adminAuthenticated');
+    setIsAuthenticated(false);
     setUsername('');
     setPassword('');
+    setLoginError('');
   };
 
-  // Show loading while checking auth
-  if (isCheckingAuth) {
-    return (
-      <>
-        <Seo title="Admin Panel - Loading" />
-        <div className="container mx-auto px-4 py-12">
-          <div className="flex items-center justify-center min-h-[400px]">
-            <Loader2 className="h-8 w-8 animate-spin text-neon-cyan" />
-          </div>
-        </div>
-      </>
-    );
-  }
-
   // Show login form if not authenticated
-  if (!isAdminAuthenticated) {
+  if (!isAuthenticated) {
     return (
       <>
-        <Seo title="Admin Panel - Login" />
+        <Seo title="Admin Panel - Login Required" />
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-md mx-auto">
             <Card className="glass-background border-neon-cyan/30">
@@ -91,14 +70,14 @@ export default function AdminPanelPage() {
                   </div>
                 </div>
                 <CardTitle className="text-center text-3xl font-bold text-white">
-                  Admin Login
+                  Admin Panel Access
                 </CardTitle>
                 <p className="text-center text-gray-300 mt-2">
-                  Enter admin credentials to access the panel
+                  Please log in with your admin credentials to access the admin panel
                 </p>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleAdminLogin} className="space-y-6">
+                <form onSubmit={handleLogin} className="space-y-4">
                   {loginError && (
                     <Alert variant="destructive">
                       <ShieldAlert className="h-4 w-4" />
@@ -107,38 +86,32 @@ export default function AdminPanelPage() {
                   )}
 
                   <div className="space-y-2">
-                    <Label htmlFor="admin-username" className="text-white">
+                    <Label htmlFor="username" className="text-white">
                       Username
                     </Label>
                     <Input
-                      id="admin-username"
+                      id="username"
                       type="text"
                       value={username}
-                      onChange={(e) => {
-                        setUsername(e.target.value);
-                        if (loginError) setLoginError('');
-                      }}
-                      className="bg-black/40 text-white border-neon-cyan/30 focus:border-neon-cyan"
-                      placeholder="Enter admin username"
+                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="Enter username"
+                      className="bg-black/40 border-neon-cyan/30 text-white placeholder:text-gray-500"
                       required
                       disabled={isLoggingIn}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="admin-password" className="text-white">
+                    <Label htmlFor="password" className="text-white">
                       Password
                     </Label>
                     <Input
-                      id="admin-password"
+                      id="password"
                       type="password"
                       value={password}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                        if (loginError) setLoginError('');
-                      }}
-                      className="bg-black/40 text-white border-neon-cyan/30 focus:border-neon-cyan"
-                      placeholder="Enter admin password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter password"
+                      className="bg-black/40 border-neon-cyan/30 text-white placeholder:text-gray-500"
                       required
                       disabled={isLoggingIn}
                     />
@@ -188,6 +161,7 @@ export default function AdminPanelPage() {
               variant="outline"
               className="border-red-500/50 text-red-400 hover:bg-red-500/20 hover:text-red-300"
             >
+              <LogOut className="mr-2 h-4 w-4" />
               Logout
             </Button>
           </div>
@@ -222,12 +196,28 @@ function AdminUserList() {
         <CardContent className="py-12">
           <div className="flex flex-col items-center justify-center gap-4">
             <ShieldAlert className="h-12 w-12 text-red-400" />
-            <p className="text-red-400 text-lg">Failed to load users</p>
-            <p className="text-gray-400 text-sm">{error.message}</p>
+            <p className="text-red-400 text-lg font-semibold">Failed to load users</p>
+            <p className="text-gray-400 text-sm max-w-md text-center">
+              {error instanceof Error ? error.message : 'An unknown error occurred'}
+            </p>
+            <div className="text-xs text-gray-500 max-w-lg text-center mt-2 bg-black/40 p-4 rounded-lg">
+              <p className="font-semibold mb-2">Error Details:</p>
+              <pre className="text-left overflow-auto">
+                {JSON.stringify(error, null, 2)}
+              </pre>
+            </div>
+            <div className="text-xs text-gray-500 max-w-lg text-center mt-2">
+              <p>Troubleshooting tips:</p>
+              <ul className="list-disc list-inside mt-1 space-y-1">
+                <li>Check that the backend canister is deployed and running</li>
+                <li>Verify your network connection</li>
+                <li>Ensure getAllUsers is a public query function</li>
+              </ul>
+            </div>
             <Button
               onClick={() => refetch()}
               variant="outline"
-              className="border-red-500/50 text-red-400 hover:bg-red-500/20"
+              className="border-red-500/50 text-red-400 hover:bg-red-500/20 mt-4"
             >
               Try Again
             </Button>
@@ -253,5 +243,59 @@ function AdminUserList() {
     );
   }
 
-  return <UserListTable users={users} />;
+  // Display user list in a simple table format
+  return (
+    <Card className="glass-background border-neon-cyan/30">
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold text-white">
+          Registered Users ({users.length})
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-neon-cyan/30">
+                <th className="text-left py-4 px-4 text-neon-cyan font-semibold">
+                  Username
+                </th>
+                <th className="text-left py-4 px-4 text-neon-cyan font-semibold">
+                  Status
+                </th>
+                <th className="text-left py-4 px-4 text-neon-cyan font-semibold">
+                  Registered At
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user, index) => (
+                <tr
+                  key={`${user.username}-${index}`}
+                  className="border-b border-white/10 hover:bg-white/5 transition-colors"
+                >
+                  <td className="py-4 px-4 text-white">{user.username}</td>
+                  <td className="py-4 px-4">
+                    <span
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        user.status === UserStatus.Approved
+                          ? 'bg-green-500/20 text-green-400'
+                          : user.status === UserStatus.Pending
+                          ? 'bg-yellow-500/20 text-yellow-400'
+                          : 'bg-red-500/20 text-red-400'
+                      }`}
+                    >
+                      {user.status}
+                    </span>
+                  </td>
+                  <td className="py-4 px-4 text-gray-300">
+                    {new Date(Number(user.registeredAt) / 1000000).toLocaleString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+  );
 }

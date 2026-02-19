@@ -39,6 +39,11 @@ export function useLoginUser() {
   });
 }
 
+// Extended UserProfile with Principal for admin operations
+export interface UserProfileWithPrincipal extends UserProfile {
+  principal: Principal;
+}
+
 export function useGetAllUsers() {
   const { actor, isFetching: actorFetching } = useActor();
 
@@ -46,10 +51,50 @@ export function useGetAllUsers() {
     queryKey: ['allUsers'],
     queryFn: async () => {
       if (!actor) throw new Error('Actor not available');
-      return actor.getAllUsers();
+      try {
+        console.log('Calling getAllUsers...');
+        const users = await actor.getAllUsers();
+        console.log('getAllUsers response:', users);
+        return users;
+      } catch (error: any) {
+        console.error('Failed to fetch users - Full error:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw new Error(
+          `Failed to load users: ${error.message || 'Unknown error'}`
+        );
+      }
     },
     enabled: !!actor && !actorFetching,
     retry: 2,
+    retryDelay: 1000,
+  });
+}
+
+export function useGetAllApprovals() {
+  const { actor, isFetching: actorFetching } = useActor();
+
+  return useQuery({
+    queryKey: ['allApprovals'],
+    queryFn: async () => {
+      if (!actor) throw new Error('Actor not available');
+      try {
+        console.log('Calling listApprovals...');
+        const approvals = await actor.listApprovals();
+        console.log('listApprovals response:', approvals);
+        return approvals;
+      } catch (error: any) {
+        console.error('Failed to fetch approvals - Full error:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw new Error(
+          `Failed to load approvals: ${error.message || 'Unknown error'}`
+        );
+      }
+    },
+    enabled: !!actor && !actorFetching,
+    retry: 2,
+    retryDelay: 1000,
   });
 }
 
@@ -58,33 +103,22 @@ export function useApproveUser() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (username: string) => {
+    mutationFn: async (userPrincipal: Principal) => {
       if (!actor) throw new Error('Actor not available');
-      
-      // Get all users to find the principal for this username
-      const users = await actor.getAllUsers();
-      
-      // Since we can't get the principal directly from username in the backend,
-      // we need to use the caller's principal. The backend approveUser expects a Principal.
-      // However, the backend stores users by Principal, not username.
-      // We need to call the backend with the user's Principal.
-      
-      // For now, we'll need to modify the approach - the backend needs the Principal
-      // but we only have the username in the UI. This is a backend gap.
-      // As a workaround, we'll pass the username and let the backend handle it.
-      
-      // Actually, looking at the backend, approveUser takes a Principal parameter.
-      // We need to get the Principal from somewhere. Let's check if we can derive it.
-      
-      // Since the backend doesn't provide a way to get Principal from username,
-      // we'll need to store this mapping or change the backend.
-      // For now, let's assume we need to pass the Principal.
-      
-      // This is a limitation - we'll document it as a backend gap
-      throw new Error('Cannot approve user: Principal mapping not available. Backend needs to be updated to support approval by username.');
+      try {
+        const result = await actor.approveUser(userPrincipal);
+        return result;
+      } catch (error: any) {
+        console.error('Failed to approve user:', error);
+        throw new Error(
+          error.message || 'Failed to approve user in backend canister'
+        );
+      }
     },
     onSuccess: () => {
+      // Invalidate both queries to refresh the data
       queryClient.invalidateQueries({ queryKey: ['allUsers'] });
+      queryClient.invalidateQueries({ queryKey: ['allApprovals'] });
     },
   });
 }

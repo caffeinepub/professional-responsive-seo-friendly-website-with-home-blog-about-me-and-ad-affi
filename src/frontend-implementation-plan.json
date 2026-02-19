@@ -1,58 +1,43 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Update Admin Panel Authentication to Use Custom Credentials",
+  "title": "Make Admin Panel table mobile-responsive with stacked layout",
   "requirements": [
     {
-      "id": "REQ-143",
-      "summary": "Update AdminPanelPage authentication to use new credentials (admin/habibur123)",
+      "id": "REQ-161",
+      "summary": "Implement mobile-responsive stacked card layout in UserListTable component with breakpoint-based layout switching at 768px, displaying Username, WhatsApp Number, and Status badge vertically with the Approve button positioned directly below the status badge",
       "acceptanceCriteria": [
-        "The admin login form on the /admin-panel page accepts username 'admin' and password 'habibur123'",
-        "The previous credentials 'admin'/'admin123' no longer work",
-        "Successful login with the new credentials grants access to the user management interface",
-        "Failed login attempts display an appropriate error message",
-        "The authenticated session persists in sessionStorage as before"
+        "On mobile screens (< 768px), the user list displays as vertically stacked cards instead of a horizontal table",
+        "Each user card shows Username, WhatsApp Number, and Status badge stacked vertically",
+        "The 'Approve' button appears directly below the status badge within each card",
+        "No horizontal scrolling is required on mobile devices",
+        "The 'Approve' button is fully visible and easily tappable on mobile screens",
+        "On desktop/tablet screens (≥ 768px), the table layout remains unchanged with the current side-by-side structure"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/AdminPanelPage.tsx",
+          "path": "frontend/src/components/admin/UserListTable.tsx",
           "operation": "modify",
-          "description": "Update the hardcoded admin credentials from 'admin'/'admin123' to 'admin'/'habibur123' in the handleLogin function's credential verification logic. Replace the existing username and password constants or comparison values with the new credentials while maintaining the same sessionStorage-based session management and UserListTable integration."
+          "description": "Add responsive breakpoint logic using Tailwind's 'md:' prefix to toggle between mobile card layout (< 768px) and desktop table layout (≥ 768px). Wrap the existing table structure in a 'hidden md:table' container. Create a new mobile-only card layout (visible on < 768px, hidden on ≥ 768px) that iterates through users and displays each as a card with Username, WhatsApp Number, Status badge, and Approve button stacked vertically within each card container. Ensure the Approve button is positioned directly below the status badge in the card layout. Preserve all existing query logic, mutation behavior, and status badge rendering."
         }
       ]
     },
     {
-      "id": "REQ-144",
-      "summary": "Ensure secure credential handling without plain-text exposure in logs or debugging tools",
+      "id": "REQ-162",
+      "summary": "Style mobile card layout with dark theme consistent styling including semi-transparent backgrounds, proper spacing, rounded corners, sufficient touch target size (minimum 44x44px) for the Approve button, and maintain existing status badge color schemes",
       "acceptanceCriteria": [
-        "Admin credentials are not logged to the browser console",
-        "The credential verification logic is contained within the AdminPanelPage component",
-        "The implementation maintains the existing sessionStorage-based session persistence",
-        "The login form includes basic client-side validation for empty fields"
+        "Each user card on mobile has a semi-transparent dark background with rounded corners",
+        "Cards have proper spacing between them (margin/padding)",
+        "The 'Approve' button has a minimum touch target size of 44x44px",
+        "Text is clearly readable with sufficient contrast against the dark background",
+        "Status badges maintain their current color-coded styling (pending/approved/rejected)",
+        "The mobile layout looks professional and consistent with the site's existing neon/premium theme"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/AdminPanelPage.tsx",
+          "path": "frontend/src/components/admin/UserListTable.tsx",
           "operation": "modify",
-          "description": "Review and remove any console.log statements that might expose admin credentials. Add basic client-side validation for empty username and password fields before credential verification. Ensure the credential comparison logic does not log or expose the expected credentials through debugging tools while maintaining the simple client-side authentication approach."
-        }
-      ]
-    },
-    {
-      "id": "REQ-145",
-      "summary": "Verify the updated admin authentication flow functions correctly",
-      "acceptanceCriteria": [
-        "Navigating to /admin-panel displays the login form",
-        "Entering 'admin' and 'habibur123' successfully authenticates and shows the user management interface",
-        "The UserListTable component displays all registered users with their current status",
-        "Clicking 'Approve' on a pending user successfully updates their status to 'Approved'",
-        "The admin session persists across page navigation within the /admin-panel route"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/AdminPanelPage.tsx",
-          "operation": "modify",
-          "description": "Ensure the login form renders correctly on page load when not authenticated, the UserListTable component is displayed after successful authentication with the new credentials, and the sessionStorage-based session persistence works correctly for maintaining the authenticated state across page reloads and navigation."
+          "description": "Apply Tailwind CSS classes to the mobile card layout: use 'bg-black/40' or 'bg-gray-900/60' for semi-transparent dark backgrounds, 'rounded-lg' or 'rounded-xl' for rounded corners, 'space-y-4' for vertical spacing between cards, and 'p-4' or 'p-6' for internal card padding. Ensure the Approve button has 'min-h-[44px] min-w-[44px]' classes to meet the 44x44px touch target requirement. Apply text contrast classes ('text-white', 'text-gray-100', or similar) for readability. Verify that existing status badge classes (pending/approved/rejected color variants) are preserved and remain visible against the dark card background. Use consistent neon accent colors from the site's theme (referencing frontend/tailwind.config.js color schemes) for interactive elements."
         }
       ]
     }

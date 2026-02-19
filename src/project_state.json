@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 73,
+  "projectStateVersion": 79,
   "summary": "Consolidate all authentication logic (AuthProvider, useAuth hook, Registration form, Login form) into a single App.tsx file to ensure AuthProvider wraps the application at the root level and eliminate 'useAuth must be used within an AuthProvider' errors. Remove external context files and keep all auth logic together in one place.",
   "architectural_notes": [
     "Home page ad region should support embedding third-party ad network code (external async script + container div) in place of a placeholder, while keeping the rest of the layout unchanged.",
@@ -1072,6 +1072,94 @@
         "REQ-145"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-fix-the-frontend-query-hooks-in-frontend-src-hooks-usequeries-ts-so-that-the-getallusers-hook-correctly-calls-the-backend-getallusers-method-not-getusers-using-the-authenticated-actor-handles-the-response-properly-and-displays-meaningful-error-messages-if-the-canister-call-fails",
+      "title": "Fix the frontend query hooks in frontend/src/hooks/useQueries.ts so that the getAllUsers hook correctly calls the backend getAllUsers method (not 'getUsers') using the authenticated actor, handles the response properly, and displays meaningful error messages if the canister call fails.",
+      "reqIds": [
+        "REQ-149"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-frontend-mutation-hook-in-frontend-src-hooks-usequeries-ts-so-that-the-approveuser-mutation-correctly-calls-the-backend-approveuser-method-with-the-username-parameter-handles-success-error-responses-properly-and-triggers-a-query-invalidation-to-refresh-the-user-list-after-successful-approval",
+      "title": "Fix the frontend mutation hook in frontend/src/hooks/useQueries.ts so that the approveUser mutation correctly calls the backend approveUser method with the username parameter, handles success/error responses properly, and triggers a query invalidation to refresh the user list after successful approval.",
+      "reqIds": [
+        "REQ-150"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-adminpanelpage-component-in-frontend-src-pages-adminpanelpage-tsx-to-properly-use-the-corrected-getallusers-query-hook-display-loading-and-error-states-clearly-including-the-specific-canister-error-message-for-debugging-and-ensure-the-userlisttable-component-receives-the-correctly-formatted-user-data",
+      "title": "Update the AdminPanelPage component in frontend/src/pages/AdminPanelPage.tsx to properly use the corrected getAllUsers query hook, display loading and error states clearly (including the specific canister error message for debugging), and ensure the UserListTable component receives the correctly formatted user data.",
+      "reqIds": [
+        "REQ-151"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-all-internet-identity-authentication-logic-from-the-admin-panel-page-frontend-src-pages-adminpanelpage-tsx-including-the-useinternetidentity-hook-imports-login-prompts-and-any-ui-elements-that-reference-internet-identity-authentication",
+      "title": "Remove all Internet Identity authentication logic from the Admin Panel page (frontend/src/pages/AdminPanelPage.tsx) including the useInternetIdentity hook imports, login prompts, and any UI elements that reference Internet Identity authentication.",
+      "reqIds": [
+        "REQ-153"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-simple-username-and-password-login-form-on-the-admin-panel-page-with-two-text-input-fields-labeled-username-and-password-and-a-login-submit-button-styled-consistently-with-the-site-s-dark-theme-and-neon-accent-styling",
+      "title": "Implement a simple username and password login form on the Admin Panel page with two text input fields labeled 'Username' and 'Password', and a 'Login' submit button, styled consistently with the site's dark theme and neon accent styling.",
+      "reqIds": [
+        "REQ-154"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-admin-authentication-logic-in-the-admin-panel-page-that-verifies-the-submitted-username-is-exactly-admin-and-the-password-is-exactly-habibur123-stores-the-authenticated-session-state-in-sessionstorage-and-displays-the-user-management-interface-only-when-authenticated",
+      "title": "Implement admin authentication logic in the Admin Panel page that verifies the submitted username is exactly 'admin' and the password is exactly 'habibur123', stores the authenticated session state in sessionStorage, and displays the user management interface only when authenticated.",
+      "reqIds": [
+        "REQ-155"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-getallusers-query-hook-in-frontend-src-hooks-usequeries-ts-to-properly-call-the-backend-getallusers-method-using-the-backend-actor-without-requiring-internet-identity-authentication-handle-the-response-data-correctly-and-display-meaningful-error-messages-with-full-error-details-for-debugging-if-the-call-fails",
+      "title": "Fix the getAllUsers query hook in frontend/src/hooks/useQueries.ts to properly call the backend getAllUsers method using the backend actor without requiring Internet Identity authentication, handle the response data correctly, and display meaningful error messages with full error details for debugging if the call fails.",
+      "reqIds": [
+        "REQ-156"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-adminpanelpage-component-frontend-src-pages-adminpanelpage-tsx-to-trigger-the-getallusers-query-immediately-after-successful-admin-login-using-the-simple-username-password-authentication-display-a-clear-loading-state-while-fetching-show-the-full-error-message-if-the-fetch-fails-and-render-the-userlisttable-with-the-fetched-data-when-successful",
+      "title": "Update the AdminPanelPage component (frontend/src/pages/AdminPanelPage.tsx) to trigger the getAllUsers query immediately after successful admin login using the simple username/password authentication, display a clear loading state while fetching, show the full error message if the fetch fails, and render the UserListTable with the fetched data when successful.",
+      "reqIds": [
+        "REQ-157"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-test-the-complete-admin-login-flow-by-verifying-that-an-admin-can-navigate-to-admin-panel-see-the-username-password-login-form-enter-credentials-admin-and-habibur123-successfully-authenticate-and-immediately-see-the-full-list-of-registered-users-without-any-failed-to-load-users-errors",
+      "title": "Test the complete admin login flow by verifying that an admin can navigate to /admin-panel, see the username/password login form, enter credentials 'admin' and 'habibur123', successfully authenticate, and immediately see the full list of registered users without any 'Failed to load users' errors.",
+      "reqIds": [
+        "REQ-160"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-userlisttable-component-frontend-src-components-admin-userlisttable-tsx-to-implement-a-mobile-responsive-stacked-layout-where-each-user-is-displayed-as-a-card-instead-of-a-table-row-on-small-screens-768px-with-the-user-s-information-username-whatsapp-number-status-badge-stacked-vertically-and-the-approve-button-positioned-directly-below-the-status-badge-within-each-card",
+      "title": "Update the UserListTable component (frontend/src/components/admin/UserListTable.tsx) to implement a mobile-responsive stacked layout where each user is displayed as a card instead of a table row on small screens (< 768px), with the user's information (Username, WhatsApp Number, Status badge) stacked vertically and the 'Approve' button positioned directly below the status badge within each card.",
+      "reqIds": [
+        "REQ-161"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-style-the-mobile-card-layout-in-userlisttable-with-proper-spacing-borders-and-background-colors-consistent-with-the-site-s-dark-theme-and-premium-styling-ensuring-each-card-is-visually-distinct-and-the-approve-button-has-adequate-touch-target-size-minimum-44x44px-for-mobile-usability",
+      "title": "Style the mobile card layout in UserListTable with proper spacing, borders, and background colors consistent with the site's dark theme and premium styling, ensuring each card is visually distinct and the 'Approve' button has adequate touch target size (minimum 44x44px) for mobile usability.",
+      "reqIds": [
+        "REQ-162"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1476,6 +1564,78 @@
     {
       "id": "AR-108",
       "summary": "Implement secure admin authentication for the /admin-panel with provided credentials: username 'admin' and password 'habibur123', including proper session management and credential verification",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-109",
+      "summary": "Fix backend connection in Admin Panel by ensuring getUsers and approveUser functions are properly linked to the backend canister and the frontend can fetch data without rejection errors",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-110",
+      "summary": "Verify and fix the backend canister method declarations in backend/main.mo so that the getAllUsers query function is properly exposed as a public query endpoint with the correct return type (Array of user objects containing username, whatsappNumber, and status fields) and can be called by the frontend without rejection.",
+      "reqIds": [
+        "REQ-146"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-111",
+      "summary": "Verify and fix the backend canister method declarations in backend/main.mo so that the approveUser update function is properly exposed as a public shared update endpoint that accepts a username/identifier parameter, updates the user status from 'Pending' to 'Approved', and returns a success/error result without rejection.",
+      "reqIds": [
+        "REQ-147"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-112",
+      "summary": "Update the frontend actor interface type declarations (if using TypeScript declarations for the backend actor) to match the exact method signatures and return types of getAllUsers and approveUser in the backend canister, ensuring the frontend calls use the correct method names and parameter types.",
+      "reqIds": [
+        "REQ-148"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-116",
+      "summary": "Ensure the backend canister is properly deployed and the frontend is configured to connect to the correct canister ID in production, verifying that the canister environment variables and actor initialization in frontend/src/hooks/useActor.ts point to the deployed backend canister.",
+      "reqIds": [
+        "REQ-152"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-117",
+      "summary": "Replace Internet Identity login on admin panel with a simple username/password login form (Username: admin, Password: habibur123)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-118",
+      "summary": "Fix 'Failed to load users' backend connection issue on admin panel so the member list loads immediately after admin login",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-124",
+      "summary": "Update the backend actor initialization in frontend/src/hooks/useActor.ts to create an anonymous actor instance for admin panel operations that does not require Internet Identity authentication, ensuring the actor can call getAllUsers and approveUser methods without authentication errors.",
+      "reqIds": [
+        "REQ-158"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-125",
+      "summary": "Verify that the backend getAllUsers query function in backend/main.mo is properly declared as a public query method that returns an array of user objects with username, whatsappNumber, and status fields, and can be called by anonymous (non-authenticated) callers without access control restrictions.",
+      "reqIds": [
+        "REQ-159"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-126",
+      "summary": "Update the Admin Panel user list table to be responsive and stacked on mobile, placing the 'Approve' button directly below each user's status instead of in a side-by-side table row to prevent horizontal scrolling and cut-off content on mobile screens",
       "reqIds": [],
       "status": "pending"
     }

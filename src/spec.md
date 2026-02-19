@@ -1,11 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Update the Admin Panel authentication to use custom credentials (username: 'admin', password: 'habibur123').
+**Goal:** Make the Admin Panel user list table mobile-responsive with a stacked card layout.
 
 **Planned changes:**
-- Replace the current admin login credentials in AdminPanelPage.tsx from 'admin'/'admin123' to 'admin'/'habibur123'
-- Ensure credentials are not exposed in console logs or client-side debugging
-- Test the updated authentication flow including login, user list viewing, and user approval functionality
+- Update UserListTable component to display users as vertically stacked cards on mobile screens (< 768px)
+- Position the 'Approve' button directly below the status badge within each card
+- Style mobile cards with proper spacing, dark theme backgrounds, and minimum 44x44px touch targets
+- Maintain existing horizontal table layout on desktop/tablet screens (≥ 768px)
 
-**User-visible outcome:** Admin can log in to the Admin Panel using the new credentials ('admin'/'habibur123') and manage users as before. The previous credentials no longer work.
+**User-visible outcome:** Admin users can view and approve pending users on mobile devices without horizontal scrolling, with all information and buttons fully visible and easily tappable.

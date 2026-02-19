@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-admin-panel-page-authentication-logic-in-frontend-src-pages-adminpanelpage-tsx-to-use-the-admin-credentials-username-admin-and-password-habibur123-replacing-the-current-default-credentials-admin-admin123",
-      "featureTitle": "Update the Admin Panel page authentication logic in frontend/src/pages/AdminPanelPage.tsx to use the admin credentials: username 'admin' and password 'habibur123' (replacing the current default credentials 'admin'/'admin123').",
+      "featureId": "feature-update-the-userlisttable-component-frontend-src-components-admin-userlisttable-tsx-to-implement-a-mobile-responsive-stacked-layout-where-each-user-is-displayed-as-a-card-instead-of-a-table-row-on-small-screens-768px-with-the-user-s-information-username-whatsapp-number-status-badge-stacked-vertically-and-the-approve-button-positioned-directly-below-the-status-badge-within-each-card",
+      "featureTitle": "Update the UserListTable component (frontend/src/components/admin/UserListTable.tsx) to implement a mobile-responsive stacked layout where each user is displayed as a card instead of a table row on small screens (< 768px), with the user's information (Username, WhatsApp Number, Status badge) stacked vertically and the 'Approve' button positioned directly below the status badge within each card.",
       "files": [
-        "frontend/src/pages/AdminPanelPage.tsx"
+        "frontend/src/components/admin/UserListTable.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -17,15 +17,15 @@
         "user-approval@3.0.0"
       ],
       "testIds": [
-        "REQ-143"
+        "REQ-161"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-admin-credentials-are-stored-securely-in-the-frontend-code-without-plain-text-exposure-in-console-logs-or-client-side-debugging-tools-using-basic-client-side-credential-verification-suitable-for-a-simple-admin-access-control-system",
-      "featureTitle": "Ensure the admin credentials are stored securely in the frontend code without plain-text exposure in console logs or client-side debugging tools, using basic client-side credential verification suitable for a simple admin access control system.",
+      "featureId": "feature-style-the-mobile-card-layout-in-userlisttable-with-proper-spacing-borders-and-background-colors-consistent-with-the-site-s-dark-theme-and-premium-styling-ensuring-each-card-is-visually-distinct-and-the-approve-button-has-adequate-touch-target-size-minimum-44x44px-for-mobile-usability",
+      "featureTitle": "Style the mobile card layout in UserListTable with proper spacing, borders, and background colors consistent with the site's dark theme and premium styling, ensuring each card is visually distinct and the 'Approve' button has adequate touch target size (minimum 44x44px) for mobile usability.",
       "files": [
-        "frontend/src/pages/AdminPanelPage.tsx"
+        "frontend/src/components/admin/UserListTable.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -37,27 +37,7 @@
         "user-approval@3.0.0"
       ],
       "testIds": [
-        "REQ-144"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-test-the-updated-admin-authentication-flow-by-verifying-that-an-admin-can-successfully-log-in-to-admin-panel-using-username-admin-and-password-habibur123-view-the-list-of-registered-users-and-approve-pending-users-without-errors",
-      "featureTitle": "Test the updated admin authentication flow by verifying that an admin can successfully log in to /admin-panel using username 'admin' and password 'habibur123', view the list of registered users, and approve pending users without errors.",
-      "files": [
-        "frontend/src/pages/AdminPanelPage.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0",
-        "user-approval@3.0.0"
-      ],
-      "testIds": [
-        "REQ-145"
+        "REQ-162"
       ],
       "confidence": "high"
     }

@@ -7,12 +7,12 @@ import Iter "mo:core/Iter";
 import Int "mo:core/Int";
 import Order "mo:core/Order";
 import Principal "mo:core/Principal";
-import Migration "migration";
+
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
 import UserApproval "user-approval/approval";
 
-(with migration = Migration.run)
+
 actor {
   // Initialize access control and approval state
   let accessControlState = AccessControl.initState();

@@ -1,77 +1,20 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-19T05:11:54.766Z",
-  "summary": "The diff demonstrates significant progress on the user registration, authentication, and admin approval workflow. Backend models and functions (User, registerUser, loginUser, getAllUsers, approveUser) appear implemented. Frontend components for registration, login, admin panel, and route guards are present. However, the diff is heavily truncated, making full verification difficult. Based on visible evidence, most requirements appear addressed, though some details (e.g., exact Bengali message, password hashing implementation, stable data structure usage) cannot be fully confirmed due to truncation.",
+  "generatedAt": "2026-02-19T05:24:30.631Z",
+  "summary": "The diff shows changes to frontend-file-summaries.txt and project_state.json, but there is no evidence of modifications to frontend/src/main.tsx. REQ-119 explicitly requires updating main.tsx to wrap the App component with AuthProvider, and ensuring AuthProvider wraps QueryClientProvider and RouterProvider. The provided diff does not demonstrate these required structural changes.",
   "missing_requirements": [
     {
-      "id": "REQ-107",
-      "requirement": "Password hashing implementation with secure algorithm",
-      "reason": "The backend code shows 'passwordHash = password' which appears to be plaintext storage, violating the constraint 'never store passwords in plaintext; always hash passwords before storage'. No hashing logic is visible in the truncated registerUser function.",
-      "evidence": [
-        "backend/main.mo"
-      ]
-    },
-    {
-      "id": "REQ-108",
-      "requirement": "Verify password hash (not plaintext) during login",
-      "reason": "The loginUser function shows 'if (user.passwordHash != password)' which appears to compare plaintext passwords rather than verifying a hash, inconsistent with secure password handling requirements.",
-      "evidence": [
-        "backend/main.mo"
-      ]
+      "id": "REQ-119",
+      "requirement": "Update frontend/src/main.tsx to wrap the App component with the AuthProvider from frontend/src/hooks/useAuthContext.tsx, ensuring the AuthProvider wraps the RouterProvider and QueryClientProvider",
+      "reason": "The diff does not include any modifications to frontend/src/main.tsx. The only modified files shown are frontend-file-summaries.txt and project_state.json, which are metadata/documentation files and do not contain the actual implementation of the required provider hierarchy changes.",
+      "evidence": []
     }
   ],
-  "hallucinated_features": [
-    {
-      "description": "Admin token initialization via URL parameter",
-      "reason": "The useActor hook includes logic to extract and initialize an 'caffeineAdminToken' from URL parameters, calling '_initializeAccessControlWithSecret'. This admin access mechanism was not requested in any requirement.",
-      "evidence": [
-        "frontend/src/hooks/useActor.ts",
-        "frontend/src/utils/urlParams.ts"
-      ]
-    },
-    {
-      "description": "Principal-based approval system separate from User model",
-      "reason": "The backend implements UserApproval and AccessControl modules with Principal-based approval tracking, separate from the User status field. Requirements specified a simple 'status' field on User records, not a separate approval system.",
-      "evidence": [
-        "backend/main.mo"
-      ]
-    },
-    {
-      "description": "isCallerApproved and isCallerAdmin query functions",
-      "reason": "The frontend queries 'isCallerApproved' and 'isCallerAdmin' functions that operate on the caller's Principal rather than the User.status field as specified. This represents a different architecture than requested.",
-      "evidence": [
-        "frontend/src/hooks/useQueries.ts",
-        "frontend/src/components/tasks/ApprovalGuard.tsx"
-      ]
-    },
-    {
-      "description": "Migration module for actor state",
-      "reason": "A migration.mo file was added to handle actor upgrades, which was not part of any requirement in the BuildRequest.",
-      "evidence": [
-        "backend/migration.mo"
-      ]
-    }
-  ],
-  "confidence": 0.65,
+  "hallucinated_features": [],
+  "confidence": 0.95,
   "changed_files": [
-    "backend/main.mo",
-    "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/src/App.tsx",
-    "frontend/src/components/admin/UserListTable.tsx",
-    "frontend/src/components/registration/LoginForm.tsx",
-    "frontend/src/components/registration/RegistrationForm.tsx",
-    "frontend/src/components/tasks/ApprovalGuard.tsx",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useAuthContext.tsx",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/pages/AdminPanelPage.tsx",
-    "frontend/src/pages/RegistrationPage.tsx",
-    "frontend/src/pages/Task1Page.tsx",
-    "frontend/src/pages/Task2Page.tsx",
-    "frontend/src/pages/Task3Page.tsx",
-    "frontend/src/utils/urlParams.ts",
     "project_state.json"
   ]
 }

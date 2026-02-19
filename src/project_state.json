@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 57,
+  "projectStateVersion": 59,
   "summary": "Update the homepage Hero CTA: rename the single button from \"Contact on Facebook\" to \"রেজিস্ট্রেশন করুন\" and link it to the new Registration page (\"/registration\"). Replace the embedded Google Form on the Registration page with a professional built-in registration form containing Username, WhatsApp Number, Group Number, Email, and Password fields, styled with a clean white card background, blue Register button, and green Login button. Add a floating WhatsApp icon at the bottom right. (Admin approval system and access control are deferred for incremental implementation.)",
   "architectural_notes": [
     "Home page ad region should support embedding third-party ad network code (external async script + container div) in place of a placeholder, while keeping the rest of the layout unchanged.",
@@ -18,9 +18,10 @@
     "Mobile hamburger menu icon is missing on mobile view, preventing access to navigation.",
     "Text is not clearly readable against the background image; insufficient contrast/overlay/text-shadow.",
     "Deployment/build did not complete successfully (deployment error reported).",
-    "Registration page is not visible/accessible on the live site; ensure /registration route is published and reachable from the Home page CTA."
+    "Registration page is not visible/accessible on the live site; ensure /registration route is published and reachable from the Home page CTA.",
+    "'useAuth must be used within an AuthProvider' error occurs because AuthProvider is not wrapping the app root; registration and login pages cannot access authentication context."
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-a-responsive-site-layout-with-a-clean-professional-design-including-a-header-navigation-home-blog-about-me-footer-and-consistent-spacing-typography-across-pages",
@@ -1229,6 +1230,20 @@
       "summary": "Implement an approveUser backend update function in backend/main.mo that accepts a user identifier (username or email), finds the user record, updates their status from 'Pending' to 'Approved', and returns a success/error response.",
       "reqIds": [
         "REQ-110"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-78",
+      "summary": "Wrap the main App component or Router with the AuthProvider in App.tsx or index.tsx to fix 'useAuth must be used within an AuthProvider' error",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-79",
+      "summary": "Update frontend/src/main.tsx to wrap the App component with the AuthProvider from frontend/src/hooks/useAuthContext.tsx, ensuring the AuthProvider wraps the RouterProvider and QueryClientProvider so the authentication context is available globally to all routes and components, including the Registration and Login pages.",
+      "reqIds": [
+        "REQ-119"
       ],
       "status": "pending"
     }

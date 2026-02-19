@@ -47,5 +47,5 @@
   "frontend/src/components/tasks/ApprovalGuard.tsx": "Route guard component that checks authentication and approval status, redirects unauthenticated users to registration, and displays Bengali blocking message for pending users while allowing admins and approved users to access content.",
   "frontend/src/components/admin/UserListTable.tsx": "Admin dashboard component displaying all registered users in responsive table/card layout with username, WhatsApp, email, status badges, and approve buttons for pending users with real-time updates.",
   "frontend/src/pages/AdminPanelPage.tsx": "Admin panel page at /admin-panel route with access control checking admin status, displaying access denied message for non-admins, and rendering the user list table for authorized admins.",
-  "frontend/src/main.tsx": "Application entry point wrapping the app with QueryClientProvider, InternetIdentityProvider, AuthProvider for authentication state management, and Toaster for notifications."
+  "frontend/src/main.tsx": "Application entry point with proper provider hierarchy: InternetIdentityProvider wraps AuthProvider, which wraps QueryClientProvider and the App component, ensuring authentication context is available globally to all components including registration and login pages."
 }

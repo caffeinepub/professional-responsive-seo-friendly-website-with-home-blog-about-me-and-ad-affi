@@ -1,275 +1,38 @@
 {
   "kind": "build_request",
-  "title": "Implement user registration, approval workflow, and admin dashboard",
-  "projectName": "H★S Online Earn Platform",
+  "title": "Fix AuthProvider wrapper to resolve useAuth context error",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-106",
-      "text": "Add a User data model to the backend (backend/main.mo) containing fields: username (Text), whatsappNumber (Text), groupNumber (Text), email (Text), passwordHash (Text), status (Text with values 'Pending' or 'Approved'), and registeredAt (Int timestamp).",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "Default Status: Every new user must be set to 'Pending' after registration."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Backend defines a User type with all required fields",
-        "Status field defaults to 'Pending' for new users",
-        "User records include registration timestamp"
-      ]
-    },
-    {
-      "id": "REQ-107",
-      "text": "Implement a registerUser backend function in backend/main.mo that accepts user registration data (username, whatsappNumber, groupNumber, email, password), hashes the password securely, creates a new User record with status='Pending', stores it in a stable data structure (Map or similar), and returns a success/error response.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "Default Status: Every new user must be set to 'Pending' after registration."
-        ]
-      },
-      "acceptanceCriteria": [
-        "registerUser function accepts all required registration fields",
-        "Password is hashed before storage (never store plaintext)",
-        "New users are assigned 'Pending' status by default",
-        "Function returns clear success or error responses"
-      ]
-    },
-    {
-      "id": "REQ-108",
-      "text": "Implement a loginUser backend function in backend/main.mo that accepts username/email and password, verifies credentials against stored user data, checks the user's status field, and returns authentication success with user details only if status='Approved', or returns an appropriate error if status='Pending' or credentials are invalid.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "Login Logic: Only users with 'Approved' status should be able to see the work."
-        ]
-      },
-      "acceptanceCriteria": [
-        "loginUser verifies username/email and password match",
-        "Returns success only for users with status='Approved'",
-        "Returns clear error for 'Pending' users or invalid credentials",
-        "Does not expose sensitive user data in error messages"
-      ]
-    },
-    {
-      "id": "REQ-109",
-      "text": "Implement a getAllUsers backend query function in backend/main.mo that returns a list of all registered users with their username, whatsappNumber, and status fields (do not include passwordHash in the response).",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "Admin Dashboard: Create a hidden URL (like /admin-panel) where I can see the list of all registered users (Name, WhatsApp, Status)"
-        ]
-      },
-      "acceptanceCriteria": [
-        "getAllUsers returns array of user records",
-        "Each record includes username, whatsappNumber, and status",
-        "Password hashes are excluded from the response",
-        "Query is callable by frontend"
-      ]
-    },
-    {
-      "id": "REQ-110",
-      "text": "Implement an approveUser backend update function in backend/main.mo that accepts a user identifier (username or email), finds the user record, updates their status from 'Pending' to 'Approved', and returns a success/error response.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "an 'Approve' button to activate them"
-        ]
-      },
-      "acceptanceCriteria": [
-        "approveUser accepts user identifier parameter",
-        "Updates user status to 'Approved'",
-        "Returns success when user is found and updated",
-        "Returns error if user does not exist"
-      ]
-    },
-    {
-      "id": "REQ-111",
-      "text": "Wire the registration form submit handler in frontend/src/components/registration/RegistrationForm.tsx to call the backend registerUser function with the form data (username, whatsappNumber, groupNumber, email, password), display a success message on successful registration, and show error messages for validation failures or backend errors.",
+      "id": "REQ-119",
+      "text": "Update frontend/src/main.tsx to wrap the App component with the AuthProvider from frontend/src/hooks/useAuthContext.tsx, ensuring the AuthProvider wraps the RouterProvider and QueryClientProvider so the authentication context is available globally to all routes and components, including the Registration and Login pages.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-latest"
         ],
         "quotes": [
-          "Default Status: Every new user must be set to 'Pending' after registration."
+          "I am getting an error: 'useAuth must be used within an AuthProvider'. Please wrap the main App component or the Router with the AuthProvider in App.tsx or index.tsx. Ensure that the authentication context is available globally so the registration and login pages can work correctly."
         ]
       },
       "acceptanceCriteria": [
-        "Form submits data to backend registerUser function",
-        "Shows success message when registration succeeds",
-        "Displays error messages for failures",
-        "Form validates required fields before submission"
-      ]
-    },
-    {
-      "id": "REQ-112",
-      "text": "Implement a login authentication flow where the 'Login' button on the Registration page (frontend/src/components/registration/RegistrationForm.tsx or a new login form component) triggers a backend loginUser call with username/email and password, stores authentication state (user session/token) on success, and displays appropriate error messages for failed login attempts.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "Login Logic: Only users with 'Approved' status should be able to see the work."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Login button triggers authentication flow",
-        "Successful login stores user session state",
-        "Failed login shows clear error messages",
-        "Authentication state persists across page navigation"
-      ]
-    },
-    {
-      "id": "REQ-113",
-      "text": "Add route guards to the Task pages (frontend/src/pages/Task1Page.tsx, Task2Page.tsx, Task3Page.tsx) that check the current user's authentication status and approval status before rendering task content. If the user is not logged in, redirect to the Registration page. If the user is logged in but has status='Pending', display this exact Bengali message instead of task content: 'আপনার অ্যাকাউন্টটি বর্তমানে যাচাই করা হচ্ছে। অ্যাডমিন অ্যাপ্রুভ করার পর আপনি কাজ শুরু করতে পারবেন।'",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "Block Tasks: If a 'Pending' user logs in and tries to access the tasks or job page, show them this message: 'আপনার অ্যাকাউন্টটি বর্তমানে যাচাই করা হচ্ছে। অ্যাডমিন অ্যাপ্রুভ করার পর আপনি কাজ শুরু করতে পারবেন।'"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Task pages check user authentication status",
-        "Unauthenticated users are redirected to /registration",
-        "Pending users see the exact Bengali blocking message",
-        "Approved users can access task content normally"
-      ]
-    },
-    {
-      "id": "REQ-114",
-      "text": "Create a new Admin Panel page component at frontend/src/pages/AdminPanelPage.tsx and register it in the TanStack Router route tree at the path '/admin-panel'. The page must use the global SiteLayout and include basic access control (e.g., password prompt or simple auth check).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "Admin Dashboard: Create a hidden URL (like /admin-panel) where I can see the list of all registered users"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Admin panel page exists at /admin-panel route",
-        "Page uses global SiteLayout for consistency",
-        "Basic access control prevents unauthorized viewing",
-        "Route is registered in the app route tree"
-      ]
-    },
-    {
-      "id": "REQ-115",
-      "text": "On the Admin Panel page (frontend/src/pages/AdminPanelPage.tsx), fetch all registered users from the backend using the getAllUsers query function and display them in a clean, responsive table or card list showing each user's Name (username), WhatsApp Number, and current Status ('Pending' or 'Approved').",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "where I can see the list of all registered users (Name, WhatsApp, Status)"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Admin panel fetches user list from backend",
-        "Displays username, WhatsApp number, and status for each user",
-        "Layout is clean and responsive",
-        "Shows loading state while fetching data"
-      ]
-    },
-    {
-      "id": "REQ-116",
-      "text": "Add an 'Approve' action button next to each 'Pending' user in the Admin Panel user list that, when clicked, calls the backend approveUser function with that user's identifier, updates the user's status to 'Approved', refreshes the user list to show the updated status, and displays a success confirmation message.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "and an 'Approve' button to activate them"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Approve button appears for each Pending user",
-        "Clicking button triggers backend approveUser call",
-        "User list refreshes to show updated status",
-        "Success message confirms approval action",
-        "Button is disabled or hidden for already-Approved users"
-      ]
-    },
-    {
-      "id": "REQ-117",
-      "text": "Create a React context provider or authentication hook (e.g., frontend/src/hooks/useAuth.ts or useAuthContext.tsx) that manages user authentication state (logged in/out, user details, approval status), provides login/logout functions, and persists the session across page refreshes using localStorage or sessionStorage.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "Login Logic: Only users with 'Approved' status should be able to see the work."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Auth context/hook manages authentication state",
-        "Provides login and logout functions",
-        "Session persists across page refreshes",
-        "Exposes user approval status to components",
-        "Can be used by route guards and UI components"
-      ]
-    },
-    {
-      "id": "REQ-118",
-      "text": "Update the Registration page (frontend/src/pages/RegistrationPage.tsx) to show a clear success message after successful registration informing the user that their account is pending admin approval and they will be notified when they can access tasks.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "Default Status: Every new user must be set to 'Pending' after registration."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Success message appears after registration completes",
-        "Message explains pending approval status",
-        "User understands they cannot access tasks immediately",
-        "Message is displayed in Bengali for consistency"
+        "The AuthProvider from frontend/src/hooks/useAuthContext.tsx wraps the entire app at the root level in frontend/src/main.tsx",
+        "The component hierarchy ensures AuthProvider wraps both QueryClientProvider and RouterProvider",
+        "The 'useAuth must be used within an AuthProvider' error no longer occurs",
+        "Registration and Login pages can successfully access the authentication context via the useAuth hook",
+        "The authentication state persists across navigation and page refreshes"
       ]
     }
   ],
   "constraints": [
-    "Do not modify frontend/src/hooks/useInternetIdentity.ts or useInternetIdentity.tsx",
-    "Do not modify frontend/src/hooks/useActor.ts",
-    "Do not modify frontend/src/main.tsx",
-    "Do not modify frontend/src/components/ui directory files",
-    "All backend logic must remain in the single main actor file (backend/main.mo)",
-    "Never store passwords in plaintext; always hash passwords before storage",
-    "Admin panel route (/admin-panel) should not be publicly advertised in navigation menus"
+    "Do not modify frontend/src/hooks/useInternetIdentity.tsx or frontend/src/hooks/useActor.ts",
+    "Preserve the existing QueryClient and InternetIdentityProvider wrapper structure",
+    "Ensure the AuthProvider is positioned correctly in the provider hierarchy so useAuth hook works in all child components"
   ],
   "nonGoals": [
-    "Email verification or password reset functionality",
-    "Two-factor authentication",
-    "Role-based access control beyond Pending/Approved status",
-    "User profile editing after registration",
-    "Advanced admin features like user deletion or bulk operations",
-    "Integration with external authentication providers",
-    "Real-time notifications when user status changes"
+    "Modifying the AuthProvider implementation itself",
+    "Changing the authentication logic or user flow",
+    "Adding new authentication features"
   ],
   "imageRequirements": {
     "required": [],

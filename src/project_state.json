@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 79,
+  "projectStateVersion": 81,
   "summary": "Consolidate all authentication logic (AuthProvider, useAuth hook, Registration form, Login form) into a single App.tsx file to ensure AuthProvider wraps the application at the root level and eliminate 'useAuth must be used within an AuthProvider' errors. Remove external context files and keep all auth logic together in one place.",
   "architectural_notes": [
     "Home page ad region should support embedding third-party ad network code (external async script + container div) in place of a placeholder, while keeping the rest of the layout unchanged.",
@@ -14,7 +14,9 @@
     "Header navigation should be simplified to only: Home, Work Tasks (dropdown with Task 1/2/3), Payment Proof, and Support (Support is a direct external link to the user’s Facebook).",
     "Payment Proof gallery page should include a top \"Upload New Proof\" CTA button that links externally to the provided Google Form (no in-site file upload handling)."
   ],
-  "known_issues": [],
+  "known_issues": [
+    "Admin panel shows 'Failed to load users' in Version 39 - backend canister appears stopped or disconnected"
+  ],
   "isFixRequest": true,
   "existing_features": [
     {
@@ -1160,6 +1162,38 @@
         "REQ-162"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-diagnose-and-fix-the-backend-canister-connectivity-issue-causing-failed-to-load-users-error-on-the-admin-panel-page-in-version-39-verify-the-canister-is-running-properly-deployed-and-the-frontend-actor-configuration-in-frontend-src-hooks-useactor-ts-points-to-the-correct-canister-id",
+      "title": "Diagnose and fix the backend canister connectivity issue causing 'Failed to load users' error on the Admin Panel page in Version 39. Verify the canister is running, properly deployed, and the frontend actor configuration in frontend/src/hooks/useActor.ts points to the correct canister ID.",
+      "reqIds": [
+        "REQ-163"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-getallusers-query-hook-in-frontend-src-hooks-usequeries-ts-to-properly-handle-the-backend-response-including-error-cases-and-display-meaningful-error-messages-with-full-error-details-for-debugging-if-the-canister-call-fails",
+      "title": "Fix the getAllUsers query hook in frontend/src/hooks/useQueries.ts to properly handle the backend response, including error cases, and display meaningful error messages with full error details for debugging if the canister call fails.",
+      "reqIds": [
+        "REQ-165"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-adminpanelpage-component-in-frontend-src-pages-adminpanelpage-tsx-to-trigger-the-getallusers-query-immediately-after-successful-admin-login-and-display-clear-loading-and-error-states-with-full-error-messages-for-debugging",
+      "title": "Update the AdminPanelPage component in frontend/src/pages/AdminPanelPage.tsx to trigger the getAllUsers query immediately after successful admin login and display clear loading and error states with full error messages for debugging.",
+      "reqIds": [
+        "REQ-166"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-test-the-complete-admin-panel-workflow-on-mobile-and-desktop-to-ensure-admin-can-log-in-with-credentials-admin-habibur123-the-user-list-loads-immediately-without-errors-all-user-data-is-displayed-correctly-and-the-approve-button-works-on-both-mobile-and-desktop-without-ui-issues",
+      "title": "Test the complete admin panel workflow on mobile and desktop to ensure: admin can log in with credentials 'admin'/'habibur123', the user list loads immediately without errors, all user data is displayed correctly, and the Approve button works on both mobile and desktop without UI issues.",
+      "reqIds": [
+        "REQ-168"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1637,6 +1671,22 @@
       "id": "AR-126",
       "summary": "Update the Admin Panel user list table to be responsive and stacked on mobile, placing the 'Approve' button directly below each user's status instead of in a side-by-side table row to prevent horizontal scrolling and cut-off content on mobile screens",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-128",
+      "summary": "Verify the backend getAllUsers query method in backend/main.mo is properly exposed as a public query endpoint and can be called without authentication errors. Ensure the method signature matches exactly what the frontend expects.",
+      "reqIds": [
+        "REQ-164"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-131",
+      "summary": "Update the UserListTable component in frontend/src/components/admin/UserListTable.tsx to ensure the 'Approve' button is clearly visible and easily clickable on mobile screens by positioning it directly below the username in the mobile card layout with adequate touch target size (minimum 44x44px).",
+      "reqIds": [
+        "REQ-167"
+      ],
       "status": "pending"
     }
   ],

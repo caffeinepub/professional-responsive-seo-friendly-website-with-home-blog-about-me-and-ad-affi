@@ -50,24 +50,39 @@ export function useGetAllUsers() {
   return useQuery<UserProfile[]>({
     queryKey: ['allUsers'],
     queryFn: async () => {
-      if (!actor) throw new Error('Actor not available');
+      if (!actor) {
+        console.error('Actor not available for getAllUsers');
+        throw new Error('Backend connection not available. Please refresh the page.');
+      }
+      
       try {
-        console.log('Calling getAllUsers...');
+        console.log('Calling getAllUsers with actor:', !!actor);
         const users = await actor.getAllUsers();
         console.log('getAllUsers response:', users);
         return users;
       } catch (error: any) {
         console.error('Failed to fetch users - Full error:', error);
         console.error('Error message:', error.message);
-        console.error('Error stack:', error.stack);
-        throw new Error(
-          `Failed to load users: ${error.message || 'Unknown error'}`
-        );
+        console.error('Error name:', error.name);
+        console.error('Error constructor:', error.constructor?.name);
+        
+        // Provide more specific error messages
+        if (error.message?.includes('Unauthorized')) {
+          throw new Error('Unauthorized: You must be logged in as an admin to view users');
+        } else if (error.message?.includes('has no update method')) {
+          throw new Error('Backend method not found. The canister may need to be redeployed.');
+        } else if (error.message?.includes('Canister') || error.message?.includes('canister')) {
+          throw new Error(`Backend canister error: ${error.message}`);
+        } else {
+          throw new Error(
+            `Failed to load users: ${error.message || 'Unknown backend error. Please check the console for details.'}`
+          );
+        }
       }
     },
     enabled: !!actor && !actorFetching,
     retry: 2,
-    retryDelay: 1000,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 5000),
   });
 }
 
@@ -147,9 +162,17 @@ export function useIsCallerAdmin() {
     queryKey: ['isCallerAdmin'],
     queryFn: async () => {
       if (!actor) return false;
-      return actor.isCallerAdmin();
+      try {
+        const isAdmin = await actor.isCallerAdmin();
+        console.log('isCallerAdmin result:', isAdmin);
+        return isAdmin;
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+        return false;
+      }
     },
     enabled: !!actor && !actorFetching,
+    retry: 1,
   });
 }
 

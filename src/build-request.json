@@ -1,59 +1,132 @@
 {
   "kind": "build_request",
-  "title": "Make Admin Panel table mobile-responsive with stacked layout",
-  "priority": "normal",
+  "title": "Fix Admin Panel Backend Connection and Mobile UI Issues",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-161",
-      "text": "Update the UserListTable component (frontend/src/components/admin/UserListTable.tsx) to implement a mobile-responsive stacked layout where each user is displayed as a card instead of a table row on small screens (< 768px), with the user's information (Username, WhatsApp Number, Status badge) stacked vertically and the 'Approve' button positioned directly below the status badge within each card.",
-      "target": "frontend",
+      "id": "REQ-163",
+      "text": "Diagnose and fix the backend canister connectivity issue causing 'Failed to load users' error on the Admin Panel page in Version 39. Verify the canister is running, properly deployed, and the frontend actor configuration in frontend/src/hooks/useActor.ts points to the correct canister ID.",
+      "target": "both",
       "source": {
         "messageIds": [
-          "msg-last"
+          "msg-latest"
         ],
         "quotes": [
-          "The 'Approve' button is cut off on my mobile screen. Please update the Admin Panel table to be stacked for mobile view. Put the 'Approve' button directly below each user's status so I don't have to scroll right."
+          "The admin panel is showing 'Failed to load users' again in Version 39. The backend canister seems stopped or disconnected."
         ]
       },
       "acceptanceCriteria": [
-        "On mobile screens (< 768px), the user list displays as vertically stacked cards instead of a horizontal table",
-        "Each user card shows Username, WhatsApp Number, and Status badge stacked vertically",
-        "The 'Approve' button appears directly below the status badge within each card",
-        "No horizontal scrolling is required on mobile devices",
-        "The 'Approve' button is fully visible and easily tappable on mobile screens",
-        "On desktop/tablet screens (≥ 768px), the table layout remains unchanged with the current side-by-side structure"
+        "Admin panel loads the user list automatically without rejection errors",
+        "Backend canister responds to getAllUsers query calls",
+        "Frontend actor successfully connects to the deployed backend canister"
       ]
     },
     {
-      "id": "REQ-162",
-      "text": "Style the mobile card layout in UserListTable with proper spacing, borders, and background colors consistent with the site's dark theme and premium styling, ensuring each card is visually distinct and the 'Approve' button has adequate touch target size (minimum 44x44px) for mobile usability.",
-      "target": "frontend",
+      "id": "REQ-164",
+      "text": "Verify the backend getAllUsers query method in backend/main.mo is properly exposed as a public query endpoint and can be called without authentication errors. Ensure the method signature matches exactly what the frontend expects.",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-last"
+          "msg-latest"
+        ],
+        "quotes": [
+          "Ensure the user list loads automatically without any rejection error."
         ]
       },
       "acceptanceCriteria": [
-        "Each user card on mobile has a semi-transparent dark background with rounded corners",
-        "Cards have proper spacing between them (margin/padding)",
-        "The 'Approve' button has a minimum touch target size of 44x44px",
-        "Text is clearly readable with sufficient contrast against the dark background",
-        "Status badges maintain their current color-coded styling (pending/approved/rejected)",
-        "The mobile layout looks professional and consistent with the site's existing neon/premium theme"
+        "getAllUsers method is declared as a public query in backend/main.mo",
+        "Method returns array of user objects with username, whatsappNumber, and status fields",
+        "Method can be called by anonymous actors without authentication requirements"
+      ]
+    },
+    {
+      "id": "REQ-165",
+      "text": "Fix the getAllUsers query hook in frontend/src/hooks/useQueries.ts to properly handle the backend response, including error cases, and display meaningful error messages with full error details for debugging if the canister call fails.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Reconnect the frontend to the backend canister properly."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Query hook correctly calls backend.getAllUsers() method",
+        "Response data is properly parsed and returned to the component",
+        "Error states show specific canister error messages for debugging"
+      ]
+    },
+    {
+      "id": "REQ-166",
+      "text": "Update the AdminPanelPage component in frontend/src/pages/AdminPanelPage.tsx to trigger the getAllUsers query immediately after successful admin login and display clear loading and error states with full error messages for debugging.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Ensure the user list loads automatically without any rejection error."
+        ]
+      },
+      "acceptanceCriteria": [
+        "User list query executes automatically after admin authentication",
+        "Loading spinner shows while fetching data",
+        "Error messages display full canister error details if fetch fails",
+        "UserListTable renders with fetched data when successful"
+      ]
+    },
+    {
+      "id": "REQ-167",
+      "text": "Update the UserListTable component in frontend/src/components/admin/UserListTable.tsx to ensure the 'Approve' button is clearly visible and easily clickable on mobile screens by positioning it directly below the username in the mobile card layout with adequate touch target size (minimum 44x44px).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Make sure the 'Approve' button is clearly visible and clickable on my mobile screen (put it under the username if needed)."
+        ]
+      },
+      "acceptanceCriteria": [
+        "On mobile screens (<768px), Approve button appears directly below the username field",
+        "Button has minimum 44x44px touch target size",
+        "Button is fully visible without horizontal scrolling",
+        "Button styling makes it clearly identifiable and clickable on mobile"
+      ]
+    },
+    {
+      "id": "REQ-168",
+      "text": "Test the complete admin panel workflow on mobile and desktop to ensure: admin can log in with credentials 'admin'/'habibur123', the user list loads immediately without errors, all user data is displayed correctly, and the Approve button works on both mobile and desktop without UI issues.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Deploy this as Version 40. This must be the final stable version."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin can successfully authenticate and view user list on both mobile and desktop",
+        "No 'Failed to load users' errors appear",
+        "Approve button is visible and functional on mobile devices",
+        "User status updates correctly when Approve button is clicked",
+        "Page layout is responsive and professional on all screen sizes"
       ]
     }
   ],
   "constraints": [
-    "Do not change the desktop table layout or existing UserListTable functionality",
-    "Preserve all existing status badge styling and color schemes",
-    "Maintain the current approve user mutation logic and query invalidation behavior",
-    "Use responsive Tailwind CSS utilities for breakpoint-based layout switching"
+    "Do not change the admin authentication credentials (username: 'admin', password: 'habibur123')",
+    "Maintain the existing mobile-responsive card layout structure for the UserListTable component",
+    "Preserve all existing user management backend logic and data structures",
+    "Ensure the fix works with the current single-actor Motoko backend architecture"
   ],
   "nonGoals": [
-    "Changing the admin authentication system",
-    "Modifying the backend getAllUsers or approveUser functions",
-    "Adding new user management features beyond mobile layout improvement",
-    "Changing the AdminPanelPage component structure or authentication flow"
+    "Redesigning the admin panel UI beyond the mobile button placement fix",
+    "Adding new user management features or additional admin capabilities",
+    "Changing the authentication system or user approval workflow",
+    "Modifying any other pages or components outside the admin panel scope"
   ],
   "imageRequirements": {
     "required": [],

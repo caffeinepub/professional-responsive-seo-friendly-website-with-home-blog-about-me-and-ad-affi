@@ -1,43 +1,99 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Make Admin Panel table mobile-responsive with stacked layout",
+  "title": "Fix Admin Panel Backend Connection and Mobile UI Issues",
   "requirements": [
     {
-      "id": "REQ-161",
-      "summary": "Implement mobile-responsive stacked card layout in UserListTable component with breakpoint-based layout switching at 768px, displaying Username, WhatsApp Number, and Status badge vertically with the Approve button positioned directly below the status badge",
+      "id": "REQ-163",
+      "summary": "Diagnose and fix backend canister connectivity causing 'Failed to load users' error by verifying actor configuration and canister deployment status",
       "acceptanceCriteria": [
-        "On mobile screens (< 768px), the user list displays as vertically stacked cards instead of a horizontal table",
-        "Each user card shows Username, WhatsApp Number, and Status badge stacked vertically",
-        "The 'Approve' button appears directly below the status badge within each card",
-        "No horizontal scrolling is required on mobile devices",
-        "The 'Approve' button is fully visible and easily tappable on mobile screens",
-        "On desktop/tablet screens (≥ 768px), the table layout remains unchanged with the current side-by-side structure"
+        "Admin panel loads the user list automatically without rejection errors",
+        "Backend canister responds to getAllUsers query calls",
+        "Frontend actor successfully connects to the deployed backend canister"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/admin/UserListTable.tsx",
+          "path": "frontend/src/hooks/useActor.ts",
           "operation": "modify",
-          "description": "Add responsive breakpoint logic using Tailwind's 'md:' prefix to toggle between mobile card layout (< 768px) and desktop table layout (≥ 768px). Wrap the existing table structure in a 'hidden md:table' container. Create a new mobile-only card layout (visible on < 768px, hidden on ≥ 768px) that iterates through users and displays each as a card with Username, WhatsApp Number, Status badge, and Approve button stacked vertically within each card container. Ensure the Approve button is positioned directly below the status badge in the card layout. Preserve all existing query logic, mutation behavior, and status badge rendering."
+          "description": "Review and verify the actor initialization logic to ensure correct canister ID configuration and proper error handling. Add detailed logging for connection issues to help diagnose canister connectivity problems. Ensure the actor is properly initialized before any queries attempt to use it."
+        },
+        {
+          "path": "frontend/src/pages/AdminPanelPage.tsx",
+          "operation": "modify",
+          "description": "Add connection status debugging by displaying actor availability and any connection errors in the UI. Include detailed error messages when the getAllUsers query fails to help diagnose backend connectivity issues. Verify the component waits for actor initialization before attempting queries."
         }
       ]
     },
     {
-      "id": "REQ-162",
-      "summary": "Style mobile card layout with dark theme consistent styling including semi-transparent backgrounds, proper spacing, rounded corners, sufficient touch target size (minimum 44x44px) for the Approve button, and maintain existing status badge color schemes",
+      "id": "REQ-165",
+      "summary": "Fix getAllUsers query hook to properly handle backend responses and display meaningful error messages with full error details for debugging",
       "acceptanceCriteria": [
-        "Each user card on mobile has a semi-transparent dark background with rounded corners",
-        "Cards have proper spacing between them (margin/padding)",
-        "The 'Approve' button has a minimum touch target size of 44x44px",
-        "Text is clearly readable with sufficient contrast against the dark background",
-        "Status badges maintain their current color-coded styling (pending/approved/rejected)",
-        "The mobile layout looks professional and consistent with the site's existing neon/premium theme"
+        "Query hook correctly calls backend.getAllUsers() method",
+        "Response data is properly parsed and returned to the component",
+        "Error states show specific canister error messages for debugging"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Review and enhance the useGetAllUsers hook to ensure it properly handles the backend.getAllUsers() call with comprehensive error handling. Add detailed error logging that captures the full error object including rejection codes and messages. Ensure the query is only enabled when the actor is available and properly initialized. Add retry logic with exponential backoff for transient network errors."
+        }
+      ]
+    },
+    {
+      "id": "REQ-166",
+      "summary": "Update AdminPanelPage to trigger getAllUsers query after admin login and display clear loading and error states with full debugging information",
+      "acceptanceCriteria": [
+        "User list query executes automatically after admin authentication",
+        "Loading spinner shows while fetching data",
+        "Error messages display full canister error details if fetch fails",
+        "UserListTable renders with fetched data when successful"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/AdminPanelPage.tsx",
+          "operation": "modify",
+          "description": "Modify the component to automatically trigger the getAllUsers query immediately after successful admin authentication. Add a loading spinner component that displays while the query is fetching. Enhance error display to show the complete error object with stringified details for debugging (error message, code, and any additional properties). Ensure the UserListTable only renders when data is successfully fetched and available. Add a manual refresh button to retry the query if it fails."
+        }
+      ]
+    },
+    {
+      "id": "REQ-167",
+      "summary": "Update UserListTable mobile layout to position Approve button directly below username with adequate touch target size (minimum 44x44px)",
+      "acceptanceCriteria": [
+        "On mobile screens (<768px), Approve button appears directly below the username field",
+        "Button has minimum 44x44px touch target size",
+        "Button is fully visible without horizontal scrolling",
+        "Button styling makes it clearly identifiable and clickable on mobile"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/admin/UserListTable.tsx",
           "operation": "modify",
-          "description": "Apply Tailwind CSS classes to the mobile card layout: use 'bg-black/40' or 'bg-gray-900/60' for semi-transparent dark backgrounds, 'rounded-lg' or 'rounded-xl' for rounded corners, 'space-y-4' for vertical spacing between cards, and 'p-4' or 'p-6' for internal card padding. Ensure the Approve button has 'min-h-[44px] min-w-[44px]' classes to meet the 44x44px touch target requirement. Apply text contrast classes ('text-white', 'text-gray-100', or similar) for readability. Verify that existing status badge classes (pending/approved/rejected color variants) are preserved and remain visible against the dark card background. Use consistent neon accent colors from the site's theme (referencing frontend/tailwind.config.js color schemes) for interactive elements."
+          "description": "Modify the mobile card layout (screens <768px) to position the Approve button directly below the username field instead of its current position. Ensure the button has a minimum touch target size of 44x44px using appropriate padding and min-height/min-width styles. Add responsive classes to ensure the button is fully visible without requiring horizontal scrolling. Enhance button styling with clear visual affordances (prominent color, adequate contrast, clear label) to make it easily identifiable and clickable on mobile devices. Maintain the existing desktop table layout without changes."
+        }
+      ]
+    },
+    {
+      "id": "REQ-168",
+      "summary": "Test complete admin panel workflow on mobile and desktop ensuring login works, user list loads without errors, and Approve button functions correctly",
+      "acceptanceCriteria": [
+        "Admin can successfully authenticate and view user list on both mobile and desktop",
+        "No 'Failed to load users' errors appear",
+        "Approve button is visible and functional on mobile devices",
+        "User status updates correctly when Approve button is clicked",
+        "Page layout is responsive and professional on all screen sizes"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/AdminPanelPage.tsx",
+          "operation": "modify",
+          "description": "Add comprehensive error boundary and fallback UI to handle any runtime errors gracefully. Verify the admin authentication flow (username: 'admin', password: 'habibur123') works correctly and transitions to the user list view. Ensure responsive layout works properly across all viewport sizes with media query testing. Add visual feedback for all user interactions (loading states, success messages, error states). Verify the approval mutation updates the user list immediately after successful approval."
+        },
+        {
+          "path": "frontend/src/components/admin/UserListTable.tsx",
+          "operation": "modify",
+          "description": "Test and verify the approval mutation works correctly on both mobile and desktop, updating the user status in real-time. Ensure the toast notifications display properly on mobile devices. Verify the table/card layout remains professional and functional across all screen sizes. Add loading states to the Approve button during mutation execution to prevent double-clicks. Ensure the component properly refreshes the user list after successful approval."
         }
       ]
     }

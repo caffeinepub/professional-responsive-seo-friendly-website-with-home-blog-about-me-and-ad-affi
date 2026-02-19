@@ -6,6 +6,7 @@ import Time "mo:core/Time";
 import Principal "mo:core/Principal";
 import Order "mo:core/Order";
 import Iter "mo:core/Iter";
+import Runtime "mo:core/Runtime";
 
 import AccessControl "authorization/access-control";
 import MixinAuthorization "authorization/MixinAuthorization";
@@ -137,10 +138,15 @@ actor {
   };
 
   public query ({ caller }) func getAllUsers() : async [UserProfile] {
+    // Admin-only: Only admins can view all users in the admin panel
+    if (not (AccessControl.isAdmin(accessControlState, caller))) {
+      Runtime.trap("Unauthorized: Only admins can view all users");
+    };
     users.values().map(userToProfile).toArray();
   };
 
   public shared ({ caller }) func approveUser(userPrincipal : Principal) : async Text {
+    // Admin-only: Only admins can approve users
     if (not (AccessControl.isAdmin(accessControlState, caller))) {
       Runtime.trap("Unauthorized: Only admins can approve users");
     };
@@ -195,6 +201,7 @@ actor {
   };
 
   public shared ({ caller }) func saveCallerUserProfile(profile : UserProfile) : async () {
+    // Users-only: Only approved users can save profiles
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can save profiles");
     };
@@ -220,6 +227,7 @@ actor {
     excerpt : Text,
     content : Text,
   ) : async Text {
+    // Users-only: Only approved users can create blog posts
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can create blog posts");
     };
@@ -244,14 +252,17 @@ actor {
   // Approval endpoints (required for component compatibility)
   //---------------------------------------------
   public query ({ caller }) func isCallerApproved() : async Bool {
+    // Anyone can check their own approval status
     AccessControl.hasPermission(accessControlState, caller, #admin) or UserApproval.isApproved(approvalState, caller);
   };
 
   public shared ({ caller }) func requestApproval() : async () {
+    // Anyone can request approval
     UserApproval.requestApproval(approvalState, caller);
   };
 
   public shared ({ caller }) func setApproval(user : Principal, status : UserApproval.ApprovalStatus) : async () {
+    // Admin-only: Only admins can set approval status
     if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
       Runtime.trap("Unauthorized: Only admins can perform this action");
     };
@@ -259,6 +270,7 @@ actor {
   };
 
   public query ({ caller }) func listApprovals() : async [UserApproval.UserApprovalInfo] {
+    // Admin-only: Only admins can list all approvals
     if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
       Runtime.trap("Unauthorized: Only admins can perform this action");
     };

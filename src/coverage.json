@@ -1,45 +1,87 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-19T10:10:17.837Z",
+  "generatedAt": "2026-02-19T10:24:15.897Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
-    "implemented": 2,
+    "total": 6,
+    "implemented": 4,
     "items": [
       {
-        "id": "REQ-161",
-        "summary": "Update the UserListTable component (frontend/src/components/admin/UserListTable.tsx) to implement a mobile-responsive stacked layout where each user is displayed as a card instead of a table row on small screens (< 768px), with the user's information (Username, WhatsApp Number, Status badge) stacked vertically and the 'Approve' button positioned directly below the status badge within each card.",
+        "id": "REQ-163",
+        "summary": "Diagnose and fix the backend canister connectivity issue causing 'Failed to load users' error on the Admin Panel page in Version 39. Verify the canister is running, properly deployed, and the frontend actor configuration in frontend/src/hooks/useActor.ts points to the correct canister ID.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/admin/UserListTable.tsx"
+          "frontend/src/hooks/useActor.ts",
+          "frontend/src/pages/AdminPanelPage.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/admin/UserListTable.tsx"
+          "frontend/src/pages/AdminPanelPage.tsx"
         ]
       },
       {
-        "id": "REQ-162",
-        "summary": "Style the mobile card layout in UserListTable with proper spacing, borders, and background colors consistent with the site's dark theme and premium styling, ensuring each card is visually distinct and the 'Approve' button has adequate touch target size (minimum 44x44px) for mobile usability.",
+        "id": "REQ-164",
+        "summary": "Verify the backend getAllUsers query method in backend/main.mo is properly exposed as a public query endpoint and can be called without authentication errors. Ensure the method signature matches exactly what the frontend expects.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-165",
+        "summary": "Fix the getAllUsers query hook in frontend/src/hooks/useQueries.ts to properly handle the backend response, including error cases, and display meaningful error messages with full error details for debugging if the canister call fails.",
         "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useQueries.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useQueries.ts"
+        ]
+      },
+      {
+        "id": "REQ-166",
+        "summary": "Update the AdminPanelPage component in frontend/src/pages/AdminPanelPage.tsx to trigger the getAllUsers query immediately after successful admin login and display clear loading and error states with full error messages for debugging.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/AdminPanelPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/AdminPanelPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-167",
+        "summary": "Update the UserListTable component in frontend/src/components/admin/UserListTable.tsx to ensure the 'Approve' button is clearly visible and easily clickable on mobile screens by positioning it directly below the username in the mobile card layout with adequate touch target size (minimum 44x44px).",
+        "status": "missing",
         "plannedFiles": [
           "frontend/src/components/admin/UserListTable.tsx"
         ],
-        "matchedFiles": [
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-168",
+        "summary": "Test the complete admin panel workflow on mobile and desktop to ensure: admin can log in with credentials 'admin'/'habibur123', the user list loads immediately without errors, all user data is displayed correctly, and the Approve button works on both mobile and desktop without UI issues.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/AdminPanelPage.tsx",
           "frontend/src/components/admin/UserListTable.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/AdminPanelPage.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/admin/UserListTable.tsx",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/pages/AdminPanelPage.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

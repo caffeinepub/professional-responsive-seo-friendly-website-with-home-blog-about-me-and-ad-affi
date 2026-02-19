@@ -1,11 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Fix the "useAuth must be used within an AuthProvider" error by properly wrapping the app with AuthProvider in main.tsx.
+**Goal:** Update the Admin Panel authentication to use custom credentials (username: 'admin', password: 'habibur123').
 
 **Planned changes:**
-- Update frontend/src/main.tsx to wrap the App component with AuthProvider from frontend/src/hooks/useAuthContext.tsx
-- Ensure AuthProvider wraps both QueryClientProvider and RouterProvider so authentication context is available globally
-- Verify the provider hierarchy allows useAuth hook to work in all child components including Registration and Login pages
+- Replace the current admin login credentials in AdminPanelPage.tsx from 'admin'/'admin123' to 'admin'/'habibur123'
+- Ensure credentials are not exposed in console logs or client-side debugging
+- Test the updated authentication flow including login, user list viewing, and user approval functionality
 
-**User-visible outcome:** Users can successfully access the Registration and Login pages without encountering authentication context errors, and authentication state persists across navigation.
+**User-visible outcome:** Admin can log in to the Admin Panel using the new credentials ('admin'/'habibur123') and manage users as before. The previous credentials no longer work.

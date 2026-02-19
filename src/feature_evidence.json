@@ -1,4 +1,65 @@
 {
   "kind": "feature_evidence_report",
-  "features": []
+  "features": [
+    {
+      "featureId": "feature-update-the-admin-panel-page-authentication-logic-in-frontend-src-pages-adminpanelpage-tsx-to-use-the-admin-credentials-username-admin-and-password-habibur123-replacing-the-current-default-credentials-admin-admin123",
+      "featureTitle": "Update the Admin Panel page authentication logic in frontend/src/pages/AdminPanelPage.tsx to use the admin credentials: username 'admin' and password 'habibur123' (replacing the current default credentials 'admin'/'admin123').",
+      "files": [
+        "frontend/src/pages/AdminPanelPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0",
+        "user-approval@3.0.0"
+      ],
+      "testIds": [
+        "REQ-143"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-the-admin-credentials-are-stored-securely-in-the-frontend-code-without-plain-text-exposure-in-console-logs-or-client-side-debugging-tools-using-basic-client-side-credential-verification-suitable-for-a-simple-admin-access-control-system",
+      "featureTitle": "Ensure the admin credentials are stored securely in the frontend code without plain-text exposure in console logs or client-side debugging tools, using basic client-side credential verification suitable for a simple admin access control system.",
+      "files": [
+        "frontend/src/pages/AdminPanelPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0",
+        "user-approval@3.0.0"
+      ],
+      "testIds": [
+        "REQ-144"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-test-the-updated-admin-authentication-flow-by-verifying-that-an-admin-can-successfully-log-in-to-admin-panel-using-username-admin-and-password-habibur123-view-the-list-of-registered-users-and-approve-pending-users-without-errors",
+      "featureTitle": "Test the updated admin authentication flow by verifying that an admin can successfully log in to /admin-panel using username 'admin' and password 'habibur123', view the list of registered users, and approve pending users without errors.",
+      "files": [
+        "frontend/src/pages/AdminPanelPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0",
+        "user-approval@3.0.0"
+      ],
+      "testIds": [
+        "REQ-145"
+      ],
+      "confidence": "high"
+    }
+  ]
 }

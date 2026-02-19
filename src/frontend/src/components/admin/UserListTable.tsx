@@ -1,218 +1,203 @@
-import { useGetAllUsers, useListApprovals, useSetApproval } from '../../hooks/useQueries';
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, CheckCircle2, Clock, XCircle } from 'lucide-react';
-import { ApprovalStatus } from '../../backend';
-import { Principal } from '@icp-sdk/core/principal';
+import { useApproveUser } from '../../hooks/useQueries';
+import { CheckCircle2, Clock, XCircle, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import type { UserProfile, UserStatus } from '../../backend';
 
-export function UserListTable() {
-  const { data: users, isLoading: usersLoading } = useGetAllUsers();
-  const { data: approvals, isLoading: approvalsLoading } = useListApprovals();
-  const setApprovalMutation = useSetApproval();
+interface UserListTableProps {
+  users: UserProfile[];
+}
 
-  const isLoading = usersLoading || approvalsLoading;
+export function UserListTable({ users }: UserListTableProps) {
+  const approveMutation = useApproveUser();
 
-  const handleApprove = async (userEmail: string) => {
-    if (!approvals) return;
-
-    // Find the approval info for this user by matching email
-    const user = users?.find(u => u.email === userEmail);
-    if (!user) {
-      toast.error('User not found');
-      return;
-    }
-
-    // Find the principal from approvals list
-    const approvalInfo = approvals.find(a => {
-      // Match by checking if any user has this principal
-      return users?.some(u => u.email === userEmail);
-    });
-
-    if (!approvalInfo) {
-      toast.error('Approval info not found');
-      return;
-    }
-
+  const handleApprove = async (username: string) => {
     try {
-      await setApprovalMutation.mutateAsync({
-        user: approvalInfo.principal,
-        status: ApprovalStatus.approved,
+      await approveMutation.mutateAsync(username);
+      toast.success(`User "${username}" has been approved successfully!`, {
+        duration: 4000,
       });
-      toast.success('User approved successfully!');
     } catch (error: any) {
-      toast.error(error.message || 'Failed to approve user');
+      toast.error(`Failed to approve user: ${error.message}`, {
+        duration: 5000,
+      });
     }
   };
 
-  const getUserStatus = (userEmail: string): ApprovalStatus => {
-    if (!approvals || !users) return ApprovalStatus.pending;
-    
-    // Find approval status by matching user data
-    const userIndex = users.findIndex(u => u.email === userEmail);
-    if (userIndex >= 0 && approvals[userIndex]) {
-      return approvals[userIndex].status;
+  const getStatusBadge = (status: UserStatus) => {
+    switch (status) {
+      case 'Approved':
+        return (
+          <Badge className="bg-green-500/20 text-green-400 border-green-500/50">
+            <CheckCircle2 className="mr-1 h-3 w-3" />
+            Approved
+          </Badge>
+        );
+      case 'Pending':
+        return (
+          <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/50">
+            <Clock className="mr-1 h-3 w-3" />
+            Pending
+          </Badge>
+        );
+      case 'Rejected':
+        return (
+          <Badge className="bg-red-500/20 text-red-400 border-red-500/50">
+            <XCircle className="mr-1 h-3 w-3" />
+            Rejected
+          </Badge>
+        );
+      default:
+        return (
+          <Badge variant="outline" className="text-gray-400">
+            Unknown
+          </Badge>
+        );
     }
-    
-    return ApprovalStatus.pending;
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-400" />
-      </div>
-    );
-  }
+  const formatDate = (timestamp: bigint) => {
+    try {
+      const date = new Date(Number(timestamp) / 1000000); // Convert nanoseconds to milliseconds
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    } catch {
+      return 'Invalid date';
+    }
+  };
 
-  if (!users || users.length === 0) {
-    return (
-      <Card className="glass-background border-white/10">
-        <CardContent className="py-12 text-center">
-          <p className="text-lg text-white/70">No users registered yet.</p>
-        </CardContent>
-      </Card>
-    );
-  }
+  // Sort users: Pending first, then Approved, then Rejected
+  const sortedUsers = [...users].sort((a, b) => {
+    const statusOrder = { Pending: 0, Approved: 1, Rejected: 2 };
+    const aOrder = statusOrder[a.status] ?? 3;
+    const bOrder = statusOrder[b.status] ?? 3;
+    return aOrder - bOrder;
+  });
 
   return (
-    <div className="space-y-4">
-      {/* Desktop Table View */}
-      <div className="hidden md:block">
-        <Card className="glass-background border-white/10">
-          <CardHeader>
-            <CardTitle className="text-white">Registered Users</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-white">Username</th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-white">WhatsApp</th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-white">Email</th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-white">Status</th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-white">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((user, index) => {
-                    const status = getUserStatus(user.email);
-                    return (
-                      <tr key={index} className="border-b border-white/5">
-                        <td className="px-4 py-3 text-white">{user.username}</td>
-                        <td className="px-4 py-3 text-white">{user.whatsappNumber}</td>
-                        <td className="px-4 py-3 text-white/80 text-sm">{user.email}</td>
-                        <td className="px-4 py-3">
-                          {status === ApprovalStatus.approved && (
-                            <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                              <CheckCircle2 className="h-3 w-3 mr-1" />
-                              Approved
-                            </Badge>
-                          )}
-                          {status === ApprovalStatus.pending && (
-                            <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
-                              <Clock className="h-3 w-3 mr-1" />
-                              Pending
-                            </Badge>
-                          )}
-                          {status === ApprovalStatus.rejected && (
-                            <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
-                              <XCircle className="h-3 w-3 mr-1" />
-                              Rejected
-                            </Badge>
-                          )}
-                        </td>
-                        <td className="px-4 py-3">
-                          {status === ApprovalStatus.pending && (
-                            <Button
-                              size="sm"
-                              onClick={() => handleApprove(user.email)}
-                              disabled={setApprovalMutation.isPending}
-                              className="bg-green-600 text-white hover:bg-green-700"
-                            >
-                              {setApprovalMutation.isPending ? (
-                                <Loader2 className="h-4 w-4 animate-spin" />
-                              ) : (
-                                'Approve'
-                              )}
-                            </Button>
-                          )}
-                          {status === ApprovalStatus.approved && (
-                            <span className="text-sm text-green-400">✓ Approved</span>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+    <Card className="glass-background border-neon-cyan/30">
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold text-white">
+          Registered Users ({users.length})
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {/* Desktop Table View */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-neon-cyan/30">
+                <th className="text-left py-4 px-4 text-neon-cyan font-semibold">
+                  Username
+                </th>
+                <th className="text-left py-4 px-4 text-neon-cyan font-semibold">
+                  Registered At
+                </th>
+                <th className="text-left py-4 px-4 text-neon-cyan font-semibold">
+                  Status
+                </th>
+                <th className="text-right py-4 px-4 text-neon-cyan font-semibold">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedUsers.map((user, index) => (
+                <tr
+                  key={`${user.username}-${index}`}
+                  className="border-b border-white/10 hover:bg-white/5 transition-colors"
+                >
+                  <td className="py-4 px-4 text-white font-medium">
+                    {user.username}
+                  </td>
+                  <td className="py-4 px-4 text-gray-300">
+                    {formatDate(user.registeredAt)}
+                  </td>
+                  <td className="py-4 px-4">{getStatusBadge(user.status)}</td>
+                  <td className="py-4 px-4 text-right">
+                    {user.status === 'Pending' ? (
+                      <Button
+                        onClick={() => handleApprove(user.username)}
+                        disabled={approveMutation.isPending}
+                        className="neon-button-primary min-h-10"
+                        size="sm"
+                      >
+                        {approveMutation.isPending ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Approving...
+                          </>
+                        ) : (
+                          <>
+                            <CheckCircle2 className="mr-2 h-4 w-4" />
+                            Approve
+                          </>
+                        )}
+                      </Button>
+                    ) : (
+                      <span className="text-gray-500 text-sm">
+                        {user.status === 'Approved' ? 'Already Approved' : 'Rejected'}
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      {/* Mobile Card View */}
-      <div className="md:hidden space-y-4">
-        {users.map((user, index) => {
-          const status = getUserStatus(user.email);
-          return (
-            <Card key={index} className="glass-background border-white/10">
+        {/* Mobile Card View */}
+        <div className="md:hidden space-y-4">
+          {sortedUsers.map((user, index) => (
+            <Card
+              key={`${user.username}-${index}`}
+              className="bg-black/40 border-white/10"
+            >
               <CardContent className="p-4 space-y-3">
-                <div>
-                  <p className="text-sm text-white/60">Username</p>
-                  <p className="text-white font-medium">{user.username}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-white/60">WhatsApp</p>
-                  <p className="text-white">{user.whatsappNumber}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-white/60">Email</p>
-                  <p className="text-white/80 text-sm break-all">{user.email}</p>
-                </div>
-                <div className="flex items-center justify-between pt-2">
+                <div className="flex items-start justify-between">
                   <div>
-                    {status === ApprovalStatus.approved && (
-                      <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                        <CheckCircle2 className="h-3 w-3 mr-1" />
-                        Approved
-                      </Badge>
-                    )}
-                    {status === ApprovalStatus.pending && (
-                      <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
-                        <Clock className="h-3 w-3 mr-1" />
-                        Pending
-                      </Badge>
-                    )}
-                    {status === ApprovalStatus.rejected && (
-                      <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
-                        <XCircle className="h-3 w-3 mr-1" />
-                        Rejected
-                      </Badge>
-                    )}
+                    <p className="text-white font-semibold text-lg">
+                      {user.username}
+                    </p>
+                    <p className="text-gray-400 text-sm mt-1">
+                      {formatDate(user.registeredAt)}
+                    </p>
                   </div>
-                  {status === ApprovalStatus.pending && (
-                    <Button
-                      size="sm"
-                      onClick={() => handleApprove(user.email)}
-                      disabled={setApprovalMutation.isPending}
-                      className="bg-green-600 text-white hover:bg-green-700"
-                    >
-                      {setApprovalMutation.isPending ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        'Approve'
-                      )}
-                    </Button>
-                  )}
+                  {getStatusBadge(user.status)}
                 </div>
+
+                {user.status === 'Pending' && (
+                  <Button
+                    onClick={() => handleApprove(user.username)}
+                    disabled={approveMutation.isPending}
+                    className="w-full neon-button-primary min-h-12"
+                  >
+                    {approveMutation.isPending ? (
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Approving...
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle2 className="mr-2 h-5 w-5" />
+                        Approve User
+                      </>
+                    )}
+                  </Button>
+                )}
               </CardContent>
             </Card>
-          );
-        })}
-      </div>
-    </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   );
 }

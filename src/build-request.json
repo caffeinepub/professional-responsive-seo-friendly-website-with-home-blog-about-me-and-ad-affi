@@ -1,38 +1,82 @@
 {
   "kind": "build_request",
-  "title": "Fix AuthProvider wrapper to resolve useAuth context error",
+  "title": "Update Admin Panel Authentication to Use Custom Credentials",
+  "projectName": "H★S Online Earn Platform",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-119",
-      "text": "Update frontend/src/main.tsx to wrap the App component with the AuthProvider from frontend/src/hooks/useAuthContext.tsx, ensuring the AuthProvider wraps the RouterProvider and QueryClientProvider so the authentication context is available globally to all routes and components, including the Registration and Login pages.",
+      "id": "REQ-143",
+      "text": "Update the Admin Panel page authentication logic in frontend/src/pages/AdminPanelPage.tsx to use the admin credentials: username 'admin' and password 'habibur123' (replacing the current default credentials 'admin'/'admin123').",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-final"
         ],
         "quotes": [
-          "I am getting an error: 'useAuth must be used within an AuthProvider'. Please wrap the main App component or the Router with the AuthProvider in App.tsx or index.tsx. Ensure that the authentication context is available globally so the registration and login pages can work correctly."
+          "Set the Admin Username as: admin",
+          "Set the Admin Password as: habibur123"
         ]
       },
       "acceptanceCriteria": [
-        "The AuthProvider from frontend/src/hooks/useAuthContext.tsx wraps the entire app at the root level in frontend/src/main.tsx",
-        "The component hierarchy ensures AuthProvider wraps both QueryClientProvider and RouterProvider",
-        "The 'useAuth must be used within an AuthProvider' error no longer occurs",
-        "Registration and Login pages can successfully access the authentication context via the useAuth hook",
-        "The authentication state persists across navigation and page refreshes"
+        "The admin login form on the /admin-panel page accepts username 'admin' and password 'habibur123'",
+        "The previous credentials 'admin'/'admin123' no longer work",
+        "Successful login with the new credentials grants access to the user management interface",
+        "Failed login attempts display an appropriate error message",
+        "The authenticated session persists in sessionStorage as before"
+      ]
+    },
+    {
+      "id": "REQ-144",
+      "text": "Ensure the admin credentials are stored securely in the frontend code without plain-text exposure in console logs or client-side debugging tools, using basic client-side credential verification suitable for a simple admin access control system.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-final"
+        ],
+        "quotes": [
+          "Please implement this secure login system"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin credentials are not logged to the browser console",
+        "The credential verification logic is contained within the AdminPanelPage component",
+        "The implementation maintains the existing sessionStorage-based session persistence",
+        "The login form includes basic client-side validation for empty fields"
+      ]
+    },
+    {
+      "id": "REQ-145",
+      "text": "Test the updated admin authentication flow by verifying that an admin can successfully log in to /admin-panel using username 'admin' and password 'habibur123', view the list of registered users, and approve pending users without errors.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-final"
+        ],
+        "quotes": [
+          "Let me know once it is deployed"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Navigating to /admin-panel displays the login form",
+        "Entering 'admin' and 'habibur123' successfully authenticates and shows the user management interface",
+        "The UserListTable component displays all registered users with their current status",
+        "Clicking 'Approve' on a pending user successfully updates their status to 'Approved'",
+        "The admin session persists across page navigation within the /admin-panel route"
       ]
     }
   ],
   "constraints": [
-    "Do not modify frontend/src/hooks/useInternetIdentity.tsx or frontend/src/hooks/useActor.ts",
-    "Preserve the existing QueryClient and InternetIdentityProvider wrapper structure",
-    "Ensure the AuthProvider is positioned correctly in the provider hierarchy so useAuth hook works in all child components"
+    "Do not modify the backend user management system or approval logic",
+    "Preserve the existing sessionStorage-based admin session management approach",
+    "Keep the AdminPanelPage component structure and UserListTable integration unchanged except for the credential verification logic",
+    "Do not add external authentication libraries or complex encryption for this simple admin access control"
   ],
   "nonGoals": [
-    "Modifying the AuthProvider implementation itself",
-    "Changing the authentication logic or user flow",
-    "Adding new authentication features"
+    "Implementing backend-based admin authentication or role management",
+    "Adding password reset or forgot password functionality for admin access",
+    "Creating multiple admin user accounts with different permission levels",
+    "Implementing OAuth or third-party authentication for admin access",
+    "Adding admin activity logging or audit trails"
   ],
   "imageRequirements": {
     "required": [],

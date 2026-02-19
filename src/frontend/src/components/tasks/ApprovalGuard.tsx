@@ -1,29 +1,28 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { useAuth } from '../../hooks/useAuthContext';
-import { useIsCallerApproved, useIsCallerAdmin } from '../../hooks/useQueries';
+import { useAuth } from '../../App';
 import { Card, CardContent } from '@/components/ui/card';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { UserStatus } from '../../backend';
 
 interface ApprovalGuardProps {
   children: ReactNode;
 }
 
 export function ApprovalGuard({ children }: ApprovalGuardProps) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user, isLoading } = useAuth();
   const navigate = useNavigate();
-  const { data: isApproved, isLoading: approvalLoading } = useIsCallerApproved();
-  const { data: isAdmin, isLoading: adminLoading } = useIsCallerAdmin();
 
   // Redirect to registration if not authenticated
-  if (!isAuthenticated) {
-    navigate({ to: '/registration' });
-    return null;
-  }
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      navigate({ to: '/registration' });
+    }
+  }, [isAuthenticated, isLoading, navigate]);
 
-  // Show loading state while checking approval status
-  if (approvalLoading || adminLoading) {
+  // Show loading state while checking authentication
+  if (isLoading) {
     return (
       <div className="container flex min-h-[60vh] items-center justify-center py-12">
         <Card className="glass-background border-white/10 max-w-md">
@@ -36,13 +35,13 @@ export function ApprovalGuard({ children }: ApprovalGuardProps) {
     );
   }
 
-  // Admins can always access
-  if (isAdmin) {
-    return <>{children}</>;
+  // If not authenticated, return null (redirect will happen via useEffect)
+  if (!isAuthenticated || !user) {
+    return null;
   }
 
   // Show blocking message for pending users
-  if (!isApproved) {
+  if (user.status === UserStatus.Pending) {
     return (
       <div className="container flex min-h-[60vh] items-center justify-center py-12">
         <Card className="glass-background border-yellow-500/30 max-w-2xl">
@@ -55,6 +54,33 @@ export function ApprovalGuard({ children }: ApprovalGuardProps) {
             </h2>
             <p className="text-lg text-white/80">
               Your account is currently being verified. You will be able to start working after admin approval.
+            </p>
+            <Button
+              onClick={() => navigate({ to: '/' })}
+              className="bg-blue-600 text-white hover:bg-blue-700 mt-4"
+            >
+              Go to Home
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Show blocking message for rejected users
+  if (user.status === UserStatus.Rejected) {
+    return (
+      <div className="container flex min-h-[60vh] items-center justify-center py-12">
+        <Card className="glass-background border-red-500/30 max-w-2xl">
+          <CardContent className="flex flex-col items-center p-8 text-center space-y-6">
+            <div className="rounded-full bg-red-500/20 p-4">
+              <AlertCircle className="h-16 w-16 text-red-400" />
+            </div>
+            <h2 className="text-2xl font-bold text-white md:text-3xl">
+              Account Rejected
+            </h2>
+            <p className="text-lg text-white/80">
+              Your account has been rejected. Please contact admin for more information.
             </p>
             <Button
               onClick={() => navigate({ to: '/' })}

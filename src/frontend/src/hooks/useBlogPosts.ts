@@ -49,6 +49,7 @@ export function useSearchPosts(term: string) {
   return useQuery<BlogPost[]>({
     queryKey: ['posts', 'search', term],
     queryFn: async () => {
+      // Backend doesn't have searchPosts, so we do client-side filtering
       if (!actor) {
         return samplePosts.filter(
           (post) =>
@@ -57,10 +58,20 @@ export function useSearchPosts(term: string) {
         );
       }
       try {
-        return await actor.searchPosts(term);
+        const posts = await actor.getPosts();
+        return posts.filter(
+          (post) =>
+            post.title.toLowerCase().includes(term.toLowerCase()) ||
+            post.content.toLowerCase().includes(term.toLowerCase()) ||
+            post.excerpt.toLowerCase().includes(term.toLowerCase())
+        );
       } catch (error) {
         console.error('Failed to search posts:', error);
-        return [];
+        return samplePosts.filter(
+          (post) =>
+            post.title.toLowerCase().includes(term.toLowerCase()) ||
+            post.content.toLowerCase().includes(term.toLowerCase())
+        );
       }
     },
     enabled: !!actor && !isFetching && term.length > 0,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 59,
-  "summary": "Update the homepage Hero CTA: rename the single button from \"Contact on Facebook\" to \"রেজিস্ট্রেশন করুন\" and link it to the new Registration page (\"/registration\"). Replace the embedded Google Form on the Registration page with a professional built-in registration form containing Username, WhatsApp Number, Group Number, Email, and Password fields, styled with a clean white card background, blue Register button, and green Login button. Add a floating WhatsApp icon at the bottom right. (Admin approval system and access control are deferred for incremental implementation.)",
+  "projectStateVersion": 73,
+  "summary": "Consolidate all authentication logic (AuthProvider, useAuth hook, Registration form, Login form) into a single App.tsx file to ensure AuthProvider wraps the application at the root level and eliminate 'useAuth must be used within an AuthProvider' errors. Remove external context files and keep all auth logic together in one place.",
   "architectural_notes": [
     "Home page ad region should support embedding third-party ad network code (external async script + container div) in place of a placeholder, while keeping the rest of the layout unchanged.",
     "Site-wide visual theme should support a full-screen fixed background image (parallax-style) with a dark overlay layer to preserve text contrast/readability; must be responsive across mobile and desktop.",
@@ -14,13 +14,7 @@
     "Header navigation should be simplified to only: Home, Work Tasks (dropdown with Task 1/2/3), Payment Proof, and Support (Support is a direct external link to the user’s Facebook).",
     "Payment Proof gallery page should include a top \"Upload New Proof\" CTA button that links externally to the provided Google Form (no in-site file upload handling)."
   ],
-  "known_issues": [
-    "Mobile hamburger menu icon is missing on mobile view, preventing access to navigation.",
-    "Text is not clearly readable against the background image; insufficient contrast/overlay/text-shadow.",
-    "Deployment/build did not complete successfully (deployment error reported).",
-    "Registration page is not visible/accessible on the live site; ensure /registration route is published and reachable from the Home page CTA.",
-    "'useAuth must be used within an AuthProvider' error occurs because AuthProvider is not wrapping the app root; registration and login pages cannot access authentication context."
-  ],
+  "known_issues": [],
   "isFixRequest": true,
   "existing_features": [
     {
@@ -894,6 +888,190 @@
         "REQ-118"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-rewrite-frontend-src-hooks-useauthcontext-tsx-from-scratch-to-implement-a-clean-robust-authentication-context-provider-that-manages-user-state-isauthenticated-user-details-including-username-email-whatsappnumber-status-provides-login-and-logout-functions-and-persists-authentication-state-to-localstorage-with-proper-initialization-on-mount",
+      "title": "Completely rewrite frontend/src/hooks/useAuthContext.tsx from scratch to implement a clean, robust authentication context provider that manages user state (isAuthenticated, user details including username, email, whatsappNumber, status), provides login and logout functions, and persists authentication state to localStorage with proper initialization on mount.",
+      "reqIds": [
+        "REQ-120"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-rewrite-frontend-src-components-registration-registrationform-tsx-from-scratch-to-implement-a-clean-registration-form-with-fields-username-text-input-whatsapp-number-number-input-with-placeholder-01-email-email-input-and-password-password-input-with-show-hide-toggle-including-client-side-validation-required-fields-email-format-whatsapp-format-starting-with-01-password-minimum-6-characters-and-integration-with-the-rewritten-authentication-context",
+      "title": "Rewrite frontend/src/components/registration/RegistrationForm.tsx from scratch to implement a clean registration form with fields: Username (text input), WhatsApp Number (number input with placeholder '01...'), Email (email input), and Password (password input with show/hide toggle), including client-side validation (required fields, email format, WhatsApp format starting with '01', password minimum 6 characters) and integration with the rewritten authentication context.",
+      "reqIds": [
+        "REQ-121"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-rewrite-frontend-src-components-registration-loginform-tsx-from-scratch-to-implement-a-clean-login-form-with-fields-username-email-text-input-and-password-password-input-with-show-hide-toggle-calling-the-backend-loginuser-function-via-the-authentication-context-s-login-method-storing-the-authenticated-user-state-on-success-and-displaying-appropriate-error-messages-for-invalid-credentials-or-pending-approval-status",
+      "title": "Rewrite frontend/src/components/registration/LoginForm.tsx from scratch to implement a clean login form with fields: Username/Email (text input) and Password (password input with show/hide toggle), calling the backend loginUser function via the authentication context's login method, storing the authenticated user state on success, and displaying appropriate error messages for invalid credentials or pending approval status.",
+      "reqIds": [
+        "REQ-122"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-components-tasks-approvalguard-tsx-to-use-the-rewritten-authentication-context-useauthcontext-hook-to-check-user-authentication-status-and-approval-status-redirecting-unauthenticated-users-to-the-registration-page-and-displaying-the-bengali-pending-message-for-users-with-status-pending",
+      "title": "Update frontend/src/components/tasks/ApprovalGuard.tsx to use the rewritten authentication context (useAuthContext hook) to check user authentication status and approval status, redirecting unauthenticated users to the Registration page and displaying the Bengali pending message 'আপনার অ্যাকাউন্টটি বর্তমানে যাচাই করা হচ্ছে। অ্যাডমিন অ্যাপ্রুভ করার পর আপনি কাজ শুরু করতে পারবেন।' for users with status='Pending'.",
+      "reqIds": [
+        "REQ-123"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-pages-registrationpage-tsx-to-work-with-the-rewritten-authentication-system-ensuring-the-page-renders-the-tabbed-interface-with-registrationform-and-loginform-components-checks-for-existing-authentication-state-and-redirects-authenticated-users-to-an-appropriate-destination-e-g-home-or-tasks",
+      "title": "Update frontend/src/pages/RegistrationPage.tsx to work with the rewritten authentication system, ensuring the page renders the tabbed interface with RegistrationForm and LoginForm components, checks for existing authentication state, and redirects authenticated users to an appropriate destination (e.g., home or tasks).",
+      "reqIds": [
+        "REQ-124"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-hooks-usequeries-ts-to-ensure-the-registration-and-login-query-hooks-useregisteruser-useloginuser-are-compatible-with-the-rewritten-authentication-context-structure-including-proper-error-handling-response-parsing-and-integration-with-the-backend-user-management-functions",
+      "title": "Update frontend/src/hooks/useQueries.ts to ensure the registration and login query hooks (useRegisterUser, useLoginUser) are compatible with the rewritten authentication context structure, including proper error handling, response parsing, and integration with the backend user management functions.",
+      "reqIds": [
+        "REQ-125"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-pages-adminpanelpage-tsx-to-use-the-rewritten-authentication-context-to-verify-admin-permissions-fetch-all-users-via-the-getallusers-query-display-the-userlisttable-component-and-ensure-approve-reject-actions-refresh-the-user-list-and-work-correctly-with-the-new-authentication-structure",
+      "title": "Update frontend/src/pages/AdminPanelPage.tsx to use the rewritten authentication context to verify admin permissions, fetch all users via the getAllUsers query, display the UserListTable component, and ensure approve/reject actions refresh the user list and work correctly with the new authentication structure.",
+      "reqIds": [
+        "REQ-127"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-or-comment-out-any-old-broken-authentication-code-files-that-are-no-longer-needed-after-the-rewrite-including-any-duplicate-or-conflicting-auth-hooks-context-providers-or-components-that-might-interfere-with-the-new-clean-authentication-structure",
+      "title": "Remove or comment out any old/broken authentication code files that are no longer needed after the rewrite, including any duplicate or conflicting auth hooks, context providers, or components that might interfere with the new clean authentication structure.",
+      "reqIds": [
+        "REQ-128"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-move-all-authentication-logic-authprovider-useauth-hook-user-state-management-login-logout-functions-into-a-single-file-at-frontend-src-app-tsx-at-the-top-of-the-file-before-the-main-app-component-definition",
+      "title": "Move all authentication logic (AuthProvider, useAuth hook, user state management, login/logout functions) into a single file at frontend/src/App.tsx at the top of the file, before the main App component definition.",
+      "reqIds": [
+        "REQ-129"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-define-the-registrationform-and-loginform-components-directly-inside-frontend-src-app-tsx-after-authprovider-and-useauth-before-or-after-the-main-app-component-ensuring-they-use-the-local-useauth-hook-from-the-same-file",
+      "title": "Define the RegistrationForm and LoginForm components directly inside frontend/src/App.tsx (after AuthProvider and useAuth, before or after the main App component), ensuring they use the local useAuth hook from the same file.",
+      "reqIds": [
+        "REQ-130"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-wrap-the-main-app-component-the-router-and-all-routes-inside-the-authprovider-component-within-the-same-frontend-src-app-tsx-file-ensuring-authprovider-is-the-outermost-wrapper-at-the-root-level",
+      "title": "Wrap the main App component (the router and all routes) inside the AuthProvider component within the same frontend/src/App.tsx file, ensuring AuthProvider is the outermost wrapper at the root level.",
+      "reqIds": [
+        "REQ-131"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-or-delete-the-external-authentication-context-files-frontend-src-hooks-useauthcontext-tsx-and-any-other-separate-auth-provider-files-to-eliminate-conflicts-and-ensure-all-authentication-logic-lives-only-in-app-tsx",
+      "title": "Remove or delete the external authentication context files (frontend/src/hooks/useAuthContext.tsx and any other separate auth provider files) to eliminate conflicts and ensure all authentication logic lives only in App.tsx.",
+      "reqIds": [
+        "REQ-132"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-all-components-that-currently-import-authentication-hooks-or-context-approvalguard-registrationpage-adminpanelpage-task-pages-to-either-be-moved-into-app-tsx-or-refactored-to-work-without-external-auth-imports-ensuring-the-single-file-authentication-structure-is-complete",
+      "title": "Update all components that currently import authentication hooks or context (ApprovalGuard, RegistrationPage, AdminPanelPage, task pages) to either be moved into App.tsx or refactored to work without external auth imports, ensuring the single-file authentication structure is complete.",
+      "reqIds": [
+        "REQ-133"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-admin-panel-page-component-at-frontend-src-pages-adminpanelpage-tsx-that-renders-a-full-page-admin-interface-with-the-global-sitelayout-header-footer-background-and-includes-a-page-title-admin-panel-user-management",
+      "title": "Create a new Admin Panel page component at frontend/src/pages/AdminPanelPage.tsx that renders a full-page admin interface with the global SiteLayout (header, footer, background) and includes a page title 'Admin Panel - User Management'.",
+      "reqIds": [
+        "REQ-134"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-admin-authentication-on-the-admin-panel-page-using-a-simple-password-based-access-control-system-with-a-default-admin-username-admin-and-default-password-admin123-storing-the-authenticated-state-in-sessionstorage-to-persist-across-page-navigation-within-the-session",
+      "title": "Implement admin authentication on the Admin Panel page using a simple password-based access control system with a default admin username 'admin' and default password 'admin123', storing the authenticated state in sessionStorage to persist across page navigation within the session.",
+      "reqIds": [
+        "REQ-135"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-admin-panel-page-frontend-src-pages-adminpanelpage-tsx-fetch-all-registered-users-from-the-backend-using-the-existing-getallusers-query-hook-from-frontend-src-hooks-usequeries-ts-and-display-a-loading-state-while-fetching-error-state-on-failure-and-the-user-list-table-when-data-is-available",
+      "title": "On the Admin Panel page (frontend/src/pages/AdminPanelPage.tsx), fetch all registered users from the backend using the existing getAllUsers query hook from frontend/src/hooks/useQueries.ts and display a loading state while fetching, error state on failure, and the user list table when data is available.",
+      "reqIds": [
+        "REQ-136"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-the-userlisttable-component-frontend-src-components-admin-userlisttable-tsx-on-the-authenticated-admin-panel-page-passing-the-fetched-users-data-as-props-and-ensure-the-table-displays-each-user-s-username-whatsapp-number-and-status-in-a-clean-responsive-table-format",
+      "title": "Render the UserListTable component (frontend/src/components/admin/UserListTable.tsx) on the authenticated Admin Panel page, passing the fetched users data as props, and ensure the table displays each user's Username, WhatsApp Number, and Status in a clean responsive table format.",
+      "reqIds": [
+        "REQ-137"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-userlisttable-component-frontend-src-components-admin-userlisttable-tsx-to-display-an-approve-button-next-to-each-user-with-status-pending-and-wire-the-button-click-to-call-the-backend-approveuser-function-via-the-mutation-hook-refresh-the-user-list-on-success-and-display-a-success-toast-message",
+      "title": "Update the UserListTable component (frontend/src/components/admin/UserListTable.tsx) to display an 'Approve' button next to each user with status='Pending', and wire the button click to call the backend approveUser function via the mutation hook, refresh the user list on success, and display a success toast/message.",
+      "reqIds": [
+        "REQ-138"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-style-the-admin-panel-page-with-a-professional-dark-theme-consistent-with-the-site-s-existing-neon-premium-styling-including-a-semi-transparent-dark-container-for-the-admin-login-form-and-the-user-management-table-with-proper-spacing-readable-text-colors-and-mobile-friendly-touch-targets",
+      "title": "Style the Admin Panel page with a professional dark theme consistent with the site's existing neon/premium styling, including a semi-transparent dark container for the admin login form and the user management table with proper spacing, readable text colors, and mobile-friendly touch targets.",
+      "reqIds": [
+        "REQ-140"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-clear-admin-instructions-or-help-text-on-the-admin-panel-page-explaining-that-this-is-where-administrators-can-review-and-approve-new-user-registrations-and-that-only-approved-users-can-access-work-tasks",
+      "title": "Add clear admin instructions or help text on the Admin Panel page explaining that this is where administrators can review and approve new user registrations, and that only approved users can access work tasks.",
+      "reqIds": [
+        "REQ-141"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-admin-panel-page-authentication-logic-in-frontend-src-pages-adminpanelpage-tsx-to-use-the-admin-credentials-username-admin-and-password-habibur123-replacing-the-current-default-credentials-admin-admin123",
+      "title": "Update the Admin Panel page authentication logic in frontend/src/pages/AdminPanelPage.tsx to use the admin credentials: username 'admin' and password 'habibur123' (replacing the current default credentials 'admin'/'admin123').",
+      "reqIds": [
+        "REQ-143"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-admin-credentials-are-stored-securely-in-the-frontend-code-without-plain-text-exposure-in-console-logs-or-client-side-debugging-tools-using-basic-client-side-credential-verification-suitable-for-a-simple-admin-access-control-system",
+      "title": "Ensure the admin credentials are stored securely in the frontend code without plain-text exposure in console logs or client-side debugging tools, using basic client-side credential verification suitable for a simple admin access control system.",
+      "reqIds": [
+        "REQ-144"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-test-the-updated-admin-authentication-flow-by-verifying-that-an-admin-can-successfully-log-in-to-admin-panel-using-username-admin-and-password-habibur123-view-the-list-of-registered-users-and-approve-pending-users-without-errors",
+      "title": "Test the updated admin authentication flow by verifying that an admin can successfully log in to /admin-panel using username 'admin' and password 'habibur123', view the list of registered users, and approve pending users without errors.",
+      "reqIds": [
+        "REQ-145"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1234,17 +1412,71 @@
       "status": "pending"
     },
     {
-      "id": "AR-78",
-      "summary": "Wrap the main App component or Router with the AuthProvider in App.tsx or index.tsx to fix 'useAuth must be used within an AuthProvider' error",
+      "id": "AR-86",
+      "summary": "Rewrite the core application structure to properly wrap the entire app within <AuthProvider> in the main entry file (main.tsx or App.tsx), ensuring the authentication context is globally available before any routing or component rendering occurs.",
       "reqIds": [],
       "status": "pending"
     },
     {
-      "id": "AR-79",
-      "summary": "Update frontend/src/main.tsx to wrap the App component with the AuthProvider from frontend/src/hooks/useAuthContext.tsx, ensuring the AuthProvider wraps the RouterProvider and QueryClientProvider so the authentication context is available globally to all routes and components, including the Registration and Login pages.",
+      "id": "AR-87",
+      "summary": "Re-implement the Registration system from scratch with fields: Username (Name), WhatsApp Number, and Password. Ensure all authentication logic is built within the new clean structure with AuthProvider properly initialized.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-88",
+      "summary": "Re-implement the Login system from scratch using the new authentication structure, ensuring it checks credentials and user approval status before granting access.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-89",
+      "summary": "Rebuild the Admin Approval logic within the new clean structure: all new users must have 'Pending' status by default, and only 'Approved' users can access work/task pages.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-90",
+      "summary": "Rewrite frontend/src/main.tsx to wrap the entire application with <AuthProvider> at the root level, ensuring the authentication context is globally available before any routing or component rendering occurs. The provider must wrap both the QueryClientProvider and the Router/App component.",
       "reqIds": [
         "REQ-119"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-97",
+      "summary": "Verify backend/main.mo contains the complete user management system including User type definition, registerUser function (with password hashing and 'Pending' default status), loginUser function (with credential verification and status check), getAllUsers query, and approveUser update function, ensuring all functions work correctly with the rewritten frontend authentication system.",
+      "reqIds": [
+        "REQ-126"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-98",
+      "summary": "Build a complete admin panel at /admin-panel with user authentication (default admin credentials), showing a list of all registered users (name, WhatsApp, status) and an 'Approve' button for each pending user to change their status to 'Approved'.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-104",
+      "summary": "Register the Admin Panel page in the TanStack Router route tree at the exact path '/admin-panel' so it is accessible via direct navigation to /admin-panel, and ensure the route is included in the app's routing configuration.",
+      "reqIds": [
+        "REQ-139"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-107",
+      "summary": "Verify that the backend approveUser function in backend/main.mo correctly updates the user status from 'Pending' to 'Approved' when called with a valid username, and that the getAllUsers query returns the updated status immediately after approval.",
+      "reqIds": [
+        "REQ-142"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-108",
+      "summary": "Implement secure admin authentication for the /admin-panel with provided credentials: username 'admin' and password 'habibur123', including proper session management and credential verification",
+      "reqIds": [],
       "status": "pending"
     }
   ],

@@ -7,17 +7,6 @@ export interface None {
     __kind__: "None";
 }
 export type Option<T> = Some<T> | None;
-export type UserLoginResponse = {
-    __kind__: "error";
-    error: string;
-} | {
-    __kind__: "success";
-    success: UserLoginProfile;
-};
-export interface UserApprovalInfo {
-    status: ApprovalStatus;
-    principal: Principal;
-}
 export interface BlogPost {
     title: string;
     content: string;
@@ -25,28 +14,16 @@ export interface BlogPost {
     slug: string;
     excerpt: string;
 }
+export interface UserApprovalInfo {
+    status: ApprovalStatus;
+    principal: Principal;
+}
 export type Time = bigint;
-export interface UserPublicProfile {
-    groupNumber: string;
+export interface UserProfile {
+    status: UserStatus;
     username: string;
-    email: string;
-    whatsappNumber: string;
-    registeredAt: bigint;
+    registeredAt: Time;
 }
-export interface UserLoginProfile {
-    groupNumber: string;
-    username: string;
-    email: string;
-    whatsappNumber: string;
-    registeredAt: bigint;
-}
-export type UserRegistrationResponse = {
-    __kind__: "error";
-    error: string;
-} | {
-    __kind__: "success";
-    success: string;
-};
 export enum ApprovalStatus {
     pending = "pending",
     approved = "approved",
@@ -57,23 +34,27 @@ export enum UserRole {
     user = "user",
     guest = "guest"
 }
+export enum UserStatus {
+    Approved = "Approved",
+    Rejected = "Rejected",
+    Pending = "Pending"
+}
 export interface backendInterface {
+    approveUser(userPrincipal: Principal): Promise<string>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     createPost(title: string, slug: string, excerpt: string, content: string): Promise<string>;
-    getAllPostSlugs(): Promise<Array<string>>;
-    getAllUsers(): Promise<Array<UserPublicProfile>>;
-    getCallerUserProfile(): Promise<UserPublicProfile | null>;
+    getAllUsers(): Promise<Array<UserProfile>>;
+    getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
-    getPost(slug: string): Promise<BlogPost>;
+    getPost(slug: string): Promise<BlogPost | null>;
     getPosts(): Promise<Array<BlogPost>>;
-    getUserProfile(user: Principal): Promise<UserPublicProfile | null>;
+    getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
     isCallerApproved(): Promise<boolean>;
     listApprovals(): Promise<Array<UserApprovalInfo>>;
-    loginUser(emailOrUsername: string, password: string): Promise<UserLoginResponse>;
-    registerUser(username: string, whatsappNumber: string, groupNumber: string, email: string, password: string): Promise<UserRegistrationResponse>;
+    loginUser(password: string): Promise<UserProfile>;
+    registerUser(username: string, password: string): Promise<string>;
     requestApproval(): Promise<void>;
-    saveCallerUserProfile(profile: UserPublicProfile): Promise<void>;
-    searchPosts(term: string): Promise<Array<BlogPost>>;
+    saveCallerUserProfile(profile: UserProfile): Promise<void>;
     setApproval(user: Principal, status: ApprovalStatus): Promise<void>;
 }

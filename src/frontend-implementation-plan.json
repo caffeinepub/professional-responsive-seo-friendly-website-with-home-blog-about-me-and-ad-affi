@@ -1,23 +1,58 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix AuthProvider wrapper to resolve useAuth context error",
+  "title": "Update Admin Panel Authentication to Use Custom Credentials",
   "requirements": [
     {
-      "id": "REQ-119",
-      "summary": "Wrap App component with AuthProvider in main.tsx to make authentication context available globally",
+      "id": "REQ-143",
+      "summary": "Update AdminPanelPage authentication to use new credentials (admin/habibur123)",
       "acceptanceCriteria": [
-        "The AuthProvider from frontend/src/hooks/useAuthContext.tsx wraps the entire app at the root level in frontend/src/main.tsx",
-        "The component hierarchy ensures AuthProvider wraps both QueryClientProvider and RouterProvider",
-        "The 'useAuth must be used within an AuthProvider' error no longer occurs",
-        "Registration and Login pages can successfully access the authentication context via the useAuth hook",
-        "The authentication state persists across navigation and page refreshes"
+        "The admin login form on the /admin-panel page accepts username 'admin' and password 'habibur123'",
+        "The previous credentials 'admin'/'admin123' no longer work",
+        "Successful login with the new credentials grants access to the user management interface",
+        "Failed login attempts display an appropriate error message",
+        "The authenticated session persists in sessionStorage as before"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/main.tsx",
+          "path": "frontend/src/pages/AdminPanelPage.tsx",
           "operation": "modify",
-          "description": "Import AuthProvider from frontend/src/hooks/useAuthContext.tsx and restructure the component hierarchy so that AuthProvider wraps the QueryClientProvider and App component (which contains RouterProvider). The hierarchy should be: InternetIdentityProvider > AuthProvider > QueryClientProvider > App. This ensures the authentication context from useAuthContext is available to all components including Registration and Login pages that use the useAuth hook."
+          "description": "Update the hardcoded admin credentials from 'admin'/'admin123' to 'admin'/'habibur123' in the handleLogin function's credential verification logic. Replace the existing username and password constants or comparison values with the new credentials while maintaining the same sessionStorage-based session management and UserListTable integration."
+        }
+      ]
+    },
+    {
+      "id": "REQ-144",
+      "summary": "Ensure secure credential handling without plain-text exposure in logs or debugging tools",
+      "acceptanceCriteria": [
+        "Admin credentials are not logged to the browser console",
+        "The credential verification logic is contained within the AdminPanelPage component",
+        "The implementation maintains the existing sessionStorage-based session persistence",
+        "The login form includes basic client-side validation for empty fields"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/AdminPanelPage.tsx",
+          "operation": "modify",
+          "description": "Review and remove any console.log statements that might expose admin credentials. Add basic client-side validation for empty username and password fields before credential verification. Ensure the credential comparison logic does not log or expose the expected credentials through debugging tools while maintaining the simple client-side authentication approach."
+        }
+      ]
+    },
+    {
+      "id": "REQ-145",
+      "summary": "Verify the updated admin authentication flow functions correctly",
+      "acceptanceCriteria": [
+        "Navigating to /admin-panel displays the login form",
+        "Entering 'admin' and 'habibur123' successfully authenticates and shows the user management interface",
+        "The UserListTable component displays all registered users with their current status",
+        "Clicking 'Approve' on a pending user successfully updates their status to 'Approved'",
+        "The admin session persists across page navigation within the /admin-panel route"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/AdminPanelPage.tsx",
+          "operation": "modify",
+          "description": "Ensure the login form renders correctly on page load when not authenticated, the UserListTable component is displayed after successful authentication with the new credentials, and the sessionStorage-based session persistence works correctly for maintaining the authenticated state across page reloads and navigation."
         }
       ]
     }

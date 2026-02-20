@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-diagnose-and-fix-the-backend-canister-connectivity-issue-causing-failed-to-load-users-error-on-the-admin-panel-page-in-version-39-verify-the-canister-is-running-properly-deployed-and-the-frontend-actor-configuration-in-frontend-src-hooks-useactor-ts-points-to-the-correct-canister-id",
-      "featureTitle": "Diagnose and fix the backend canister connectivity issue causing 'Failed to load users' error on the Admin Panel page in Version 39. Verify the canister is running, properly deployed, and the frontend actor configuration in frontend/src/hooks/useActor.ts points to the correct canister ID.",
+      "featureId": "feature-remove-all-internet-identity-authentication-logic-from-the-admin-panel-page-frontend-src-pages-adminpanelpage-tsx-including-all-useinternetidentity-hook-imports-internet-identity-login-ui-components-authentication-checks-and-any-code-that-depends-on-internet-identity-authentication-state",
+      "featureTitle": "Remove all Internet Identity authentication logic from the Admin Panel page (frontend/src/pages/AdminPanelPage.tsx), including all useInternetIdentity hook imports, Internet Identity login UI components, authentication checks, and any code that depends on Internet Identity authentication state.",
       "files": [
         "frontend/src/pages/AdminPanelPage.tsx"
       ],
@@ -17,13 +17,53 @@
         "user-approval@3.0.0"
       ],
       "testIds": [
-        "REQ-163"
+        "REQ-169"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-fix-the-getallusers-query-hook-in-frontend-src-hooks-usequeries-ts-to-properly-handle-the-backend-response-including-error-cases-and-display-meaningful-error-messages-with-full-error-details-for-debugging-if-the-canister-call-fails",
-      "featureTitle": "Fix the getAllUsers query hook in frontend/src/hooks/useQueries.ts to properly handle the backend response, including error cases, and display meaningful error messages with full error details for debugging if the canister call fails.",
+      "featureId": "feature-implement-a-simple-username-and-password-login-form-on-the-admin-panel-page-with-two-text-input-fields-labeled-username-and-password-a-login-submit-button-and-styling-consistent-with-the-site-s-dark-theme-and-neon-accent-colors",
+      "featureTitle": "Implement a simple username and password login form on the Admin Panel page with two text input fields labeled 'Username' and 'Password', a 'Login' submit button, and styling consistent with the site's dark theme and neon accent colors.",
+      "files": [
+        "frontend/src/pages/AdminPanelPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0",
+        "user-approval@3.0.0"
+      ],
+      "testIds": [
+        "REQ-170"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-admin-authentication-logic-in-the-admin-panel-page-that-verifies-the-submitted-username-is-exactly-admin-and-the-password-is-exactly-habibur123-stores-the-authenticated-session-state-in-sessionstorage-and-displays-the-user-management-interface-only-when-authenticated",
+      "featureTitle": "Implement admin authentication logic in the Admin Panel page that verifies the submitted username is exactly 'admin' and the password is exactly 'habibur123', stores the authenticated session state in sessionStorage, and displays the user management interface only when authenticated.",
+      "files": [
+        "frontend/src/pages/AdminPanelPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0",
+        "user-approval@3.0.0"
+      ],
+      "testIds": [
+        "REQ-171"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-getallusers-query-hook-in-frontend-src-hooks-usequeries-ts-to-call-the-backend-getallusers-method-using-the-backend-actor-without-requiring-any-internet-identity-authentication-handle-the-response-data-correctly-and-display-meaningful-error-messages-with-full-error-details-if-the-call-fails",
+      "featureTitle": "Update the getAllUsers query hook in frontend/src/hooks/useQueries.ts to call the backend getAllUsers method using the backend actor without requiring any Internet Identity authentication, handle the response data correctly, and display meaningful error messages with full error details if the call fails.",
       "files": [
         "frontend/src/hooks/useQueries.ts"
       ],
@@ -37,13 +77,13 @@
         "user-approval@3.0.0"
       ],
       "testIds": [
-        "REQ-165"
+        "REQ-172"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-the-adminpanelpage-component-in-frontend-src-pages-adminpanelpage-tsx-to-trigger-the-getallusers-query-immediately-after-successful-admin-login-and-display-clear-loading-and-error-states-with-full-error-messages-for-debugging",
-      "featureTitle": "Update the AdminPanelPage component in frontend/src/pages/AdminPanelPage.tsx to trigger the getAllUsers query immediately after successful admin login and display clear loading and error states with full error messages for debugging.",
+      "featureId": "feature-update-the-adminpanelpage-component-frontend-src-pages-adminpanelpage-tsx-to-trigger-the-getallusers-query-immediately-after-successful-admin-login-using-the-simple-username-password-authentication-display-a-clear-loading-state-while-fetching-show-the-full-error-message-if-the-fetch-fails-and-render-the-userlisttable-component-with-the-fetched-user-data-when-successful",
+      "featureTitle": "Update the AdminPanelPage component (frontend/src/pages/AdminPanelPage.tsx) to trigger the getAllUsers query immediately after successful admin login using the simple username/password authentication, display a clear loading state while fetching, show the full error message if the fetch fails, and render the UserListTable component with the fetched user data when successful.",
       "files": [
         "frontend/src/pages/AdminPanelPage.tsx"
       ],
@@ -57,27 +97,7 @@
         "user-approval@3.0.0"
       ],
       "testIds": [
-        "REQ-166"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-test-the-complete-admin-panel-workflow-on-mobile-and-desktop-to-ensure-admin-can-log-in-with-credentials-admin-habibur123-the-user-list-loads-immediately-without-errors-all-user-data-is-displayed-correctly-and-the-approve-button-works-on-both-mobile-and-desktop-without-ui-issues",
-      "featureTitle": "Test the complete admin panel workflow on mobile and desktop to ensure: admin can log in with credentials 'admin'/'habibur123', the user list loads immediately without errors, all user data is displayed correctly, and the Approve button works on both mobile and desktop without UI issues.",
-      "files": [
-        "frontend/src/pages/AdminPanelPage.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0",
-        "user-approval@3.0.0"
-      ],
-      "testIds": [
-        "REQ-168"
+        "REQ-173"
       ],
       "confidence": "high"
     }

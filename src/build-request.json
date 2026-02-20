@@ -1,132 +1,156 @@
 {
   "kind": "build_request",
-  "title": "Fix Admin Panel Backend Connection and Mobile UI Issues",
+  "title": "Remove Internet Identity from Admin Panel and restore username/password login",
+  "projectName": "H★S Online Earn Platform",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-163",
-      "text": "Diagnose and fix the backend canister connectivity issue causing 'Failed to load users' error on the Admin Panel page in Version 39. Verify the canister is running, properly deployed, and the frontend actor configuration in frontend/src/hooks/useActor.ts points to the correct canister ID.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "The admin panel is showing 'Failed to load users' again in Version 39. The backend canister seems stopped or disconnected."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Admin panel loads the user list automatically without rejection errors",
-        "Backend canister responds to getAllUsers query calls",
-        "Frontend actor successfully connects to the deployed backend canister"
-      ]
-    },
-    {
-      "id": "REQ-164",
-      "text": "Verify the backend getAllUsers query method in backend/main.mo is properly exposed as a public query endpoint and can be called without authentication errors. Ensure the method signature matches exactly what the frontend expects.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "Ensure the user list loads automatically without any rejection error."
-        ]
-      },
-      "acceptanceCriteria": [
-        "getAllUsers method is declared as a public query in backend/main.mo",
-        "Method returns array of user objects with username, whatsappNumber, and status fields",
-        "Method can be called by anonymous actors without authentication requirements"
-      ]
-    },
-    {
-      "id": "REQ-165",
-      "text": "Fix the getAllUsers query hook in frontend/src/hooks/useQueries.ts to properly handle the backend response, including error cases, and display meaningful error messages with full error details for debugging if the canister call fails.",
+      "id": "REQ-169",
+      "text": "Remove all Internet Identity authentication logic from the Admin Panel page (frontend/src/pages/AdminPanelPage.tsx), including all useInternetIdentity hook imports, Internet Identity login UI components, authentication checks, and any code that depends on Internet Identity authentication state.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-latest"
         ],
         "quotes": [
-          "Reconnect the frontend to the backend canister properly."
+          "Stop adding 'Internet Identity'! It is blocking my access.Remove Internet Identity authentication completely from the admin panel."
         ]
       },
       "acceptanceCriteria": [
-        "Query hook correctly calls backend.getAllUsers() method",
-        "Response data is properly parsed and returned to the component",
-        "Error states show specific canister error messages for debugging"
+        "No Internet Identity imports or hooks remain in AdminPanelPage.tsx",
+        "No Internet Identity login UI or prompts are displayed on the admin panel page",
+        "Admin panel does not attempt to authenticate using Internet Identity"
       ]
     },
     {
-      "id": "REQ-166",
-      "text": "Update the AdminPanelPage component in frontend/src/pages/AdminPanelPage.tsx to trigger the getAllUsers query immediately after successful admin login and display clear loading and error states with full error messages for debugging.",
+      "id": "REQ-170",
+      "text": "Implement a simple username and password login form on the Admin Panel page with two text input fields labeled 'Username' and 'Password', a 'Login' submit button, and styling consistent with the site's dark theme and neon accent colors.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-latest"
         ],
         "quotes": [
-          "Ensure the user list loads automatically without any rejection error."
+          "Bring back the simple login form with 'Username' and 'Password' fields."
         ]
       },
       "acceptanceCriteria": [
-        "User list query executes automatically after admin authentication",
-        "Loading spinner shows while fetching data",
-        "Error messages display full canister error details if fetch fails",
-        "UserListTable renders with fetched data when successful"
+        "Login form displays two clearly labeled text input fields: Username and Password",
+        "Password field uses type='password' to mask input",
+        "Submit button is clearly visible and labeled 'Login'",
+        "Form styling matches site's dark theme with neon accents"
       ]
     },
     {
-      "id": "REQ-167",
-      "text": "Update the UserListTable component in frontend/src/components/admin/UserListTable.tsx to ensure the 'Approve' button is clearly visible and easily clickable on mobile screens by positioning it directly below the username in the mobile card layout with adequate touch target size (minimum 44x44px).",
+      "id": "REQ-171",
+      "text": "Implement admin authentication logic in the Admin Panel page that verifies the submitted username is exactly 'admin' and the password is exactly 'habibur123', stores the authenticated session state in sessionStorage, and displays the user management interface only when authenticated.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-latest"
         ],
         "quotes": [
-          "Make sure the 'Approve' button is clearly visible and clickable on my mobile screen (put it under the username if needed)."
+          "Set Username: admin | Password: habibur123"
         ]
       },
       "acceptanceCriteria": [
-        "On mobile screens (<768px), Approve button appears directly below the username field",
-        "Button has minimum 44x44px touch target size",
-        "Button is fully visible without horizontal scrolling",
-        "Button styling makes it clearly identifiable and clickable on mobile"
+        "Login succeeds when username='admin' and password='habibur123'",
+        "Login fails with error message for any other credentials",
+        "Authenticated state is stored in sessionStorage",
+        "User management interface is hidden until login succeeds",
+        "Session persists across page navigation within the same browser session"
       ]
     },
     {
-      "id": "REQ-168",
-      "text": "Test the complete admin panel workflow on mobile and desktop to ensure: admin can log in with credentials 'admin'/'habibur123', the user list loads immediately without errors, all user data is displayed correctly, and the Approve button works on both mobile and desktop without UI issues.",
-      "target": "both",
+      "id": "REQ-172",
+      "text": "Update the getAllUsers query hook in frontend/src/hooks/useQueries.ts to call the backend getAllUsers method using the backend actor without requiring any Internet Identity authentication, handle the response data correctly, and display meaningful error messages with full error details if the call fails.",
+      "target": "frontend",
       "source": {
         "messageIds": [
           "msg-latest"
         ],
         "quotes": [
-          "Deploy this as Version 40. This must be the final stable version."
+          "Stop adding 'Internet Identity'! It is blocking my access."
         ]
       },
       "acceptanceCriteria": [
-        "Admin can successfully authenticate and view user list on both mobile and desktop",
-        "No 'Failed to load users' errors appear",
-        "Approve button is visible and functional on mobile devices",
-        "User status updates correctly when Approve button is clicked",
-        "Page layout is responsive and professional on all screen sizes"
+        "getAllUsers query does not require Internet Identity authentication",
+        "Query successfully calls backend getAllUsers method",
+        "Response data is properly parsed and returned to components",
+        "Error messages include full error details for debugging"
+      ]
+    },
+    {
+      "id": "REQ-173",
+      "text": "Update the AdminPanelPage component (frontend/src/pages/AdminPanelPage.tsx) to trigger the getAllUsers query immediately after successful admin login using the simple username/password authentication, display a clear loading state while fetching, show the full error message if the fetch fails, and render the UserListTable component with the fetched user data when successful.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Ensure that after login, the 'Approve' button is visible next to each user."
+        ]
+      },
+      "acceptanceCriteria": [
+        "getAllUsers query is triggered immediately after successful login",
+        "Loading spinner or message displays while fetching user data",
+        "Error messages are clearly displayed if fetch fails",
+        "UserListTable renders with fetched user data on success",
+        "Approve button is visible for each pending user in the table"
+      ]
+    },
+    {
+      "id": "REQ-174",
+      "text": "Verify that the UserListTable component (frontend/src/components/admin/UserListTable.tsx) displays an 'Approve' button next to each user with status='Pending', and wire the button click to call the backend approveUser function without requiring Internet Identity authentication, refresh the user list on success, and display a success toast message.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Ensure that after login, the 'Approve' button is visible next to each user."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Approve button is visible next to each pending user",
+        "Button click calls approveUser without Internet Identity authentication",
+        "User list refreshes automatically after successful approval",
+        "Success message displays after approval",
+        "Approve button is properly sized for mobile (minimum 44x44px touch target)"
+      ]
+    },
+    {
+      "id": "REQ-175",
+      "text": "Remove or disable any Internet Identity authentication initialization from frontend/src/hooks/useActor.ts that might interfere with admin panel operations, ensuring the backend actor can be created and used without requiring Internet Identity login.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Stop adding 'Internet Identity'! It is blocking my access."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend actor can be initialized without Internet Identity",
+        "Admin panel operations work without Internet Identity authentication",
+        "No Internet Identity login prompts appear for admin operations"
       ]
     }
   ],
   "constraints": [
-    "Do not change the admin authentication credentials (username: 'admin', password: 'habibur123')",
-    "Maintain the existing mobile-responsive card layout structure for the UserListTable component",
-    "Preserve all existing user management backend logic and data structures",
-    "Ensure the fix works with the current single-actor Motoko backend architecture"
+    "Preserve the existing user registration and login system for regular users",
+    "Keep the backend user management functions (getAllUsers, approveUser) unchanged",
+    "Maintain the existing UserListTable component structure and mobile responsiveness",
+    "Do not modify the admin credentials format or storage mechanism beyond what's specified"
   ],
   "nonGoals": [
-    "Redesigning the admin panel UI beyond the mobile button placement fix",
-    "Adding new user management features or additional admin capabilities",
-    "Changing the authentication system or user approval workflow",
-    "Modifying any other pages or components outside the admin panel scope"
+    "Implementing encrypted or hashed admin password storage",
+    "Adding multi-admin support or role-based access control",
+    "Modifying the regular user authentication flow",
+    "Changing the backend user approval workflow",
+    "Adding password reset functionality for admin"
   ],
   "imageRequirements": {
     "required": [],

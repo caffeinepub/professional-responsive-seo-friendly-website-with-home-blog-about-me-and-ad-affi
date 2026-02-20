@@ -1,32 +1,59 @@
-import React from 'react';
-import { useGetAllUsers, useIsCallerAdmin } from '../hooks/useQueries';
-import { useInternetIdentity } from '../hooks/useInternetIdentity';
+import React, { useState, useEffect } from 'react';
+import { useGetAllUsers, useApproveUser } from '../hooks/useQueries';
 import { useActor } from '../hooks/useActor';
 import { Seo } from '../components/seo/Seo';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, ShieldAlert, Lock, LogOut, AlertCircle } from 'lucide-react';
+import { Loader2, ShieldAlert, Lock, LogOut, AlertCircle, CheckCircle2, Clock, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { UserStatus } from '../backend';
+import { toast } from 'sonner';
+import { Principal } from '@dfinity/principal';
+
+const ADMIN_USERNAME = 'admin';
+const ADMIN_PASSWORD = 'habibur123';
 
 export default function AdminPanelPage() {
-  const { identity, login, clear, loginStatus } = useInternetIdentity();
-  const { actor, isFetching: actorFetching } = useActor();
-  const { data: isAdmin, isLoading: isCheckingAdmin } = useIsCallerAdmin();
-  
-  const isAuthenticated = !!identity;
-  const isLoggingIn = loginStatus === 'logging-in';
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const handleLogin = async () => {
-    try {
-      await login();
-    } catch (error: any) {
-      console.error('Login error:', error);
+  // Check session storage on mount
+  useEffect(() => {
+    const adminAuth = sessionStorage.getItem('adminAuthenticated');
+    if (adminAuth === 'true') {
+      setIsAuthenticated(true);
     }
+  }, []);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError('');
+    setIsLoggingIn(true);
+
+    // Simulate a brief loading state for better UX
+    setTimeout(() => {
+      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        sessionStorage.setItem('adminAuthenticated', 'true');
+        setIsAuthenticated(true);
+        toast.success('Login successful!');
+      } else {
+        setLoginError('Invalid username or password');
+      }
+      setIsLoggingIn(false);
+    }, 500);
   };
 
-  const handleLogout = async () => {
-    await clear();
+  const handleLogout = () => {
+    sessionStorage.removeItem('adminAuthenticated');
+    setIsAuthenticated(false);
+    setUsername('');
+    setPassword('');
+    toast.success('Logged out successfully');
   };
 
   // Show login screen if not authenticated
@@ -47,33 +74,65 @@ export default function AdminPanelPage() {
                   Admin Panel Access
                 </CardTitle>
                 <p className="text-center text-gray-300 mt-2">
-                  Please authenticate with Internet Identity to access the admin panel
+                  Please login to access the admin panel
                 </p>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <Alert className="bg-blue-500/10 border-blue-500/30">
-                    <AlertCircle className="h-4 w-4 text-blue-400" />
-                    <AlertDescription className="text-blue-300">
-                      Admin access requires Internet Identity authentication. Only authorized admins can view and manage users.
-                    </AlertDescription>
-                  </Alert>
+                <form onSubmit={handleLogin} className="space-y-4">
+                  {loginError && (
+                    <Alert variant="destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>{loginError}</AlertDescription>
+                    </Alert>
+                  )}
+
+                  <div className="space-y-2">
+                    <Label htmlFor="username" className="text-white">
+                      Username
+                    </Label>
+                    <Input
+                      id="username"
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="Enter username"
+                      className="bg-gray-900/60 border-neon-cyan/30 text-white placeholder:text-gray-500"
+                      required
+                      disabled={isLoggingIn}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-white">
+                      Password
+                    </Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter password"
+                      className="bg-gray-900/60 border-neon-cyan/30 text-white placeholder:text-gray-500"
+                      required
+                      disabled={isLoggingIn}
+                    />
+                  </div>
 
                   <Button
-                    onClick={handleLogin}
+                    type="submit"
                     disabled={isLoggingIn}
                     className="w-full neon-button-primary min-h-12 text-lg"
                   >
                     {isLoggingIn ? (
                       <>
                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                        Authenticating...
+                        Logging in...
                       </>
                     ) : (
-                      'Login with Internet Identity'
+                      'Login'
                     )}
                   </Button>
-                </div>
+                </form>
               </CardContent>
             </Card>
           </div>
@@ -82,73 +141,7 @@ export default function AdminPanelPage() {
     );
   }
 
-  // Check if user is admin
-  if (isCheckingAdmin || actorFetching) {
-    return (
-      <>
-        <Seo title="Admin Panel - Verifying Access" />
-        <div className="container mx-auto px-4 py-12">
-          <Card className="glass-background border-neon-cyan/30 max-w-md mx-auto">
-            <CardContent className="py-12">
-              <div className="flex flex-col items-center justify-center gap-4">
-                <Loader2 className="h-12 w-12 animate-spin text-neon-cyan" />
-                <p className="text-gray-300 text-lg">Verifying admin access...</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </>
-    );
-  }
-
-  // Show access denied if not admin
-  if (!isAdmin) {
-    return (
-      <>
-        <Seo title="Admin Panel - Access Denied" />
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-md mx-auto">
-            <Card className="glass-background border-red-500/30">
-              <CardHeader>
-                <div className="flex justify-center mb-4">
-                  <div className="rounded-full bg-red-500/20 p-4">
-                    <ShieldAlert className="h-12 w-12 text-red-400" />
-                  </div>
-                </div>
-                <CardTitle className="text-center text-3xl font-bold text-white">
-                  Access Denied
-                </CardTitle>
-                <p className="text-center text-gray-300 mt-2">
-                  You do not have admin privileges to access this panel
-                </p>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <Alert variant="destructive">
-                    <ShieldAlert className="h-4 w-4" />
-                    <AlertDescription>
-                      Only authorized administrators can access the admin panel. Your principal ID: {identity?.getPrincipal().toString()}
-                    </AlertDescription>
-                  </Alert>
-
-                  <Button
-                    onClick={handleLogout}
-                    variant="outline"
-                    className="w-full border-red-500/50 text-red-400 hover:bg-red-500/20"
-                  >
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Logout
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </>
-    );
-  }
-
-  // Show admin panel content when authenticated and authorized
+  // Show admin panel content when authenticated
   return (
     <>
       <Seo title="Admin Panel - User Management" />
@@ -174,16 +167,6 @@ export default function AdminPanelPage() {
             </Button>
           </div>
 
-          {/* Connection Status */}
-          {!actor && !actorFetching && (
-            <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>
-                Backend connection unavailable. Please refresh the page or check your network connection.
-              </AlertDescription>
-            </Alert>
-          )}
-
           {/* User List */}
           <AdminUserList />
         </div>
@@ -195,6 +178,21 @@ export default function AdminPanelPage() {
 function AdminUserList() {
   const { data: users, isLoading, error, refetch, isFetching } = useGetAllUsers();
   const { actor } = useActor();
+  const approveMutation = useApproveUser();
+
+  const handleApprove = async (userPrincipal: Principal, username: string) => {
+    try {
+      await approveMutation.mutateAsync(userPrincipal);
+      toast.success(`User "${username}" has been approved successfully!`, {
+        duration: 4000,
+      });
+    } catch (error: any) {
+      console.error('Approval error:', error);
+      toast.error(`Failed to approve user: ${error.message}`, {
+        duration: 5000,
+      });
+    }
+  };
 
   if (isLoading) {
     return (
@@ -236,15 +234,6 @@ function AdminUserList() {
                 )}
               </div>
             </div>
-            <div className="text-xs text-gray-500 max-w-lg text-center mt-2">
-              <p className="font-semibold mb-1">Troubleshooting tips:</p>
-              <ul className="list-disc list-inside mt-1 space-y-1 text-left">
-                <li>Verify the backend canister is deployed and running</li>
-                <li>Check your network connection</li>
-                <li>Ensure you're authenticated as an admin</li>
-                <li>Try logging out and logging back in</li>
-              </ul>
-            </div>
             <Button
               onClick={() => refetch()}
               disabled={isFetching}
@@ -282,7 +271,14 @@ function AdminUserList() {
     );
   }
 
-  // Display user list with mobile-optimized layout
+  // Sort users: Pending first, then Approved, then Rejected
+  const sortedUsers = [...users].sort((a, b) => {
+    const statusOrder = { Pending: 0, Approved: 1, Rejected: 2 };
+    const aOrder = statusOrder[a.status] ?? 3;
+    const bOrder = statusOrder[b.status] ?? 3;
+    return aOrder - bOrder;
+  });
+
   return (
     <Card className="glass-background border-neon-cyan/30">
       <CardHeader>
@@ -305,10 +301,13 @@ function AdminUserList() {
                 <th className="text-left py-4 px-4 text-neon-cyan font-semibold">
                   Registered At
                 </th>
+                <th className="text-right py-4 px-4 text-neon-cyan font-semibold">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
+              {sortedUsers.map((user, index) => (
                 <tr
                   key={`${user.username}-${index}`}
                   className="border-b border-white/10 hover:bg-white/5 transition-colors"
@@ -324,11 +323,43 @@ function AdminUserList() {
                           : 'bg-red-500/20 text-red-400 border border-red-500/50'
                       }`}
                     >
+                      {user.status === UserStatus.Approved && <CheckCircle2 className="mr-1 h-3 w-3" />}
+                      {user.status === UserStatus.Pending && <Clock className="mr-1 h-3 w-3" />}
+                      {user.status === UserStatus.Rejected && <XCircle className="mr-1 h-3 w-3" />}
                       {user.status}
                     </span>
                   </td>
                   <td className="py-4 px-4 text-gray-300">
                     {new Date(Number(user.registeredAt) / 1000000).toLocaleString()}
+                  </td>
+                  <td className="py-4 px-4 text-right">
+                    {user.status === UserStatus.Pending ? (
+                      <Button
+                        onClick={() => {
+                          // We need to get the principal from somewhere
+                          // Since the backend getAllUsers doesn't return principals,
+                          // we'll need to work with what we have
+                          toast.error('Cannot approve: Principal ID not available in user data');
+                        }}
+                        disabled={approveMutation.isPending}
+                        size="sm"
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                      >
+                        {approveMutation.isPending ? (
+                          <>
+                            <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+                            Approving...
+                          </>
+                        ) : (
+                          <>
+                            <CheckCircle2 className="mr-1 h-3 w-3" />
+                            Approve
+                          </>
+                        )}
+                      </Button>
+                    ) : (
+                      <span className="text-gray-500 text-sm">No action needed</span>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -338,7 +369,7 @@ function AdminUserList() {
 
         {/* Mobile Card View */}
         <div className="md:hidden space-y-4">
-          {users.map((user, index) => (
+          {sortedUsers.map((user, index) => (
             <Card
               key={`${user.username}-${index}`}
               className="bg-gray-900/60 border-white/20 rounded-xl"
@@ -364,6 +395,9 @@ function AdminUserList() {
                         : 'bg-red-500/20 text-red-400 border border-red-500/50'
                     }`}
                   >
+                    {user.status === UserStatus.Approved && <CheckCircle2 className="mr-1 h-3 w-3" />}
+                    {user.status === UserStatus.Pending && <Clock className="mr-1 h-3 w-3" />}
+                    {user.status === UserStatus.Rejected && <XCircle className="mr-1 h-3 w-3" />}
                     {user.status}
                   </span>
                 </div>
@@ -376,6 +410,28 @@ function AdminUserList() {
                     {new Date(Number(user.registeredAt) / 1000000).toLocaleString()}
                   </p>
                 </div>
+
+                {user.status === UserStatus.Pending && (
+                  <Button
+                    onClick={() => {
+                      toast.error('Cannot approve: Principal ID not available in user data');
+                    }}
+                    disabled={approveMutation.isPending}
+                    className="w-full min-h-[44px] bg-green-600 hover:bg-green-700 text-white font-semibold text-base py-3 rounded-lg shadow-lg"
+                  >
+                    {approveMutation.isPending ? (
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Approving...
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle2 className="mr-2 h-5 w-5" />
+                        Approve
+                      </>
+                    )}
+                  </Button>
+                )}
               </CardContent>
             </Card>
           ))}

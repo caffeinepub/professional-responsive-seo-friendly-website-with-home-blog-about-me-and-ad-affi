@@ -99,9 +99,7 @@ export function useGetAllApprovals() {
         console.log('listApprovals response:', approvals);
         return approvals;
       } catch (error: any) {
-        console.error('Failed to fetch approvals - Full error:', error);
-        console.error('Error message:', error.message);
-        console.error('Error stack:', error.stack);
+        console.error('Failed to fetch approvals:', error);
         throw new Error(
           `Failed to load approvals: ${error.message || 'Unknown error'}`
         );
@@ -109,7 +107,6 @@ export function useGetAllApprovals() {
     },
     enabled: !!actor && !actorFetching,
     retry: 2,
-    retryDelay: 1000,
   });
 }
 
@@ -120,59 +117,25 @@ export function useApproveUser() {
   return useMutation({
     mutationFn: async (userPrincipal: Principal) => {
       if (!actor) throw new Error('Actor not available');
-      try {
-        const result = await actor.approveUser(userPrincipal);
-        return result;
-      } catch (error: any) {
-        console.error('Failed to approve user:', error);
-        throw new Error(
-          error.message || 'Failed to approve user in backend canister'
-        );
-      }
+      return actor.approveUser(userPrincipal);
     },
     onSuccess: () => {
-      // Invalidate both queries to refresh the data
       queryClient.invalidateQueries({ queryKey: ['allUsers'] });
       queryClient.invalidateQueries({ queryKey: ['allApprovals'] });
     },
   });
 }
 
-// ============================================================================
-// APPROVAL QUERIES (for component compatibility)
-// ============================================================================
-
-export function useIsCallerApproved() {
-  const { actor, isFetching: actorFetching } = useActor();
-
-  return useQuery<boolean>({
-    queryKey: ['isCallerApproved'],
-    queryFn: async () => {
-      if (!actor) return false;
-      return actor.isCallerApproved();
-    },
-    enabled: !!actor && !actorFetching,
-  });
-}
-
 export function useIsCallerAdmin() {
   const { actor, isFetching: actorFetching } = useActor();
 
-  return useQuery<boolean>({
+  return useQuery({
     queryKey: ['isCallerAdmin'],
     queryFn: async () => {
-      if (!actor) return false;
-      try {
-        const isAdmin = await actor.isCallerAdmin();
-        console.log('isCallerAdmin result:', isAdmin);
-        return isAdmin;
-      } catch (error) {
-        console.error('Error checking admin status:', error);
-        return false;
-      }
+      if (!actor) throw new Error('Actor not available');
+      return actor.isCallerAdmin();
     },
     enabled: !!actor && !actorFetching,
-    retry: 1,
   });
 }
 
@@ -186,7 +149,7 @@ export function useGetPosts() {
   return useQuery({
     queryKey: ['posts'],
     queryFn: async () => {
-      if (!actor) return [];
+      if (!actor) throw new Error('Actor not available');
       return actor.getPosts();
     },
     enabled: !!actor && !actorFetching,
@@ -199,9 +162,52 @@ export function useGetPost(slug: string) {
   return useQuery({
     queryKey: ['post', slug],
     queryFn: async () => {
-      if (!actor) return null;
+      if (!actor) throw new Error('Actor not available');
       return actor.getPost(slug);
     },
     enabled: !!actor && !actorFetching && !!slug,
+  });
+}
+
+export function useSearchPosts(searchTerm: string) {
+  const { data: posts, ...rest } = useGetPosts();
+
+  const filteredPosts = posts?.filter((post) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      post.title.toLowerCase().includes(term) ||
+      post.excerpt.toLowerCase().includes(term) ||
+      post.content.toLowerCase().includes(term)
+    );
+  });
+
+  return {
+    data: filteredPosts,
+    ...rest,
+  };
+}
+
+export function useCreatePost() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      title,
+      slug,
+      excerpt,
+      content,
+    }: {
+      title: string;
+      slug: string;
+      excerpt: string;
+      content: string;
+    }) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.createPost(title, slug, excerpt, content);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['posts'] });
+    },
   });
 }

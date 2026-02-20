@@ -1,21 +1,20 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-19T10:24:15.897Z",
+  "generatedAt": "2026-02-19T12:05:44.038Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 6,
-    "implemented": 4,
+    "total": 7,
+    "implemented": 5,
     "items": [
       {
-        "id": "REQ-163",
-        "summary": "Diagnose and fix the backend canister connectivity issue causing 'Failed to load users' error on the Admin Panel page in Version 39. Verify the canister is running, properly deployed, and the frontend actor configuration in frontend/src/hooks/useActor.ts points to the correct canister ID.",
+        "id": "REQ-169",
+        "summary": "Remove all Internet Identity authentication logic from the Admin Panel page (frontend/src/pages/AdminPanelPage.tsx), including all useInternetIdentity hook imports, Internet Identity login UI components, authentication checks, and any code that depends on Internet Identity authentication state.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useActor.ts",
           "frontend/src/pages/AdminPanelPage.tsx"
         ],
         "matchedFiles": [
@@ -23,15 +22,30 @@
         ]
       },
       {
-        "id": "REQ-164",
-        "summary": "Verify the backend getAllUsers query method in backend/main.mo is properly exposed as a public query endpoint and can be called without authentication errors. Ensure the method signature matches exactly what the frontend expects.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
+        "id": "REQ-170",
+        "summary": "Implement a simple username and password login form on the Admin Panel page with two text input fields labeled 'Username' and 'Password', a 'Login' submit button, and styling consistent with the site's dark theme and neon accent colors.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/AdminPanelPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/AdminPanelPage.tsx"
+        ]
       },
       {
-        "id": "REQ-165",
-        "summary": "Fix the getAllUsers query hook in frontend/src/hooks/useQueries.ts to properly handle the backend response, including error cases, and display meaningful error messages with full error details for debugging if the canister call fails.",
+        "id": "REQ-171",
+        "summary": "Implement admin authentication logic in the Admin Panel page that verifies the submitted username is exactly 'admin' and the password is exactly 'habibur123', stores the authenticated session state in sessionStorage, and displays the user management interface only when authenticated.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/AdminPanelPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/AdminPanelPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-172",
+        "summary": "Update the getAllUsers query hook in frontend/src/hooks/useQueries.ts to call the backend getAllUsers method using the backend actor without requiring any Internet Identity authentication, handle the response data correctly, and display meaningful error messages with full error details if the call fails.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/hooks/useQueries.ts"
@@ -41,8 +55,8 @@
         ]
       },
       {
-        "id": "REQ-166",
-        "summary": "Update the AdminPanelPage component in frontend/src/pages/AdminPanelPage.tsx to trigger the getAllUsers query immediately after successful admin login and display clear loading and error states with full error messages for debugging.",
+        "id": "REQ-173",
+        "summary": "Update the AdminPanelPage component (frontend/src/pages/AdminPanelPage.tsx) to trigger the getAllUsers query immediately after successful admin login using the simple username/password authentication, display a clear loading state while fetching, show the full error message if the fetch fails, and render the UserListTable component with the fetched user data when successful.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/pages/AdminPanelPage.tsx"
@@ -52,8 +66,8 @@
         ]
       },
       {
-        "id": "REQ-167",
-        "summary": "Update the UserListTable component in frontend/src/components/admin/UserListTable.tsx to ensure the 'Approve' button is clearly visible and easily clickable on mobile screens by positioning it directly below the username in the mobile card layout with adequate touch target size (minimum 44x44px).",
+        "id": "REQ-174",
+        "summary": "Verify that the UserListTable component (frontend/src/components/admin/UserListTable.tsx) displays an 'Approve' button next to each user with status='Pending', and wire the button click to call the backend approveUser function without requiring Internet Identity authentication, refresh the user list on success, and display a success toast message.",
         "status": "missing",
         "plannedFiles": [
           "frontend/src/components/admin/UserListTable.tsx"
@@ -61,21 +75,17 @@
         "matchedFiles": []
       },
       {
-        "id": "REQ-168",
-        "summary": "Test the complete admin panel workflow on mobile and desktop to ensure: admin can log in with credentials 'admin'/'habibur123', the user list loads immediately without errors, all user data is displayed correctly, and the Approve button works on both mobile and desktop without UI issues.",
-        "status": "implemented",
+        "id": "REQ-175",
+        "summary": "Remove or disable any Internet Identity authentication initialization from frontend/src/hooks/useActor.ts that might interfere with admin panel operations, ensuring the backend actor can be created and used without requiring Internet Identity login.",
+        "status": "missing",
         "plannedFiles": [
-          "frontend/src/pages/AdminPanelPage.tsx",
-          "frontend/src/components/admin/UserListTable.tsx"
+          "frontend/src/hooks/useActor.ts"
         ],
-        "matchedFiles": [
-          "frontend/src/pages/AdminPanelPage.tsx"
-        ]
+        "matchedFiles": []
       }
     ]
   },
   "changedFiles": [
-    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",

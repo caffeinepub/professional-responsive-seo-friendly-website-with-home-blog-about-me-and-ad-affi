@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 81,
+  "projectStateVersion": 83,
   "summary": "Consolidate all authentication logic (AuthProvider, useAuth hook, Registration form, Login form) into a single App.tsx file to ensure AuthProvider wraps the application at the root level and eliminate 'useAuth must be used within an AuthProvider' errors. Remove external context files and keep all auth logic together in one place.",
   "architectural_notes": [
     "Home page ad region should support embedding third-party ad network code (external async script + container div) in place of a placeholder, while keeping the rest of the layout unchanged.",
@@ -15,7 +15,7 @@
     "Payment Proof gallery page should include a top \"Upload New Proof\" CTA button that links externally to the provided Google Form (no in-site file upload handling)."
   ],
   "known_issues": [
-    "Admin panel shows 'Failed to load users' in Version 39 - backend canister appears stopped or disconnected"
+    "Internet Identity authentication is blocking admin panel access and must be completely removed in favor of simple username/password login"
   ],
   "isFixRequest": true,
   "existing_features": [
@@ -1119,9 +1119,10 @@
       "id": "feature-implement-admin-authentication-logic-in-the-admin-panel-page-that-verifies-the-submitted-username-is-exactly-admin-and-the-password-is-exactly-habibur123-stores-the-authenticated-session-state-in-sessionstorage-and-displays-the-user-management-interface-only-when-authenticated",
       "title": "Implement admin authentication logic in the Admin Panel page that verifies the submitted username is exactly 'admin' and the password is exactly 'habibur123', stores the authenticated session state in sessionStorage, and displays the user management interface only when authenticated.",
       "reqIds": [
-        "REQ-155"
+        "REQ-155",
+        "REQ-171"
       ],
-      "version": 1
+      "version": 2
     },
     {
       "id": "feature-fix-the-getallusers-query-hook-in-frontend-src-hooks-usequeries-ts-to-properly-call-the-backend-getallusers-method-using-the-backend-actor-without-requiring-internet-identity-authentication-handle-the-response-data-correctly-and-display-meaningful-error-messages-with-full-error-details-for-debugging-if-the-call-fails",
@@ -1192,6 +1193,38 @@
       "title": "Test the complete admin panel workflow on mobile and desktop to ensure: admin can log in with credentials 'admin'/'habibur123', the user list loads immediately without errors, all user data is displayed correctly, and the Approve button works on both mobile and desktop without UI issues.",
       "reqIds": [
         "REQ-168"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-all-internet-identity-authentication-logic-from-the-admin-panel-page-frontend-src-pages-adminpanelpage-tsx-including-all-useinternetidentity-hook-imports-internet-identity-login-ui-components-authentication-checks-and-any-code-that-depends-on-internet-identity-authentication-state",
+      "title": "Remove all Internet Identity authentication logic from the Admin Panel page (frontend/src/pages/AdminPanelPage.tsx), including all useInternetIdentity hook imports, Internet Identity login UI components, authentication checks, and any code that depends on Internet Identity authentication state.",
+      "reqIds": [
+        "REQ-169"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-simple-username-and-password-login-form-on-the-admin-panel-page-with-two-text-input-fields-labeled-username-and-password-a-login-submit-button-and-styling-consistent-with-the-site-s-dark-theme-and-neon-accent-colors",
+      "title": "Implement a simple username and password login form on the Admin Panel page with two text input fields labeled 'Username' and 'Password', a 'Login' submit button, and styling consistent with the site's dark theme and neon accent colors.",
+      "reqIds": [
+        "REQ-170"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-getallusers-query-hook-in-frontend-src-hooks-usequeries-ts-to-call-the-backend-getallusers-method-using-the-backend-actor-without-requiring-any-internet-identity-authentication-handle-the-response-data-correctly-and-display-meaningful-error-messages-with-full-error-details-if-the-call-fails",
+      "title": "Update the getAllUsers query hook in frontend/src/hooks/useQueries.ts to call the backend getAllUsers method using the backend actor without requiring any Internet Identity authentication, handle the response data correctly, and display meaningful error messages with full error details if the call fails.",
+      "reqIds": [
+        "REQ-172"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-adminpanelpage-component-frontend-src-pages-adminpanelpage-tsx-to-trigger-the-getallusers-query-immediately-after-successful-admin-login-using-the-simple-username-password-authentication-display-a-clear-loading-state-while-fetching-show-the-full-error-message-if-the-fetch-fails-and-render-the-userlisttable-component-with-the-fetched-user-data-when-successful",
+      "title": "Update the AdminPanelPage component (frontend/src/pages/AdminPanelPage.tsx) to trigger the getAllUsers query immediately after successful admin login using the simple username/password authentication, display a clear loading state while fetching, show the full error message if the fetch fails, and render the UserListTable component with the fetched user data when successful.",
+      "reqIds": [
+        "REQ-173"
       ],
       "version": 1
     }
@@ -1686,6 +1719,22 @@
       "summary": "Update the UserListTable component in frontend/src/components/admin/UserListTable.tsx to ensure the 'Approve' button is clearly visible and easily clickable on mobile screens by positioning it directly below the username in the mobile card layout with adequate touch target size (minimum 44x44px).",
       "reqIds": [
         "REQ-167"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-137",
+      "summary": "Verify that the UserListTable component (frontend/src/components/admin/UserListTable.tsx) displays an 'Approve' button next to each user with status='Pending', and wire the button click to call the backend approveUser function without requiring Internet Identity authentication, refresh the user list on success, and display a success toast message.",
+      "reqIds": [
+        "REQ-174"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-138",
+      "summary": "Remove or disable any Internet Identity authentication initialization from frontend/src/hooks/useActor.ts that might interfere with admin panel operations, ensuring the backend actor can be created and used without requiring Internet Identity login.",
+      "reqIds": [
+        "REQ-175"
       ],
       "status": "pending"
     }
